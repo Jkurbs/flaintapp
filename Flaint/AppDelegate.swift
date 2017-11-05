@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import SwiftyUserDefaults
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        FirebaseApp.configure()
+        userIsLoggingIn()
         return true
     }
 
@@ -40,7 +44,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
+    
+//    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+//        return FBSDKApplicationDelegate.sharedInstance().application(application, open: url, sourceApplication: sourceApplication, annotation: annotation)
+//    }
+    
+    func userIsLoggingIn() {
+        if let uid = Defaults[.key_uid] {
+        let usersRef = Database.database().reference().child("users").child(uid)
+        if !uid.isEmpty {
+            usersRef.observeSingleEvent(of: .value, with: { (snapshot) in
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                let initialViewController = storyboard.instantiateViewController(withIdentifier: "ProfileNav") as! UINavigationController
+                self.window?.rootViewController = initialViewController
+                self.window?.makeKeyAndVisible()
+                usersRef.removeAllObservers()
+                if ( snapshot.value is NSNull ) {
+                    print(" CAN'T LOG IN: snapshot not found)")
+                }
+            })
+        }
+    }
+}
+    
+    
+    func logIn() {
+        let tabBar = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ProfileNav") as! UINavigationController
+        self.window?.rootViewController = tabBar
+        self.window?.makeKeyAndVisible()
+    }
 }
 
