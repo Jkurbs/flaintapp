@@ -29,6 +29,12 @@ class VirtualObjectLoader {
         isLoading = true
         loadedObjects.append(object)
         
+        let geometry = object.childNodes.first?.geometry
+
+        
+        
+//        object.no
+        
         // Load the content into the reference node.
         DispatchQueue.global(qos: .userInitiated).async {
             object.load()

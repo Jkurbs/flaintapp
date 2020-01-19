@@ -267,42 +267,8 @@ class ViewVC: UIViewController {
         addPainting(hitTest)
     }
     
-        func addPainting(_ hitResult: ARHitTestResult)  {
-            guard !addObjectButton.isHidden && !virtualObjectLoader.isLoading else { return }
-            statusViewController.cancelScheduledMessage(for: .contentPlacement)
-            
-            print("ADD PAINTING")
-            
-            
-            
-            
-            
-            
-            
-            
-            
-            
-//            let img = UIImage(named: "two")!
-//
-//            var desiredWidth = view.frame.width
-//            let desiredHeight = view.frame.height
-//            let imageHeight = img.size.height
-//            let imageWidth = img.size.width
-//
-//            let percent = imageWidth / desiredWidth / 3.5
-//
-//            if imageHeight > desiredHeight && imageHeight < 1300 ||  imageWidth > desiredWidth && imageWidth < 400 {
-//                desiredWidth = desiredWidth * percent
-//            } else {
-//                desiredWidth = desiredWidth * percent
-//            }
-//
-//            artRoomScene.setup(artInfo: img, height: img.size.height / desiredWidth, width: img.size.width / desiredWidth, position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
-//
-//            artRoomScene.boxnode.transform = SCNMatrix4(hitResult.anchor!.transform)
-//            artRoomScene.boxnode.eulerAngles = SCNVector3(artRoomScene.boxnode.eulerAngles.x + (-Float.pi / 2), artRoomScene.boxnode.eulerAngles.y, artRoomScene.boxnode.eulerAngles.z)
-//            artRoomScene.boxnode.position = SCNVector3(hitResult.worldTransform.columns.3.x, hitResult.worldTransform.columns.3.y, hitResult.worldTransform.columns.3.z)
-
-
-        }
+    func addPainting(_ hitResult: ARHitTestResult)  {
+        guard !addObjectButton.isHidden && !virtualObjectLoader.isLoading else { return }
+        statusViewController.cancelScheduledMessage(for: .contentPlacement)
+    }
 }
