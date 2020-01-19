@@ -101,8 +101,8 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
     // MARK: - UI Elements
     
-    var activityIndicator = MDCActivityIndicator()
-    var scnView: SCNView!
+    lazy var activityIndicator = MDCActivityIndicator()
+    lazy var scnView = SCNView()
     lazy var artRoomScene = ArtRoomScene(create: true)
     var spriteScene: OverlayScene!
     var artImg: UIImage!
@@ -167,13 +167,14 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         spriteScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         spriteScene.backgroundColor = .red
 
-        scnView = strongSelf.scnView!
+        scnView = strongSelf.scnView
         let scene = artRoomScene
         scnView.scene = scene
         scnView.autoenablesDefaultLighting = true
         scnView.isJitteringEnabled = true
         scnView.backgroundColor = .backgroundColor
         scnView.antialiasingMode = .multisampling4X
+        scnView.showsStatistics = true
 //        scnView.overlaySKScene = spriteScene
      
         contentView.addSubview(scnView)        
