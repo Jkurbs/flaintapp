@@ -108,12 +108,13 @@ class AddInfoVC: UITableViewController, AUPickerCellDelegate, ArtDescDelegate {
         }
         
          // Natural language processing
-        let sentiment = AI.shared.sentimentAnalysis(string: description) ?? ""
+//        let sentiment = AI.shared.sentimentAnalysis(string: description) ?? ""
 
         self.navigationItem.addActivityIndicator()
-        let date = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
+        let date = CachedDateFormattingHelper.shared.formatTodayDate()
+        print("DATE:", date)
 
-        let data = ["title": title, "price": price, "sentiment": sentiment, "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "imgUrl": self.imgUrl] as [String : Any]
+        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "imgUrl": self.imgUrl] as [String : Any]
         DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { (success, error) in
             if !success {
                 self.showMessage("Error saving painting", type: .error)
