@@ -16,13 +16,13 @@ extension ProfileVC {
         DataService.shared.fetchCurrentUserArt { result in
             if let art = try? result.get() as? Art {
                 self.arts.append(art)
+//                self.delegate?.arts = self.arts
                 if self.arts.count == 1 {
                     self.leftButton.isEnabled = false
                     self.rightButton.isEnabled = false
                 } else {
                     self.leftButton.isEnabled = true
                     self.rightButton.isEnabled = true
-                    
                 }
                 
                 self.countLabel.text = "1 of \(self.arts.count)"

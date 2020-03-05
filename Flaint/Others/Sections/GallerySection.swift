@@ -16,15 +16,18 @@ protocol SearchSectionControllerDelegate: class {
 
 class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate,  UISearchBarDelegate, SearchSectionControllerDelegate, ArtDelegate {
     
+        
     private var status: Int?
     private var expanded = false
     
-    var arts = [Art]()
     var filteredArts: Art!
     var currentIndex = 0
     var filterString = ""
     var searchBar: UISearchBar!
     var vc: ProfileVC?
+    
+    var arts = [Art]()
+    
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController)
@@ -62,9 +65,9 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         vc = self.viewController as? ProfileVC
         searchBar = vc?.searchBar
         searchBar.delegate = self
-            
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.fetchArts(_:)), name: NSNotification.Name(rawValue: "count"), object: nil)
-
+        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -92,9 +95,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         return (index: currentIndex, count: self.arts.count, art: art)
     }
 
-    
-    
-    
     @objc func fetchArts(_ notification: Notification) {
         if let dict = notification.userInfo as NSDictionary? {
             if let arts = dict["arts"] as? [Art] {

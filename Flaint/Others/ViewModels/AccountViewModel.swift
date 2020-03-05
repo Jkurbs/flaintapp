@@ -16,7 +16,7 @@ enum AccountModelItemType {
 
 protocol AccountModelItem {
     var type: AccountModelItemType { get }
-    var sectionTitle: String { get }
+    var sectionTitle: String? { get }
     var rowCount: Int { get }
 }
 
@@ -45,12 +45,6 @@ class AccountViewModel: NSObject {
             let emailItem = AccountViewModelPersonalItem(email: email, phone: phone)
             self.items.append(emailItem)
         }
-    }
-    
-    
-    override init() {
-        super.init()
-
     }
 }
 
@@ -81,7 +75,7 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
                     return cell
                 }
             default:
-                print("DEFAULT")
+                break
             }
         case .personal:
             if indexPath.row == 0 {
@@ -135,7 +129,6 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
         let personalVC = UpdatePersonalInfoVC()
         
         if indexPath.section == 0 && indexPath.row == 2 {
-//            let cell = tableView.cellForRow(at: indexPath) as! EditAccountGeneralCell
             generalVC.currentUser = self.user
             viewController.navigationController?.pushViewController(generalVC, animated: true)
         } else if indexPath.section == 1 && indexPath.row == 0 {
@@ -154,8 +147,8 @@ class AccountViewModelGeneralItem: AccountModelItem {
         return .general
     }
     
-    var sectionTitle: String {
-        return ""
+    var sectionTitle: String? {
+        return nil
     }
     
     var rowCount: Int {
@@ -177,7 +170,7 @@ class AccountViewModelPersonalItem: AccountModelItem {
         return .personal
     }
     
-    var sectionTitle: String {
+    var sectionTitle: String? {
         return "Private Information"
     }
     

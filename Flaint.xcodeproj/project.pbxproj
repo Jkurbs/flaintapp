@@ -302,7 +302,7 @@
 			children = (
 				6D1962E1231E7B970073EC3D /* ProfileVC */,
 				6D290596232F2C5800281205 /* Art */,
-				6D1962BD231E0C550073EC3D /* View */,
+				6D1962BD231E0C550073EC3D /* AR */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -326,12 +326,12 @@
 			path = AddCell;
 			sourceTree = "<group>";
 		};
-		6D1962BD231E0C550073EC3D /* View */ = {
+		6D1962BD231E0C550073EC3D /* AR */ = {
 			isa = PBXGroup;
 			children = (
 				6D6E5E772290FE5300A10AF9 /* ViewVC2.swift */,
 			);
-			path = View;
+			path = AR;
 			sourceTree = "<group>";
 		};
 		6D1962D2231E13E40073EC3D /* Others */ = {
@@ -362,9 +362,9 @@
 			isa = PBXGroup;
 			children = (
 				6DF0A5A6226C012100C892C4 /* ProfileVC.swift */,
+				6D4AF3FF232734EC00D40A57 /* Profile+Data.swift */,
 				6D1962E2231E7BB00073EC3D /* Profile+IGListKit.swift */,
 				6D1962E4231E7C050073EC3D /* Profile+Actions.swift */,
-				6D4AF3FF232734EC00D40A57 /* Profile+Data.swift */,
 				6DD1281922A9A88D0068195C /* OverlayScene.swift */,
 			);
 			path = ProfileVC;
@@ -1279,7 +1279,7 @@
 				DEVELOPMENT_TEAM = GF728A45JE;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1306,7 +1306,7 @@
 				DEVELOPMENT_TEAM = GF728A45JE;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

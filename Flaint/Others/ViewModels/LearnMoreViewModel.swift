@@ -16,7 +16,7 @@ enum LearnModelItemType {
 
 protocol LearnModelItem {
     var type: LearnModelItemType { get }
-    var sectionTitle: String { get }
+    var sectionTitle: String? { get }
     var rowCount: Int { get }
 }
 
@@ -172,8 +172,8 @@ class LearnViewModelGeneralItem: LearnModelItem {
         return .primary
     }
     
-    var sectionTitle: String {
-        return ""
+    var sectionTitle: String? {
+        return nil
     }
     
     var rowCount: Int {
@@ -207,7 +207,7 @@ class LearnViewModelMoreItem: LearnModelItem {
         return .secondary
     }
     
-    var sectionTitle: String {
+    var sectionTitle: String? {
         return "Description"
     }
     

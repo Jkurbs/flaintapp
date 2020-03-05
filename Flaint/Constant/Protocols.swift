@@ -9,6 +9,5 @@
 import Foundation
 
 protocol ArtDelegate {
-    var arts: [Art] { get }
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art)
 }

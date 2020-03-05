@@ -221,7 +221,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let numberOfTouches = sender.numberOfTouches
         let translation = sender.translation(in: view)
         
-        let xVelocity: Float = Float(sender.velocity(in: view ).x) / 60
+//        let xVelocity: Float = Float(sender.velocity(in: view ).x) / 60
 
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
                 
