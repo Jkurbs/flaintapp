@@ -22,7 +22,6 @@ target 'Flaint' do
   pod 'Firebase/DynamicLinks'
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
-
   pod 'SwiftKeychainWrapper'
 
 

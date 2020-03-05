@@ -73,24 +73,6 @@ class SettingsVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 60.0
     }
-    
-    func keychainAlert() {
-        let keychainAlert = UIAlertController(title: "Remember Login Info", message: "We'll remember your login info for username. You won't need to enter it when you log in again.", preferredStyle: .alert)
-        
-        let notNow = UIAlertAction(title: "Not Now", style: .default) { (action) in
-            self.logoutAlert()
-        }
-        
-        let remember = UIAlertAction(title: "Save", style: .default) { (action) in
-            KeychainWrapper.standard.set(self.userId!, forKey: "userId")
-            AuthService.shared.dataToKeychain(userId: self.userId!)
-            self.logoutAlert()
-        }
-        
-        keychainAlert.addAction(notNow)
-        keychainAlert.addAction(remember)
-        self.present(keychainAlert, animated: true, completion: nil)
-    }
             
     func logoutAlert() {
       let alert = UIAlertController(title: "Log Out", message: nil, preferredStyle: .alert)

@@ -29,7 +29,7 @@ class OverlayScene: SKScene {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-       
+        
     }
     
     override func didMove(to view: SKView) {
@@ -38,7 +38,7 @@ class OverlayScene: SKScene {
     }
     
     var previousScale = CGFloat(1.0)
-
+    
     @objc func pinched(_ sender:UIPinchGestureRecognizer){
         if sender.scale > previousScale {
             sprite.isHidden = false
@@ -69,7 +69,7 @@ class OverlayScene: SKScene {
         self.addChild(sprite)
     }
     
- 
+    
     
     func configure() {
         let path =  UIBezierPath(roundedRect: CGRect(x: 0, y: 0, width: 50, height: 50), cornerRadius: 25).cgPath

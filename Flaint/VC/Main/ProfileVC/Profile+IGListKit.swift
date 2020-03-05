@@ -10,17 +10,19 @@ import IGListKit
 
 
 extension ProfileVC {
-
+    
     // MARK: - ListAdapterDataSource
-
+    
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
         return [1] as [ListDiffable]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return GallerySection()
+        let section = GallerySection()
+        self.delegate = section
+        return section
     }
-
+    
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
         return nil
     }

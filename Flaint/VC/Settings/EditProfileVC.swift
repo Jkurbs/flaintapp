@@ -13,7 +13,7 @@ final class EditProfileVC: UITableViewController {
     
     fileprivate let viewModel = AccountViewModel()
     private var handle: AuthStateDidChangeListenerHandle!
-    var user: User!
+    var user: Users!
     // MARK: - UI Elements
     
     var indicator = UIActivityIndicatorView()
@@ -96,11 +96,9 @@ final class EditProfileVC: UITableViewController {
     // MARK: - Fetch Data
     
     func fetchData() {
-        DataService.shared.fetchCurrentUser(userID: userId) { (success, error, user) in
-            if !success {
-                print("error:", error!.localizedDescription)
-            } else {
-                self.viewModel.user = user
+        DataService.shared.fetchCurrentUser(userID: userId) { result in
+            if let result = try? result.get() as? Users {
+                self.viewModel.user = result
                 self.tableView.reloadData()
                 self.indicator.stopAnimating()
             }

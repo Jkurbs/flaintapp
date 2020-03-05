@@ -15,15 +15,16 @@ class LearnMoreVC: UIViewController {
     fileprivate let viewModel = LearnMoreViewModel()
     
     var artImg: UIImage?
-    var art: Art!
+    var art: Art! {
+        didSet {
+            viewModel.art = art
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        viewModel.art = art
-        
+                
         view.backgroundColor = .backgroundColor
-        
         self.navigationController?.isToolbarHidden = true
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "Menu-32"), style: .done, target: self, action: #selector(options))
@@ -33,7 +34,7 @@ class LearnMoreVC: UIViewController {
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
         tableView.backgroundColor = .backgroundColor
         
-        tableView.register(EditArtCell.self, forCellReuseIdentifier: "EditArtCell")
+        tableView.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "test")
         tableView.register(LearnMoreDescCell.self, forCellReuseIdentifier: "LearnMoreDescCell")
         
@@ -46,7 +47,7 @@ class LearnMoreVC: UIViewController {
         tableView.estimatedRowHeight = 200
         tableView.allowsSelection = false
         tableView.sectionHeaderHeight = 70
-
+        
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 70))
         let label = UILabel(frame: headerView.frame)
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)

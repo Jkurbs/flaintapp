@@ -72,13 +72,11 @@ extension AddImageVC {
         self.ref = ref
         
         DispatchQueue.global(qos: .background).async {
-            DataService.shared.saveImg(ref, userId, imgData, { (url, success, error) in
-                if !success {
-                    print("error:", error!.localizedDescription)
-                } else {
-                    vc.imgUrl = url!
+            DataService.shared.saveImg(ref, userId, imgData) { (result) in
+                if let url = try? result.get() as? String {
+                    vc.imgUrl = url
                 }
-            })
+            }
             DispatchQueue.main.async {
                 self.navigationController?.pushViewController(vc, animated: true)
             }

@@ -37,8 +37,8 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
         tableView?.backgroundColor = .backgroundColor
-        tableView?.register(EditArtCell.self, forCellReuseIdentifier: "EditArtCell")
-        tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: "InfoTextFieldCell")
+        tableView?.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
+        tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: InfoTextFieldCell.id)
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
 
         tableView?.tableFooterView = UIView()

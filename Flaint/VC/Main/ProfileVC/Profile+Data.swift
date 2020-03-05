@@ -12,22 +12,19 @@ extension ProfileVC {
     
     @objc func fetchArts() {
         self.arts.removeAll()
-        DataService.shared.fetchCurrentUserArt { (success, error, art) in
-            if !success {
-                print("Can't load user arts")
-                self.navigationController?.setToolbarHidden(true, animated: false)
-            } else {
-                self.arts.append(art!)
+        
+        DataService.shared.fetchCurrentUserArt { result in
+            if let art = try? result.get() as? Art {
+                self.arts.append(art)
                 if self.arts.count == 1 {
-                     self.leftButton.isEnabled = false
-                     self.rightButton.isEnabled = false
+                    self.leftButton.isEnabled = false
+                    self.rightButton.isEnabled = false
                 } else {
-                     self.leftButton.isEnabled = true
-                     self.rightButton.isEnabled = true
-
+                    self.leftButton.isEnabled = true
+                    self.rightButton.isEnabled = true
+                    
                 }
-                   
-               
+                
                 self.countLabel.text = "1 of \(self.arts.count)"
                 self.adapter.performUpdates(animated: true, completion: { (done) in
                     NotificationCenter.default.post(name: Notification.Name("count"), object: nil, userInfo: ["count": self.arts.count, "arts": self.arts])

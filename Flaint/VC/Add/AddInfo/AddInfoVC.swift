@@ -14,7 +14,7 @@ class AddInfoVC: UITableViewController, AUPickerCellDelegate, ArtDescDelegate {
     
     var expandingCellHeight: CGFloat = 100
     
-    var styles: [String]?
+    var styles = ["Abstract", "Realism", "Surrealism", "Pop art"]
     var substrates = ["Canvas", "Wood", "Paper", "Metal"]
     var mediums = ["Oil", "Watercolor", "Acrylic"]
     
@@ -114,7 +114,7 @@ class AddInfoVC: UITableViewController, AUPickerCellDelegate, ArtDescDelegate {
         let date = DateFormatter.localizedString(from: Date(), dateStyle: .short, timeStyle: .none)
 
         let data = ["title": title, "price": price, "sentiment": sentiment, "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "imgUrl": self.imgUrl] as [String : Any]
-        DataService.shared.saveArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { (success, error) in
+        DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { (success, error) in
             if !success {
                 self.showMessage("Error saving painting", type: .error)
             } else {
@@ -202,8 +202,8 @@ class AddInfoVC: UITableViewController, AUPickerCellDelegate, ArtDescDelegate {
              return cell
         } else if indexPath.section == 1 {
          cell.leftLabel.text = "Style"
-         cell.values = styles ?? ["Abstract", "Realism", "Surrealism", "Pop art"]
-            if  let index = self.styles?.firstIndex(of: self.classifications?.style ?? "") {
+         cell.values = ["Abstract", "Realism", "Surrealism", "Pop art"]
+            if  let index = self.styles.firstIndex(of: self.classifications?.style ?? "") {
              cell.selectedRow = index
          }
              return cell
@@ -268,9 +268,7 @@ class AddInfoVC: UITableViewController, AUPickerCellDelegate, ArtDescDelegate {
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
-        
-        
+
          if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
              self.view.endEditing(true)
              cell.selectedInTableView(tableView)

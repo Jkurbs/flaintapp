@@ -26,7 +26,7 @@ class  ChangePwdVC: UITableViewController {
         self.title = "Change Password"
         saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         navigationItem.rightBarButtonItem = saveButton
-        tableView.register(TextFieldCell.self, forCellReuseIdentifier: "TextFieldCell")
+        tableView.register(TextFieldCell.self, forCellReuseIdentifier: TextFieldCell.id)
         tableView.tableFooterView = UIView()
     }
     
@@ -57,7 +57,7 @@ extension ChangePwdVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "TextFieldCell", for: indexPath) as! TextFieldCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: TextFieldCell.id, for: indexPath) as! TextFieldCell
         let data = self.data[indexPath.row]
         cell.configure(placeholder: data)
         return cell

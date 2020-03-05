@@ -35,7 +35,6 @@ class ShareVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 200
-//        tableView.allowsSelection = false
         tableView.sectionHeaderHeight = 70
 
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 70))
@@ -61,7 +60,6 @@ class ShareVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
                 if let url = art.imgUrl {
                     cell.artImageView.sd_setImage(with: URL(string: url))
                 }
-                //image = UIImage(named: "test")
              return cell
            }
        }
