@@ -295,20 +295,3 @@ class DataService {
             completion(true, nil,longDynamicLink.absoluteString)
         }
     }
-    
-    
-    
-    extension DataSnapshot {
-        var data: Data? {
-            guard let value = value else { return nil }
-            return try? JSONSerialization.data(withJSONObject: value)
-        }
-        var json: String? {
-            return data?.string
-        }
-    }
-    extension Data {
-        var string: String? {
-            return String(data: self, encoding: .utf8)
-        }
-}

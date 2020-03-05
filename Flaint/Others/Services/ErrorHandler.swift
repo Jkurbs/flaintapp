@@ -14,6 +14,7 @@ class ErrorHandler {
     private static let error = ErrorHandler()
     
     func authError(_ error: Error?) {
+        
         if let errCode = AuthErrorCode(rawValue: error!._code) {
             switch errCode {
             case .invalidEmail:
@@ -56,6 +57,6 @@ class ErrorHandler {
             .textAlignment(.center),
             .textColor(.white),
             .textNumberOfLines(1),
-            ])
+        ])
     }
 }
