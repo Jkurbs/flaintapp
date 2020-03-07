@@ -118,24 +118,25 @@ class ProfileVC: UIViewController, ListAdapterDataSource, RPPreviewViewControlle
         // Toolbar setup
         var items = [UIBarButtonItem]()
         
+        let symbolConfig = UIImage.SymbolConfiguration(textStyle: .title1)
+        
         self.rotateButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        self.rotateButton.setImage(UIImage(named: "Rotation-30"), for: UIControl.State())
+        self.rotateButton.setImage(UIImage(systemName: "arrow.2.circlepath", withConfiguration: symbolConfig), for: UIControl.State())
         self.rotateButton.addTarget(self, action: #selector(changeView), for: .touchUpInside)
         let rotateButton = UIBarButtonItem(customView: self.rotateButton)
 
-        let style = UIImage.SymbolConfiguration(font: UIFont.systemFont(ofSize: 45, weight: .regular), scale: .unspecified)
                 
-        leftButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left.circle", withConfiguration: style), style: .done, target: self, action: #selector(action(_:)))
+        leftButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
         leftButton.tag = 0
         leftButton.isEnabled = false
         
-        rightButton = UIBarButtonItem(image: UIImage(systemName: "chevron.right.circle", withConfiguration: style), style: .done, target: self, action: #selector(action(_:)))
+        rightButton = UIBarButtonItem(image: UIImage(systemName: "chevron.right.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
         rightButton.tag = 1
         
-        let shareButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.right.circle", withConfiguration: style), style: .done, target: self, action: #selector(action(_:)))
+        let shareButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.right.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
         shareButton.tag = 2
         
-        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle", withConfiguration: style), style: .done, target: self, action: #selector(action(_:)))
+        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
         moreButton.tag = 3
         
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
