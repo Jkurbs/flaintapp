@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        return ApplicationDelegate.shared.application( app, open: url, options: options)
 //    }
     
+    @available(iOS 13.0, *)
     func customize() {
                 
         self.window?.rootViewController?.view.overrideUserInterfaceStyle = .light
@@ -76,7 +77,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         monitor.start(queue: queue)
         
         FirebaseApp.configure()
-        Database.database().isPersistenceEnabled = true
+//        Database.database().isPersistenceEnabled = true
         
         let firstTime = UserDefaults.standard.bool(forKey: "first_time")
         

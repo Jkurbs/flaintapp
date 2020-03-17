@@ -9,12 +9,6 @@
 import UIKit
 import IGListKit
 
-enum Style {
-    case Abstract
-    case Realism
-    case PopArt
-}
-
 class Art: Codable {
     
     var id: String!
@@ -52,5 +46,33 @@ extension Art: ListDiffable {
         guard self !== object else { return true }
         guard let object = object as? Art else { return false }
         return self.id == object.id
+    }
+}
+
+import ImageIO
+class ImageResizeOperation: Operation {
+    
+    var image: UIImage
+    var width: CGFloat
+    var height: CGFloat
+    
+    init(image: UIImage, width: CGFloat, height: CGFloat) {
+        self.image = image
+        self.width = width
+        self.height = height
+        super.init()
+    }
+
+    override func main() {
+        let imageData = image.jpegData(compressionQuality: 1.0)
+        
+        let options: [CFString: Any] = [
+            kCGImageSourceCreateThumbnailWithTransform: true,
+            kCGImageSourceCreateThumbnailFromImageAlways: true,
+            kCGImageSourceThumbnailMaxPixelSize: max(width, height) ]
+        
+        let source = CGImageSourceCreateWithData(imageData as! CFData, nil)!
+        let newImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)
+        image = UIImage(cgImage: newImage!)
     }
 }

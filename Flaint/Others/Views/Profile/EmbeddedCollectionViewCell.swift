@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
     
     

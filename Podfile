@@ -11,7 +11,6 @@ target 'Flaint' do
   pod 'Cartography', '~> 3.0'
   pod 'GSMessages'
   pod 'IQKeyboardManager'
-  pod 'Hero' 
   pod 'SDWebImage', '~> 4.0'
   pod 'MaterialComponents/ActivityIndicator'
   pod 'Firebase'

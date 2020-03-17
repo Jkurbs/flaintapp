@@ -17,7 +17,7 @@ class AlertHandler {
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
         
         let recordAction = UIAlertAction(title: "Record", style: .default) { (action) in
-            vc.startRecording()
+            
         }
         
         let editAction = UIAlertAction(title: "Edit", style: .default) { (action) in

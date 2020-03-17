@@ -9,7 +9,6 @@
 import UIKit
 import SpriteKit
 import SceneKit
-import Hero
 
 class OverlayScene: SKScene {
     

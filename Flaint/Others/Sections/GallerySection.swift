@@ -10,13 +10,11 @@ import UIKit
 import IGListKit
 import FirebaseDatabase
 
-protocol SearchSectionControllerDelegate: class {
-    func searchSectionController(_ sectionController: GallerySection, didChangeText text: String)
-}
 
 class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate,  UISearchBarDelegate, SearchSectionControllerDelegate, ArtDelegate {
     
-        
+    // MARK: - Properties
+    
     private var status: Int?
     private var expanded = false
     
@@ -25,7 +23,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     var filterString = ""
     var searchBar: UISearchBar!
     var vc: ProfileVC?
-    
     var arts = [Art]()
     
     
@@ -48,6 +45,9 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         return label
     }()
     
+    
+    // MARK: - Initializer
+    
     override func sizeForItem(at index: Int) -> CGSize {
         let guide = self.viewController?.view.safeAreaLayoutGuide
         let height = guide?.layoutFrame.size.height
@@ -57,6 +57,13 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     
     override init() {
         super.init()
+        setup()
+    
+    }
+    
+    // MARK: - Functions
+    
+    func setup() {
         self.arts.removeAll()
         self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         adapter.dataSource = self
@@ -65,27 +72,33 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         vc = self.viewController as? ProfileVC
         searchBar = vc?.searchBar
         searchBar.delegate = self
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.fetchArts(_:)), name: NSNotification.Name(rawValue: "count"), object: nil)
-        
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
     
+    // ArtDelegate
+    
+    func setArts(arts: [Art]) {
+        self.arts = arts
+        self.adapter.performUpdates(animated: true) { (done) in
+            guard self.arts.count != 0 else { return }
+        }
+    }
+    
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art) {
         if direction == .right {
             self.currentIndex += 1
-            self.adapter.collectionView?.scrollToNextItem()
             self.vc?.leftButton.isEnabled = true
+            self.adapter.collectionView?.scrollToNextItem()
             if self.currentIndex == self.arts.count - 1 {
                 self.vc?.rightButton.isEnabled = false
             }
         } else {
             currentIndex -= 1
-            self.adapter.collectionView?.scrollToPreviousItem()
             self.vc?.rightButton.isEnabled = true
+            self.adapter.collectionView?.scrollToPreviousItem()
             if currentIndex == 0 {
                 self.vc?.leftButton.isEnabled = false
             }
@@ -94,19 +107,11 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         self.vc?.art = art
         return (index: currentIndex, count: self.arts.count, art: art)
     }
+}
 
-    @objc func fetchArts(_ notification: Notification) {
-        if let dict = notification.userInfo as NSDictionary? {
-            if let arts = dict["arts"] as? [Art] {
-                self.arts = arts
-                self.adapter.performUpdates(animated: true) { (done) in
-                    guard self.arts.count != 0 else { return }
-                }
-            }
-        }
-    }
-    
-    // MARK: UISearchBarDelegate
+// MARK: - UISearchBarDelegate
+
+extension GallerySection {
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         delegate?.searchSectionController(self, didChangeText: searchText)
@@ -115,11 +120,15 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         delegate?.searchSectionController(self, didChangeText: searchBar.text!)
     }
+}
+
+// MARK: - DataSource
+
+extension GallerySection {
     
     override func numberOfItems() -> Int {
         return 1
     }
-    
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: EmbeddedCollectionViewCell.self, for: self, at: index) as? EmbeddedCollectionViewCell else {
@@ -134,6 +143,8 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         self.status = object as? Int
     }
 }
+
+// MARK: - ListAdapterDataSource
 
 extension GallerySection {
     
@@ -157,6 +168,9 @@ extension GallerySection {
         self.adapter.performUpdates(animated: true, completion: nil)
     }
 }
+
+
+// MARK: - UICollectionView Scrolling
 
 extension UICollectionView {
     

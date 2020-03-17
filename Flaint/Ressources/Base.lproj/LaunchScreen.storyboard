@@ -15,12 +15,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Flaint" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EFX-rW-cLk">
-                                <rect key="frame" x="16" y="347" width="343" height="24"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ios-marketing" translatesAutoresizingMaskIntoConstraints="NO" id="2xG-cJ-y6h">
                                 <rect key="frame" x="138.5" y="214" width="98" height="92"/>
                                 <constraints>
@@ -31,11 +25,8 @@
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="EFX-rW-cLk" firstAttribute="top" secondItem="2xG-cJ-y6h" secondAttribute="bottom" constant="41" id="46y-vq-ifY"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="EFX-rW-cLk" secondAttribute="trailing" constant="16" id="Bv0-7l-9T0"/>
                             <constraint firstItem="2xG-cJ-y6h" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HGB-qU-7kW"/>
                             <constraint firstItem="2xG-cJ-y6h" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="214" id="adA-gq-aBx"/>
-                            <constraint firstItem="EFX-rW-cLk" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="miu-yb-ik9"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

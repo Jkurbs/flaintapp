@@ -34,14 +34,6 @@ extension ProfileVC {
         self.adapter.performUpdates(animated: false, completion: nil)
     }
     
-    @objc func startRecording() {
-        self.recordView.startRecording {
-            DispatchQueue.main.async {
-                
-            }
-        }
-    }
-    
     @objc func action(_ button: UIBarButtonItem) {
         switch button.tag {
         case 0:
@@ -55,25 +47,28 @@ extension ProfileVC {
         }
     }
     
-    
-    func more() {
+    @objc func more() {
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
             let editVC = EditArtVC()
-            editVC.viewController = self
-            editVC.art = self.art ?? self.arts.first
-            editVC.artImg = self.artImg
+            editVC.art = self.art
             let nav = UINavigationController(rootViewController: editVC)
             self.navigationController?.present(nav, animated: true, completion: nil)
         }
+        
+        
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+            // Delete art
+            
+        }
+        
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(edit)
+        alert.addAction(delete)
         alert.addAction(cancel)
         self.present(alert, animated: true, completion: nil)
     }
-    
-    
     
     @objc func options() {
         let vc = SettingsVC()
@@ -81,28 +76,6 @@ extension ProfileVC {
         vc.navigationController?.isToolbarHidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
-    
-    @objc func changeView() {
-//        let storyboard = UIStoryboard(name: "Main", bundle: Bundle.main)
-//        let viewVC = storyboard.instantiateViewController(identifier: "ViewVC") as! ViewVC
-//        let nav = UINavigationController(rootViewController: viewVC)
-//        nav.modalPresentationStyle = .fullScreen
-//        nav.isToolbarHidden = false
-//        
-//        UIView.animate(withDuration: 0.2, animations: {
-//            self.rotateButton.transform = CGAffineTransform(rotationAngle: .pi)
-//        }) { (action) in
-//            if (ARConfiguration.isSupported) {
-//                nav.hero.isEnabled = true
-//                nav.hero.modalAnimationType = .fade
-//                self.rotateButton.transform = .identity
-//                self.navigationController?.present(nav, animated: true, completion: nil)
-//            } else {
-//                
-//            }
-//        }
-    } 
-    
     
     @objc func add() {
         let vc = AddImageVC()

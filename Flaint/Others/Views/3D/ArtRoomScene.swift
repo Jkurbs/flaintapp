@@ -75,3 +75,13 @@ class ArtRoomScene: SCNScene {
 }
 
 
+extension SCNNode {
+    func cleanUp() {
+        for child in childNodes {
+            child.cleanUp()
+        }
+        geometry = nil
+    }
+}
+
+

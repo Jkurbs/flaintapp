@@ -23,8 +23,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource, RPPreviewViewControlle
     
     // MARK: - UI Elements
     
-    var recordView = RecorderView()
-    var countLabel = CountLabel()
+    lazy var countLabel = CountLabel()
     
     var addButton: UIBarButtonItem!
     var menuButton: UIBarButtonItem!
@@ -38,35 +37,30 @@ class ProfileVC: UIViewController, ListAdapterDataSource, RPPreviewViewControlle
     // MARK: - Properties
     
     var userUID: String?
-    var user = [Users]()
     var art: Art?
     var artImg: UIImage!
     var arts = [Art]()
     
-    var delegate: ArtDelegate? 
+    weak var delegate: ArtDelegate? 
     
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-    
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
     
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        fetchArts()
         setupViews()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        fetchArts()
         self.navigationController?.isToolbarHidden = false
-        NotificationCenter.default.addObserver(self, selector: #selector(self.getImg(_:)), name: NSNotification.Name(rawValue: "count"), object: nil)
-        NotificationCenter.default.post(name: Notification.Name("fetchArts"), object: nil, userInfo: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.changeView), name: NSNotification.Name(rawValue: "ViewVC"), object: nil)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -95,18 +89,10 @@ class ProfileVC: UIViewController, ListAdapterDataSource, RPPreviewViewControlle
         searchBar.isTranslucent = true
         searchBar.barTintColor = .backgroundColor
         searchBar.returnKeyType = .done
-        
-        UserDefaults.standard.set(true, forKey: "first_time")
-        
-        self.hero.isEnabled = true
-        
+                
         view.backgroundColor = .backgroundColor
         
         view.addSubview(countLabel)
-        
-        self.recordView.viewController = self
-        self.recordView.frame = CGRect(x: 0, y: 0, width: 190, height: 60)
-        
         
         // NavBar setup
         searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
@@ -117,34 +103,20 @@ class ProfileVC: UIViewController, ListAdapterDataSource, RPPreviewViewControlle
         
         // Toolbar setup
         var items = [UIBarButtonItem]()
-        
         let symbolConfig = UIImage.SymbolConfiguration(textStyle: .title1)
-        
-        self.rotateButton = UIButton(frame: CGRect(x: 0, y: 0, width: 40, height: 40))
-        self.rotateButton.setImage(UIImage(systemName: "arrow.2.circlepath", withConfiguration: symbolConfig), for: UIControl.State())
-        self.rotateButton.addTarget(self, action: #selector(changeView), for: .touchUpInside)
-        let rotateButton = UIBarButtonItem(customView: self.rotateButton)
-
                 
         leftButton = UIBarButtonItem(image: UIImage(systemName: "chevron.left.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
-        leftButton.tag = 0
         leftButton.isEnabled = false
+        leftButton.tag = 0
         
         rightButton = UIBarButtonItem(image: UIImage(systemName: "chevron.right.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
         rightButton.tag = 1
         
-        let shareButton = UIBarButtonItem(image: UIImage(systemName: "arrowshape.turn.up.right.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
-        shareButton.tag = 2
-        
-        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(action(_:)))
+        let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle", withConfiguration: symbolConfig), style: .done, target: self, action: #selector(more))
         moreButton.tag = 3
         
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
         items.append(leftButton)
-        items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
-        items.append(shareButton)
-        items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
-        items.append(rotateButton)
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
         items.append(moreButton)
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))

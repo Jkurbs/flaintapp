@@ -52,7 +52,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
             guard let cell = collectionContext?.dequeueReusableCell(of: ProfileArtInfoCell.self, for: self, at: index) as? ProfileArtInfoCell else {
                 fatalError()
             }
-            cell.configure(art!)
+            cell.art = art
             cell.learnMoreButton.addTarget(self, action: #selector(learnMore), for: .touchUpInside)
             cell.learnMoreLabel.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(learnMore)))
             return cell

@@ -8,7 +8,6 @@
 
 import UIKit
 import Cartography
-import Hero
 import SceneKit
 import SDWebImage
 import MaterialComponents.MaterialActivityIndicator
@@ -23,13 +22,13 @@ class ProfileImageCell: UICollectionViewCell {
     
     var item: AccountModelItem? {
         didSet {
-//            guard let item = item as? AccountViewModelGeneralItem else {
-//                return
-//            }
-//            profileImageView.sd_setImage(with: URL(string: item.pictureUrl), placeholderImage: UIImage(named: "profile"))
+            //            guard let item = item as? AccountViewModelGeneralItem else {
+            //                return
+            //            }
+            //            profileImageView.sd_setImage(with: URL(string: item.pictureUrl), placeholderImage: UIImage(named: "profile"))
         }
     }
-
+    
     
     required override init(frame: CGRect) {
         super.init(frame: frame)
@@ -86,7 +85,7 @@ class DetailsCell: UICollectionViewCell {
             
             artCountLabel.top == label.bottom
             artCountLabel.width == contentView.width
-
+            
             quoteLabel.top == artCountLabel.bottom
             quoteLabel.width == contentView.width
         }
@@ -98,7 +97,6 @@ import func AVFoundation.AVMakeRect
 
 class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
-
     // MARK: - UI Elements
     
     lazy var activityIndicator = MDCActivityIndicator()
@@ -107,43 +105,49 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     var spriteScene: OverlayScene!
     var artImg: UIImage!
     var imageView = UIImageView()
-
-    // MARK: - Pan Gesture values
     
     var lastWidthRatio: Float = 0
-    var lastHeightRatio: Float = 0.2
+    let lastHeightRatio: Float = 0.2
     var fingersNeededToPan = 1
-    var maxWidthRatioRight: Float = 0.1
-    var maxWidthRatioLeft: Float = -0.1
+    let maxWidthRatioRight: Float = 0.1
+    let maxWidthRatioLeft: Float = -0.1
     var lastFingersNumber = 0
-    
-    var desiredWidth: CGFloat = 0.0
-    var desiredHeight: CGFloat = 0.0
+    let queue = OperationQueue()
+
     
     var art: Art? {
         didSet {
             guard let art = art else { return }
             guard let url = URL(string: art.imgUrl) else {return}
-            
+
             let myBlock: SDExternalCompletionBlock! = { [weak self] (image: UIImage?, error: Error?, cacheType: SDImageCacheType, imageUrl: URL?) -> Void in
                 if let img = image {
                     /// Scale image to contentWidth
-                    let width = (self?.contentView.frame.width)!
-                    let newImage = self?.resizeImage(with: img, scaledToWidth: Float(width))
-                    self?.spriteScene.configureImg(image: newImage!)
-
-                    self!.activityIndicator.isHidden = true
-                     self?.artRoomScene.setup(artInfo: img, height: newImage!.size.height, width: newImage!.size.width , position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
+                    let width = self?.contentView.frame.width
+                    let height = self?.contentView.frame.height
+                    self?.queue.name = "com.Kurbs.Flaintartist.ImageResizing"
+                    let imageResizeOperation = ImageResizeOperation(image: img, width: width!, height: height!)
+                    let updateImageOperation = BlockOperation { [weak self] in
+                        
+                        self?.activityIndicator.isHidden = true
+                        
+                        let newImage = imageResizeOperation.image
+                        
+                        self?.artRoomScene.setup(artInfo: img, height: newImage.size.height, width: newImage.size.width , position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
+                    }
+                    
+                    updateImageOperation.addDependency(imageResizeOperation)
+                    self?.queue.addOperation(imageResizeOperation)
+                    OperationQueue.main.addOperation(updateImageOperation)
                 }
             }
-            DispatchQueue.global(qos: .background).async {
-                self.imageView.sd_setImage(with: url, placeholderImage: nil , options: .continueInBackground, completed: myBlock)
-            }
+            
+            self.imageView.sd_setImage(with: url, placeholderImage: nil , options: .continueInBackground, completed: myBlock)
         }
     }
     
     //MARK: - Initializer
-        
+    
     required init(coder aDecoder: NSCoder) { super.init(coder: aDecoder)!}
     
     required override init(frame: CGRect) {
@@ -151,65 +155,33 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         
         contentView.backgroundColor = .backgroundColor
         
-        desiredWidth = contentView.frame.width
-        desiredHeight = contentView.frame.height
-        
         activityIndicator.frame = contentView.frame
         activityIndicator.cycleColors = [.darkText]
         activityIndicator.startAnimating()
-       
+        
         scnView = SCNView(frame: contentView.frame)
         
         weak var weakSelf = self
-        let strongSelf = weakSelf!
         
-        spriteScene = OverlayScene(size: self.frame.size)
-        spriteScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        spriteScene.backgroundColor = .red
-
-        scnView = strongSelf.scnView
+//        spriteScene = OverlayScene(size: self.frame.size)
+//        spriteScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+//        spriteScene.backgroundColor = .red
+//
+        scnView = weakSelf!.scnView
         let scene = artRoomScene
         scnView.scene = scene
         scnView.autoenablesDefaultLighting = true
         scnView.isJitteringEnabled = true
         scnView.backgroundColor = .backgroundColor
         scnView.antialiasingMode = .multisampling4X
-//        scnView.showsStatistics = true
-     
+        
         contentView.addSubview(scnView)        
- 
+        
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
         panGesture.delegate = self
         scnView.addGestureRecognizer(panGesture)
-
-//        let pinGesture = UIPinchGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
-        
-//        self.spriteScene.startAnimation()
         contentView.addSubview(activityIndicator)
-
-    }
-    
-
-    //MARK: - Scale image
-    
-     func resizeImage(with sourceImage: UIImage?, scaledToWidth i_width: Float) -> UIImage? {
-        let oldWidth = Float(sourceImage?.size.width ?? 0.0)
-        var diff: Float = 0
-        let scaleFactor = i_width / oldWidth
         
-        let newHeight = Float((sourceImage?.size.height ?? 0.0) * CGFloat(scaleFactor))
-        let contentViewHeight = Float(self.contentView.frame.size.height)
-        if newHeight > contentViewHeight {
-            diff = Float(newHeight - contentViewHeight) + 20
-        }
-        
-        let newWidth = oldWidth * scaleFactor
-
-        UIGraphicsBeginImageContext(CGSize(width: CGFloat(newWidth - diff), height: CGFloat(newHeight - diff)))
-        sourceImage?.draw(in: CGRect(x: 0, y: 0, width: CGFloat(newWidth - diff), height: CGFloat(newHeight - diff)))
-        let newImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        return newImage
     }
     
     
@@ -221,10 +193,10 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let numberOfTouches = sender.numberOfTouches
         let translation = sender.translation(in: view)
         
-//        let xVelocity: Float = Float(sender.velocity(in: view ).x) / 60
-
+        //        let xVelocity: Float = Float(sender.velocity(in: view ).x) / 60
+        
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
-                
+        
         if (numberOfTouches == fingersNeededToPan) {
             //  WIDTH constraints
             if(widthRatio >= maxWidthRatioRight) {
@@ -233,7 +205,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             if(widthRatio <= maxWidthRatioLeft) {
                 widthRatio = maxWidthRatioLeft
             }
-
+            
             self.artRoomScene.boxnode.eulerAngles.y = (Float(2 * Double.pi) * (widthRatio)) 
             lastFingersNumber = fingersNeededToPan
         }
@@ -243,6 +215,11 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         if (sender.state == .ended && lastFingersNumber==fingersNeededToPan) {
             lastWidthRatio = widthRatio
         }
+    }
+    
+    override func prepareForReuse() {
+        queue.cancelAllOperations()
+        artRoomScene.rootNode.cleanUp()
     }
 }
 
@@ -261,14 +238,24 @@ class ProfileArtInfoCell: UICollectionViewCell {
     
     var dateTitleLabel = UILabel()
     var dateLabel = UILabel()
-        
+    
     var learnMoreButton = UIButton()
     var learnMoreLabel = UILabel()
+    
+    var art: Art? {
+        didSet {
+            updateViews()
+        }
+    }
     
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupViews()
+    }
+    
+    
+    func setupViews() {
         contentView.backgroundColor = .backgroundColor
         
         let font = UIFont.medium
@@ -276,7 +263,6 @@ class ProfileArtInfoCell: UICollectionViewCell {
         
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        titleLabel.hero.id = "test"
         
         styleTitleLabel.font = font
         styleTitleLabel.text = "Style"
@@ -287,7 +273,7 @@ class ProfileArtInfoCell: UICollectionViewCell {
         sizeTitleLabel.text = "Size"
         
         sizeLabel.font = regularFont
-
+        
         dateTitleLabel.font = font
         dateTitleLabel.text = "Date"
         
@@ -308,50 +294,46 @@ class ProfileArtInfoCell: UICollectionViewCell {
         contentView.addSubview(dateLabel)
         contentView.addSubview(learnMoreLabel)
         contentView.addSubview(learnMoreButton)
-        
-        constrain(titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) { (titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) in
-              
-              titleLabel.top == contentView.top
-              titleLabel.left == contentView.left + 15
-              
-              styleTitleLabel.top == titleLabel.bottom + 10
-              styleTitleLabel.left == titleLabel.left
-              
-              styleLabel.left == styleTitleLabel.right + 80
-              styleLabel.top == styleTitleLabel.top
-              
-              sizeTitleLabel.top == styleLabel.bottom + 10
-              sizeTitleLabel.left == titleLabel.left
-              
-              sizeLabel.left == styleLabel.left
-              sizeLabel.top == styleLabel.bottom + 10
-              
-              dateTitleLabel.top == sizeLabel.bottom + 10
-              dateTitleLabel.left == titleLabel.left
-              
-              dateLabel.left == sizeLabel.left
-              dateLabel.top == sizeLabel.bottom + 10
-          }
-          
-          constrain(learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) { (learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) in
-              
-              learnMoreLabel.top == dateTitleLabel.bottom + 5
-              learnMoreLabel.left == contentView.left + 15
-              
-              learnMoreButton.top == learnMoreLabel.top
-              learnMoreButton.left == learnMoreLabel.right
-              learnMoreButton.height == 20
-              learnMoreButton.width == 20
-              learnMoreButton.centerY == learnMoreLabel.centerY
-          }
     }
-
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        constrain(titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) { (titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) in
+            
+            titleLabel.top == contentView.top
+            titleLabel.left == contentView.left + 15
+            
+            styleTitleLabel.top == titleLabel.bottom + 10
+            styleTitleLabel.left == titleLabel.left
+            
+            styleLabel.left == styleTitleLabel.right + 80
+            styleLabel.top == styleTitleLabel.top
+            
+            sizeTitleLabel.top == styleLabel.bottom + 10
+            sizeTitleLabel.left == titleLabel.left
+            
+            sizeLabel.left == styleLabel.left
+            sizeLabel.top == styleLabel.bottom + 10
+            
+            dateTitleLabel.top == sizeLabel.bottom + 10
+            dateTitleLabel.left == titleLabel.left
+            
+            dateLabel.left == sizeLabel.left
+            dateLabel.top == sizeLabel.bottom + 10
+        }
         
-  
+        constrain(learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) { (learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) in
+            
+            learnMoreLabel.top == dateTitleLabel.bottom + 5
+            learnMoreLabel.left == contentView.left + 15
+            
+            learnMoreButton.top == learnMoreLabel.top
+            learnMoreButton.left == learnMoreLabel.right
+            learnMoreButton.height == 20
+            learnMoreButton.width == 20
+            learnMoreButton.centerY == learnMoreLabel.centerY
+        }
     }
     
     
@@ -360,7 +342,8 @@ class ProfileArtInfoCell: UICollectionViewCell {
     }
     
     
-    func configure(_ art: Art) {
+    func updateViews() {
+        guard let art = art else { return }
         titleLabel.text = art.title.capitalized
         titleLabel.sizeToFit()
         styleLabel.text = art.style ?? "Unkown"
@@ -389,21 +372,21 @@ class ProfileArtAboutCell: UICollectionViewCell {
         let bounds = (text as NSString).boundingRect(with: constrainedSize, options: options, attributes: attributes, context: nil)
         return ceil(bounds.height) + insets.top + insets.bottom
     }
-
+    
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         contentView.backgroundColor = .backgroundColor
         
         let font = UIFont.systemFont(ofSize: 14, weight: .medium)
-
+        
         aboutTitleLabel.font = font
         aboutTitleLabel.text = "About this piece"
-
+        
         aboutLabel.isHidden = true
         aboutLabel.numberOfLines = 5
         aboutLabel.adjustsFontSizeToFitWidth = true
-
+        
         let attrs = [
             NSAttributedString.Key.font : UIFont.normal,
             NSAttributedString.Key.foregroundColor : UIColor.gray,
@@ -415,7 +398,7 @@ class ProfileArtAboutCell: UICollectionViewCell {
         attributedString.append(buttonTitleStr)
         moreButton.setAttributedTitle(attributedString, for: .normal)
         moreButton.isUserInteractionEnabled = false
-
+        
         contentView.addSubview(aboutTitleLabel)
         contentView.addSubview(moreButton)
         contentView.addSubview(aboutLabel)

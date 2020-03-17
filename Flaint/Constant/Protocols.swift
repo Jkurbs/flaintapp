@@ -8,6 +8,20 @@
 
 import Foundation
 
-protocol ArtDelegate {
+protocol ArtDelegate: class {
+    
+    func setArts(arts: [Art])
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art)
+}
+
+
+// Called to add description to art 
+protocol ArtDescDelegate: class {
+    func finishPassing(description: String)
+}
+
+
+// Called for searching arts
+protocol SearchSectionControllerDelegate: class {
+    func searchSectionController(_ sectionController: GallerySection, didChangeText text: String)
 }

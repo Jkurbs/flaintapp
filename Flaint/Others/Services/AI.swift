@@ -8,6 +8,7 @@
 
 import NaturalLanguage
 
+@available(iOS 13.0, *)
 class AI {
     
     static let shared = AI()

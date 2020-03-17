@@ -9,25 +9,15 @@
 import UIKit
 import FirebaseDatabase
 
+// Return UIView Id
 
-// Return UITableViewCell Id
-
-extension UITableViewCell {
-    static var id: String {
-        return String(describing: self)
-    }
-}
-
-// Return UICollectionViewCell Id
-
-extension UICollectionViewCell {
+extension UIView {
     static var id: String {
         return String(describing: self)
     }
 }
 
 // Turn DataSnapshot into JsonData
-
 extension DataSnapshot {
     var data: Data? {
         guard let value = value else { return nil }

@@ -12,10 +12,10 @@ import Cartography
 import SDWebImage
 
 class EditArtCell: UITableViewCell {
-  
+    
     var artImageView = UIImageView()
     var artImg: UIImage?
-
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,7 +24,7 @@ class EditArtCell: UITableViewCell {
         contentView.addSubview(artImageView)
     }
     
-     required init(coder aDecoder: NSCoder) {
+    required init(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)!
         
         
@@ -44,20 +44,12 @@ class EditArtCell: UITableViewCell {
             guard let item = item as? LearnViewModelGeneralItem else {
                 return
             }
-            if let img = artImg {
-                artImageView.image = img
-            } else {
-                artImageView.sd_setImage(with: URL(string: item.imgUrl), completed: nil)
-            }
+            artImageView.sd_setImage(with: URL(string: item.imgUrl), completed: nil)
         }
     }
     
-    func configure(img: UIImage?, imgUrl: String) {
-        if let img = artImg {
-            artImageView.image = img
-        } else {
-            artImageView.sd_setImage(with: URL(string: imgUrl), completed: nil)
-        }
+    func configure(imgUrl: String?) {
+        artImageView.sd_setImage(with: URL(string: imgUrl ?? ""), completed: nil)
     }
 }
 
@@ -65,7 +57,7 @@ class InfoTextFieldCell: UITableViewCell {
     
     var titleLabel = UILabel()
     var textField = UITextField()
-        
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         

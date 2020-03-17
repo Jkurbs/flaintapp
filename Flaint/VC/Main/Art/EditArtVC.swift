@@ -18,14 +18,11 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     var artImg: UIImage?
     var art: Art?
     
-    var titles = ["Title", "Price"]
-    var styles = ["Realism", "Abstract", "Pop-art", "Surrealism"]
-    var substrates = ["Canvas", "Wood", "Paper", "Metal"]
-    var mediums = ["Oil", "Watercolor", "Acrylic"]
+    var artProperties = ArtProperties.self
     
-    var sizes = [String]()
-    var depths = [String]()
-    var viewController: ProfileVC! 
+    var titles = ["Title", "Price"]
+    
+    var array = ["Title", "Price", "Description", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,19 +37,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         tableView?.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
         tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: InfoTextFieldCell.id)
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-
         tableView?.tableFooterView = UIView()
-
-        var i = 9
-        while i <= 1000 {
-            i = i + 1
-            sizes.append("\(i) cm")
-        }
-        var depth = 4
-        while depth <= 100 {
-            depth = depth + 1
-            depths.append("\(depth) cm")
-        }
     }
     
     
@@ -77,9 +62,9 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 7)) as! AUPickerCell
         let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 8)) as! AUPickerCell
         
-        if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text, let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let sentiment = AI.shared.sentimentAnalysis(string: description) {
+        if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text, let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "") {
             
-            let data = ["title": title, "price": price, "sentiment": sentiment, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String : Any]
+            let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String : Any]
             
             DataService.shared.editArt(userId: userId, artId: artId, data: data) { (success, error) in
                 if !success {
@@ -109,78 +94,62 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let section = indexPath.section
-
-        let cell = AUPickerCell(type: .default, reuseIdentifier: "PickerDateCell")
+        let cell = PickerCell(type: .default, reuseIdentifier: PickerCell.id)
         
-        cell.delegate = self
-        cell.separatorInset = UIEdgeInsets.zero
-        cell.leftLabel.textColor = UIColor.darkText
-        cell.rightLabel.textColor = UIColor.darkText
-        cell.leftLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
-        cell.rightLabel.text = "cm"
-        cell.separatorHeight = 0.0
-        cell.unexpandedHeight = 40
-
-        if section == 0 {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "EditArtCell", for: indexPath) as! EditArtCell
-            cell.configure(img: artImg, imgUrl: art!.imgUrl)
+        let title = array[indexPath.section]
+        let range = Array(10...100).map(String.init)
+        
+        switch section {
+        case 0:
+            let cell = tableView.dequeueReusableCell(withIdentifier: EditArtCell.id, for: indexPath) as! EditArtCell
+            cell.configure(imgUrl: art?.imgUrl)
             return cell
-        } else if section == 1 {
+        case 1:
             let title = self.titles[indexPath.row]
-            let cell = tableView.dequeueReusableCell(withIdentifier: "InfoTextFieldCell", for: indexPath) as! InfoTextFieldCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: InfoTextFieldCell.id, for: indexPath) as! InfoTextFieldCell
             cell.configure(title: title, art: art!)
             return cell
-        } else if section == 2 {
-//            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        case 2:
             let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
-            cell.textLabel?.text = "Description"
+            cell.textLabel?.text = title
             cell.textLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
             cell.accessoryType = .disclosureIndicator
             cell.detailTextLabel?.text = art?.description
             return cell
-        } else if section == 3 {
-            cell.leftLabel.text = "Style"
+        case 3:
+            cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.style ?? "Unkown")"
-            cell.values = styles
-            if let index = self.styles.firstIndex(of: art?.style ?? "") {
+            cell.values = artProperties.style.values
+            if let index = cell.values.firstIndex(of: art?.style ?? "") {
                 cell.selectedRow = index
             }
             return cell
-        } else if section == 4 {
-            cell.leftLabel.text = "Medium"
+        case 4:
+            cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.medium ?? "Unkown")"
-            cell.values = mediums
-            if let index = self.mediums.firstIndex(of: art?.medium ?? "") {
+            cell.values = artProperties.medium.values
+            if let index = cell.values.firstIndex(of: art?.medium ?? "") {
                 cell.selectedRow = index
             }
             return cell
-        } else if section == 5 {
-            cell.leftLabel.text = "Substrate"
+        case 5:
+            cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.substrate ?? "Unkown")"
-            cell.values = substrates
-            if let index = self.substrates.firstIndex(of: art?.substrate ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        } else if section == 6 {
-            cell.leftLabel.text = "Width"
+            cell.values = artProperties.substrate.values
+           if let index = cell.values.firstIndex(of: art?.substrate ?? "") {
+               cell.selectedRow = index
+           }
+           return cell
+        case 6, 7, 8:
+            cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.width ?? "")cm"
-            cell.values = sizes
+            cell.values = range
             return cell
-        } else if section == 7 {
-            cell.leftLabel.text = "Height"
-            cell.rightLabel.text = "\(art?.height ?? "")cm"
-            cell.values = sizes
-            return cell
-        } else {
-            cell.leftLabel.text = "Depth"
-            cell.rightLabel.text = "\(art?.depth ?? "")cm"
-            cell.values = depths
-            return cell
+        default:
+            break
         }
+        return UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -207,15 +176,12 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         
-        let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 2))
-
         if indexPath.section == 2 && indexPath.row == 0 {
             let vc = DescriptionVC()
-            vc.textView.text = cell?.detailTextLabel?.text ?? ""
+            vc.textView.text = art?.description
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
-        
         
         if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
             cell.selectedInTableView(tableView)
@@ -225,13 +191,5 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     func finishPassing(description: String) {
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 2))
         cell?.detailTextLabel?.text = "\(description)"
-    }
-}
-
-
-extension EditArtVC: AUPickerCellDelegate {
-    
-    func auPickerCell(_ cell: AUPickerCell, didPick row: Int, value: Any) {
-        
     }
 }

@@ -14,6 +14,7 @@ final class EditProfileVC: UITableViewController {
     fileprivate let viewModel = AccountViewModel()
     private var handle: AuthStateDidChangeListenerHandle!
     var user: Users!
+    
     // MARK: - UI Elements
     
     var indicator = UIActivityIndicatorView()
