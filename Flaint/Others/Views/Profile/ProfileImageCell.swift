@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cartography
 import SceneKit
 import SDWebImage
 import MaterialComponents.MaterialActivityIndicator
@@ -40,11 +39,11 @@ class ProfileImageCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(imageView, contentView) {(imageView, contentView) in
-            imageView.center == contentView.center
-            imageView.width == 80
-            imageView.height == 80
-        }
+//        constrain(imageView, contentView) {(imageView, contentView) in
+//            imageView.center == contentView.center
+//            imageView.width == 80
+//            imageView.height == 80
+//        }
         
         
         DispatchQueue.main.async {
@@ -59,7 +58,6 @@ class DetailsCell: UICollectionViewCell {
     var label =  UILabel()
     var artCountLabel = UILabel()
     var quoteLabel = UILabel()
-    
     
     
     required init(coder aDecoder: NSCoder) {
@@ -77,23 +75,20 @@ class DetailsCell: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(label, artCountLabel, quoteLabel, contentView) {(label, artCountLabel, quoteLabel, contentView) in
-            
-            label.center == contentView.center
-            label.width == contentView.width
-            label.height == contentView.height - 20
-            
-            artCountLabel.top == label.bottom
-            artCountLabel.width == contentView.width
-            
-            quoteLabel.top == artCountLabel.bottom
-            quoteLabel.width == contentView.width
-        }
+//        constrain(label, artCountLabel, quoteLabel, contentView) {(label, artCountLabel, quoteLabel, contentView) in
+//
+//            label.center == contentView.center
+//            label.width == contentView.width
+//            label.height == contentView.height - 20
+//
+//            artCountLabel.top == label.bottom
+//            artCountLabel.width == contentView.width
+//
+//            quoteLabel.top == artCountLabel.bottom
+//            quoteLabel.width == contentView.width
+//        }
     }
 }
-
-import func AVFoundation.AVMakeRect
-
 
 class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
@@ -102,7 +97,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var activityIndicator = MDCActivityIndicator()
     lazy var scnView = SCNView()
     lazy var artRoomScene = ArtRoomScene(create: true)
-    var spriteScene: OverlayScene!
     var artImg: UIImage!
     var imageView = UIImageView()
     
@@ -113,7 +107,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     let maxWidthRatioLeft: Float = -0.1
     var lastFingersNumber = 0
     let queue = OperationQueue()
-
     
     var art: Art? {
         didSet {
@@ -133,7 +126,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                         
                         let newImage = imageResizeOperation.image
                         
-                        self?.artRoomScene.setup(artInfo: img, height: newImage.size.height, width: newImage.size.width , position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
+                        self?.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width , position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
                     }
                     
                     updateImageOperation.addDependency(imageResizeOperation)
@@ -141,7 +134,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                     OperationQueue.main.addOperation(updateImageOperation)
                 }
             }
-            
             self.imageView.sd_setImage(with: url, placeholderImage: nil , options: .continueInBackground, completed: myBlock)
         }
     }
@@ -162,11 +154,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         scnView = SCNView(frame: contentView.frame)
         
         weak var weakSelf = self
-        
-//        spriteScene = OverlayScene(size: self.frame.size)
-//        spriteScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-//        spriteScene.backgroundColor = .red
-//
+
         scnView = weakSelf!.scnView
         let scene = artRoomScene
         scnView.scene = scene
@@ -185,20 +173,18 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     }
     
     
-    //MARK: - Pan Gesture
+    // MARK: - Actions
     
     @objc func handlePan(sender: UIPanGestureRecognizer) {
         
         let view = sender.view!
         let numberOfTouches = sender.numberOfTouches
         let translation = sender.translation(in: view)
-        
-        //        let xVelocity: Float = Float(sender.velocity(in: view ).x) / 60
-        
+                
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
         
         if (numberOfTouches == fingersNeededToPan) {
-            //  WIDTH constraints
+            
             if(widthRatio >= maxWidthRatioRight) {
                 widthRatio = maxWidthRatioRight
             }
@@ -211,8 +197,8 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         }
         
         lastFingersNumber = (numberOfTouches>0 ? numberOfTouches : lastFingersNumber)
-        
-        if (sender.state == .ended && lastFingersNumber==fingersNeededToPan) {
+    
+        if sender.state == .ended && lastFingersNumber == fingersNeededToPan {
             lastWidthRatio = widthRatio
         }
     }
@@ -263,25 +249,39 @@ class ProfileArtInfoCell: UICollectionViewCell {
         
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
-        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+ 
         styleTitleLabel.font = font
         styleTitleLabel.text = "Style"
-        
+        styleTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         styleLabel.font = regularFont
+        styleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         
         sizeTitleLabel.font = font
         sizeTitleLabel.text = "Size"
-        
+        sizeTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+
         sizeLabel.font = regularFont
+        sizeLabel.translatesAutoresizingMaskIntoConstraints = false
+
         
         dateTitleLabel.font = font
         dateTitleLabel.text = "Date"
+        dateTitleLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+
         
         learnMoreLabel.text = "Learn more"
         learnMoreLabel.font = font
+        learnMoreLabel.translatesAutoresizingMaskIntoConstraints = false
+
         
         learnMoreButton.setImage(UIImage(named:"More-20"), for: .normal)
         learnMoreLabel.isUserInteractionEnabled = true
+        learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
+
         
         dateLabel.font = regularFont
         
@@ -299,43 +299,37 @@ class ProfileArtInfoCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        constrain(titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) { (titleLabel, styleTitleLabel, styleLabel, sizeTitleLabel, sizeLabel, dateTitleLabel, dateLabel, contentView) in
-            
-            titleLabel.top == contentView.top
-            titleLabel.left == contentView.left + 15
-            
-            styleTitleLabel.top == titleLabel.bottom + 10
-            styleTitleLabel.left == titleLabel.left
-            
-            styleLabel.left == styleTitleLabel.right + 80
-            styleLabel.top == styleTitleLabel.top
-            
-            sizeTitleLabel.top == styleLabel.bottom + 10
-            sizeTitleLabel.left == titleLabel.left
-            
-            sizeLabel.left == styleLabel.left
-            sizeLabel.top == styleLabel.bottom + 10
-            
-            dateTitleLabel.top == sizeLabel.bottom + 10
-            dateTitleLabel.left == titleLabel.left
-            
-            dateLabel.left == sizeLabel.left
-            dateLabel.top == sizeLabel.bottom + 10
-        }
         
-        constrain(learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) { (learnMoreLabel, learnMoreButton, dateTitleLabel, contentView) in
+        
+        NSLayoutConstraint.activate([
+        
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
             
-            learnMoreLabel.top == dateTitleLabel.bottom + 5
-            learnMoreLabel.left == contentView.left + 15
+            styleTitleLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 8.0),
+            styleTitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor, constant: 0.0),
+            styleLabel.leftAnchor.constraint(equalTo: styleTitleLabel.rightAnchor, constant: 80.0),
+            styleLabel.topAnchor.constraint(equalTo: styleTitleLabel.topAnchor),
+
+            sizeTitleLabel.topAnchor.constraint(equalTo: styleLabel.bottomAnchor, constant: 8.0),
+            sizeTitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
+            sizeLabel.topAnchor.constraint(equalTo: styleLabel.bottomAnchor, constant: 8.0),
+            sizeLabel.leftAnchor.constraint(equalTo: styleLabel.leftAnchor, constant: 0.0),
             
-            learnMoreButton.top == learnMoreLabel.top
-            learnMoreButton.left == learnMoreLabel.right
-            learnMoreButton.height == 20
-            learnMoreButton.width == 20
-            learnMoreButton.centerY == learnMoreLabel.centerY
-        }
+            dateTitleLabel.topAnchor.constraint(equalTo: sizeLabel.bottomAnchor, constant: 8.0),
+            dateTitleLabel.leftAnchor.constraint(equalTo: titleLabel.leftAnchor),
+            dateLabel.topAnchor.constraint(equalTo: sizeLabel.bottomAnchor, constant: 8.0),
+            dateLabel.leftAnchor.constraint(equalTo: sizeLabel.leftAnchor),
+            
+            learnMoreLabel.topAnchor.constraint(equalTo: dateTitleLabel.bottomAnchor, constant: 8.0),
+            learnMoreLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
+
+            learnMoreButton.topAnchor.constraint(equalTo: learnMoreLabel.topAnchor),
+            learnMoreButton.leftAnchor.constraint(equalTo: learnMoreLabel.rightAnchor),
+            learnMoreButton.centerYAnchor.constraint(equalTo: learnMoreLabel.centerYAnchor)
+        
+        ])
     }
-    
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

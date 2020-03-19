@@ -7,11 +7,16 @@
 //
 
 import FirebaseAuth
-import SwiftKeychainWrapper
 
 class AuthService {
     
     static let shared = AuthService()
+    
+    var UserID: String? {
+        didSet {
+            UserDefaults.standard.set(UserID, forKey: .userId)
+        }
+    }
     
     // MARK: - Phone verification
 
@@ -78,7 +83,8 @@ class AuthService {
                 complete(nil, false, error)
             } else {
                 if let uid = result?.user.uid {
-                    UserDefaults.standard.set(uid, forKey: "userId")
+                    self.UserID = uid
+                    UserDefaults.standard.set(uid, forKey: .userId)
                     complete(uid, true, nil)
                 }
             }

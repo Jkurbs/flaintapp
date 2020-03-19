@@ -8,17 +8,16 @@
 
 import UIKit
 
-extension String {
-    func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
-    }
-    
-    mutating func capitalizeFirstLetter() {
-        self = self.capitalizingFirstLetter()
-    }
-}
 
 extension String {
+    
+    
+    
+    // UserID
+    
+    static var userId = "UserID"
+    
+    
     
     // formatting text for currency textField
     func currencyInputFormatting() -> String {
@@ -46,14 +45,20 @@ extension String {
         
         return formatter.string(from: number)!
     }
-}
-
-
-extension String {
+    
     func heightWithConstrainedWidth(width: CGFloat, font: UIFont) -> CGFloat {
         let constraintRect = CGSize(width: width, height: .greatestFiniteMagnitude)
         let boundingBox = self.boundingRect(with: constraintRect, options: [.usesFontLeading, .usesLineFragmentOrigin], attributes: [NSAttributedString.Key.font: font], context: nil)
         
         return boundingBox.height
     }
+    
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+    
+    mutating func capitalizeFirstLetter() {
+        self = self.capitalizingFirstLetter()
+    }
 }
+

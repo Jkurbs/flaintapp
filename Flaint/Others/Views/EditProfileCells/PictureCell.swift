@@ -7,9 +7,6 @@
 //
 
 import UIKit
-import Cartography
-import func AVFoundation.AVMakeRect
-
 
 class PictureCell: UITableViewCell {
     
@@ -42,12 +39,17 @@ class PictureCell: UITableViewCell {
         userImgView.contentMode = .scaleAspectFill
         userImgView.layer.borderColor = UIColor.lightGray.cgColor
         userImgView.layer.borderWidth = 0.5
+        userImgView.translatesAutoresizingMaskIntoConstraints = false
+        
+        
+        
         contentView.addSubview(userImgView)
         
         addImgButton.setTitleColor(contentView.tintColor, for: .normal)
         addImgButton.setTitle("Change Picture", for: .normal)
         addImgButton.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
         addImgButton.contentHorizontalAlignment = .center
+        addImgButton.translatesAutoresizingMaskIntoConstraints = false
         addImgButton.addTarget(self, action: #selector(pickImage(_:)), for: .touchUpInside)
         contentView.addSubview(addImgButton)
         contentView.addSubview(separator)
@@ -61,19 +63,29 @@ class PictureCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(userImgView, addImgButton, separator, contentView) { (userImgView, addImgButton, separator, contentView) in
-            userImgView.height == contentView.height - 70
-            userImgView.width == contentView.height - 70
-            userImgView.center == contentView.center
-            
-            addImgButton.top == userImgView.bottom + 5
-            addImgButton.width == contentView.width
-            
-            separator.right == contentView.right
-            separator.height == 0.5
-            separator.width == contentView.width
-            separator.bottom == contentView.bottom
-        }
+        NSLayoutConstraint.activate([
+            userImgView.heightAnchor.constraint(equalToConstant: contentView.frame.height - 70),
+            userImgView.widthAnchor.constraint(equalTo: userImgView.heightAnchor),
+            userImgView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            userImgView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+        ])
+        
+        
+        
+        
+//        constrain(userImgView, addImgButton, separator, contentView) { (userImgView, addImgButton, separator, contentView) in
+//            userImgView.height == contentView.height - 70
+//            userImgView.width == contentView.height - 70
+//            userImgView.center == contentView.center
+//
+//            addImgButton.top == userImgView.bottom + 5
+//            addImgButton.width == contentView.width
+//
+//            separator.right == contentView.right
+//            separator.height == 0.5
+//            separator.width == contentView.width
+//            separator.bottom == contentView.bottom
+//        }
         
         DispatchQueue.main.async {
             self.userImgView.layer.cornerRadius = self.userImgView.frame.width/2

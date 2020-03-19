@@ -8,7 +8,6 @@
 
 import UIKit
 import ReplayKit
-import Cartography
 
 
 class RecorderView: UIView {

@@ -7,8 +7,6 @@
 //
 
 import UIKit
-import Cartography
-
 
 class AddDescCell: UITableViewCell {
     
@@ -24,6 +22,7 @@ class AddDescCell: UITableViewCell {
         textView.text = "Description"
         textView.textColor = UIColor.lightGray
         textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
+        textView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(textView)
     }
     
@@ -34,12 +33,12 @@ class AddDescCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(textView, contentView) { (textView, contentView) in
-            textView.top == contentView.top + 5
-            textView.bottom == contentView.bottom + 5
-            textView.left == contentView.left + 12
-            textView.right == contentView.right - 20
-        }
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 8.0),
+            textView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 8.0),
+            textView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
+            textView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: 16.0)
+        ])
     }
     
     var textString: String {

@@ -8,11 +8,8 @@
 
 import UIKit
 import Firebase
-import GSMessages
 import Network
 import IQKeyboardManager
-import SwiftKeychainWrapper
-import FBSDKCoreKit
 
 
 @UIApplicationMain
@@ -23,7 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-       ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
+ 
+        
+//       ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
        configure()
        customize()
        return true
@@ -55,8 +54,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         pageControl.pageIndicatorTintColor = UIColor(white: 0.8, alpha: 1.0)
         pageControl.currentPageIndicatorTintColor = UIColor(white: 0.6, alpha: 1.0)
         
-        GSMessage.successBackgroundColor = .success
-        GSMessage.errorBackgroundColor  = .error
         IQKeyboardManager.shared().isEnabled = true
     }
     

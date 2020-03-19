@@ -9,8 +9,6 @@
 import FirebaseDatabase
 import FirebaseStorage
 import FirebaseAuth
-import FirebaseDynamicLinks
-import SwiftKeychainWrapper
 
 class DataService {
     
@@ -73,7 +71,7 @@ class DataService {
     func updateUserData(_ name: String, _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> ()) {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-                if let user = user, let password = KeychainWrapper.standard.string(forKey: "pwd") {
+                if let user = user, let password = UserDefaults.standard.string(forKey: "pwd") {
                     let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
                     user.reauthenticate(with: credential, completion:  { (result, error) in
                         if let error = error {
@@ -115,7 +113,7 @@ class DataService {
         }
         
         func updateUsernameAuth(_ username: String) {
-            if let email = KeychainWrapper.standard.string(forKey: "email") {
+            if let email = UserDefaults.standard.string(forKey: "email") {
                 // Add new username
                 self.RefUsernameAuthLink.updateChildValues([username: email])
             }
@@ -185,8 +183,9 @@ class DataService {
         // MARK: - Fetch current user arts
         
         func fetchCurrentUserArt(complete: @escaping (completion) -> ()) {
-            guard let id = UserDefaults.standard.string(forKey: "userId") else {return}
-            RefArts.child(id).observeSingleEvent(of: .value) { (snapshot) in
+            guard let userId = UserDefaults.standard.string(forKey: "userId") else {return}
+            
+            RefArts.child(userId).observeSingleEvent(of: .value) { (snapshot) in
                 self.RefArts.keepSynced(true)
                 if snapshot.exists() {
                     let enumerator = snapshot.children
@@ -267,13 +266,20 @@ class DataService {
         
         // MARK: - Delete Art
         
-        func deleteArt(userId: String, artId: String,  _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
-            DataService.shared.RefArts.child(userId).child(artId).removeValue { (error, ref) in
+    func deleteArt(userId: String, artId: String, artStyle: String,  _ completion: @escaping (completion) -> () = { _ in }) {
+            DataService.shared.RefArts.child(userId).child(artId).removeValue { error, _ in
                 if let error = error {
-                    print("error: ", error.localizedDescription)
-                    completion(false, error)
+                    NSLog("error: \(error)")
+                    completion(.failure(error))
                 } else {
-                    completion(true, nil)
+                    DataService.shared.RefBase.child(artStyle.lowercased()).child(artId).removeValue { (error, _) in
+                        if let error = error {
+                            NSLog("error: \(error)")
+                            completion(.failure(error))
+                        } else {
+                            completion(.success(true))
+                        }
+                    }
                 }
             }
         }
@@ -285,13 +291,13 @@ class DataService {
         // MARK: - Create Link
         
         func createLink(Id: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String)->() ) {
-            guard let link = URL(string: "https://www.flaintapp.com/?id=\(Id)") else { return }
-            let dynamicLinksDomainURIPrefix = "https://flaint"
-            let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
-            linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Flaint")
-            guard let longDynamicLink = linkBuilder?.url else { return }
-            print("The long URL is: \(longDynamicLink.absoluteString)")
-            
-            completion(true, nil,longDynamicLink.absoluteString)
+//            guard let link = URL(string: "https://www.flaintapp.com/?id=\(Id)") else { return }
+//            let dynamicLinksDomainURIPrefix = "https://flaint"
+//            let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+//            linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Flaint")
+//            guard let longDynamicLink = linkBuilder?.url else { return }
+//            print("The long URL is: \(longDynamicLink.absoluteString)")
+//
+//            completion(true, nil,longDynamicLink.absoluteString)
         }
     }

@@ -45,8 +45,9 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
             guard let cell = collectionContext?.dequeueReusableCell(of: ProfileArtCell.self, for: self, at: index) as? ProfileArtCell else {
                 fatalError()
             }
-            cell.art = self.art
+            cell.artRoomScene.boxnode.cleanUp()
             cell.artRoomScene.boxnode.removeFromParentNode()
+            cell.art = self.art
             return cell
         } else {
             guard let cell = collectionContext?.dequeueReusableCell(of: ProfileArtInfoCell.self, for: self, at: index) as? ProfileArtInfoCell else {

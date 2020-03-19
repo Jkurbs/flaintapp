@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cartography
 
 class ProfileInfoCell: UITableViewCell {
     
@@ -29,6 +28,7 @@ class ProfileInfoCell: UITableViewCell {
         contentView.addSubview(textField)
         textField.autocapitalizationType = .words
         textField.autocorrectionType = .no
+        textField.translatesAutoresizingMaskIntoConstraints = false
     }
     
     
@@ -40,12 +40,15 @@ class ProfileInfoCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(titleLabel, textField, contentView) { (titleLabel, textField, contentView) in
-            titleLabel.left == contentView.left + 15
-            titleLabel.height == contentView.height
-            textField.right == contentView.right
-            textField.height == contentView.height
-            textField.width == 260
-        }
+        NSLayoutConstraint.activate([
+        
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
+            titleLabel.heightAnchor.constraint(equalToConstant: contentView.frame.height),
+            
+            textField.rightAnchor.constraint(equalTo: contentView.rightAnchor),
+            textField.heightAnchor.constraint(equalToConstant: contentView.frame.height),
+            textField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -16.0)
+        ])
+
     }
 }

@@ -9,8 +9,7 @@
 import UIKit
 
 final class EmbeddedCollectionViewCell: UICollectionViewCell {
-    
-    
+
     lazy var collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -19,9 +18,7 @@ final class EmbeddedCollectionViewCell: UICollectionViewCell {
         self.contentView.addSubview(view)
         return view
     }()
-    
-    
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         collectionView.backgroundColor = .backgroundColor

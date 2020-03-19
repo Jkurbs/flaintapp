@@ -11,44 +11,26 @@ import SceneKit
 
 class ArtRoomScene: SCNScene {
     
-    var artImage = UIImage()
-    var height: CGFloat = 0
-    var width: CGFloat = 0
-    var position = SCNVector3()
-    var rotation = SCNVector4()
-    var geometry = SCNBox()
-    var post: Art!
-    var boxnode = SCNNode()
-    var cameraOrbit = SCNNode()
-    var cameraNode = SCNNode()
-    let camera = SCNCamera()
-    var materials = [SCNMaterial]()
-    
-    //HANDLE PAN CAMERA
-    var lastWidthRatio: CGFloat = 0
-    var lastHeightRatio: Float = 0.2
-
+    lazy var boxnode = SCNNode()
     
     convenience init(create: Bool) {
         self.init()
     }
     
-    func setup(artInfo: UIImage?, height: CGFloat? = nil, width: CGFloat? = nil, position: SCNVector3, rotation: SCNVector4)  {
+    func setup(image: UIImage?, height: CGFloat? = nil, width: CGFloat? = nil, position: SCNVector3, rotation: SCNVector4)  {
         
-        self.artImage = artInfo!
-        self.height = height!
-        self.width = width!
-        self.geometry = SCNBox(width: width!/110, height: height!/110, length: 57 / 700, chamferRadius: 0.008)
-        self.geometry.firstMaterial?.diffuse.contents = UIColor.red
-        self.geometry.firstMaterial?.specular.contents = UIColor.white
-        self.geometry.firstMaterial?.emission.contents = UIColor.blue
-        boxnode = SCNNode(geometry: self.geometry)
+       let camera = SCNCamera()
+       var materials = [SCNMaterial]()
+       let cameraOrbit = SCNNode()
+
+        let geometry = SCNBox(width: width!/110, height: height!/110, length: 57 / 700, chamferRadius: 0.008)
+        boxnode = SCNNode(geometry: geometry)
         boxnode.position = position
         boxnode.rotation = rotation
         
         self.rootNode.addChildNode(boxnode)
         
-        cameraNode = SCNNode()
+        let cameraNode = SCNNode()
         cameraNode.camera = camera
         camera.orthographicScale = 9
         camera.zNear = 1
@@ -58,18 +40,10 @@ class ArtRoomScene: SCNScene {
         cameraOrbit.addChildNode(cameraNode)
         self.rootNode.addChildNode(cameraOrbit)
         let material = SCNMaterial()
-        material.diffuse.contents = artImage
+        material.diffuse.contents = image
         let borderMat = SCNMaterial()
         borderMat.diffuse.contents = UIImage(named: "texture")
-        self.materials = [material, borderMat, borderMat, borderMat, borderMat]
-        self.geometry.materials = self.materials
-    }
-    
-    
-    func add() {
-        self.rootNode.addChildNode(boxnode)
-        self.rootNode.addChildNode(cameraNode)
-        self.rootNode.addChildNode(cameraOrbit)
+        materials = [material, borderMat, borderMat, borderMat, borderMat]
         geometry.materials = materials
     }
 }

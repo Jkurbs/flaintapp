@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cartography
 
 class AddArtInfoCell: UITableViewCell {
     
@@ -31,6 +30,7 @@ class AddArtInfoCell: UITableViewCell {
         titleField.font = font
         titleField.clearButtonMode = .always
         titleField.setPlaceHolderColor("Name")
+        titleField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(titleField)
         
         priceField.font = font
@@ -38,13 +38,14 @@ class AddArtInfoCell: UITableViewCell {
         priceField.addTarget(self, action: #selector(myTextFieldDidChange), for: .editingChanged)
         priceField.setPlaceHolderColor("Price")
         priceField.keyboardType = .numberPad
+        priceField.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(priceField)
         
         artImageView.contentMode = .scaleAspectFit
         artImageView.isUserInteractionEnabled = true 
         artImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
+        artImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(artImageView)
-        
         
         contentView.layer.addSublayer(separator)
         
@@ -57,36 +58,36 @@ class AddArtInfoCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(titleField, priceField, artImageView, contentView) { (nameField, priceField, artImageView, contentView) in
+        NSLayoutConstraint.activate([
             
-            nameField.top == contentView.top
-            nameField.width == contentView.width/2
-            nameField.height == 45
+            titleField.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleField.widthAnchor.constraint(equalToConstant: contentView.frame.width/2),
+            titleField.heightAnchor.constraint(equalToConstant: 48.0),
             
-            priceField.top == nameField.bottom
-            priceField.width == nameField.width
-            priceField.height == 45
+            priceField.topAnchor.constraint(equalTo: titleField.bottomAnchor),
+            priceField.widthAnchor.constraint(equalTo: titleField.widthAnchor),
+            priceField.heightAnchor.constraint(equalToConstant: 48.0),
             
-            artImageView.right == contentView.right - 20
-            artImageView.height == contentView.height - 10
-            artImageView.centerY == contentView.centerY
-            artImageView.width == 70
-        }
+            artImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16.0),
+            artImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -8.0),
+            artImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+            artImageView.widthAnchor.constraint(equalToConstant: 72.0)
+        ])
         
         let height: CGFloat = 0.5
         separator.frame = CGRect(x: 15, y: 45, width: bounds.width/2, height: height)
     }
     
     @objc func imageViewTapped() {
-//        let vc = AddImageVC()
-//        vc.imageView.image = self.artImageView.image
-//        viewController.navigationController?.pushViewController(vc, animated: true)
+        //        let vc = AddImageVC()
+        //        vc.imageView.image = self.artImageView.image
+        //        viewController.navigationController?.pushViewController(vc, animated: true)
     }
     
     func configure(img: UIImage) {
         artImageView.image = img
     }
-
+    
     
     @objc func myTextFieldDidChange(_ textField: UITextField) {
         if let amountString = textField.text?.currencyInputFormatting() {

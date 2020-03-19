@@ -11,7 +11,7 @@ import IGListKit
 import FirebaseDatabase
 
 
-class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate,  UISearchBarDelegate, SearchSectionControllerDelegate, ArtDelegate {
+class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate,  UISearchBarDelegate, SearchSectionControllerDelegate {
     
     // MARK: - Properties
     
@@ -22,12 +22,12 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     var currentIndex = 0
     var filterString = ""
     var searchBar: UISearchBar!
-    var vc: ProfileVC?
+    weak var vc: ProfileVC?
     var arts = [Art]()
     
     
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController)
+        return ListAdapter(updater:  ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 2)
     }()
     
     weak var delegate: SearchSectionControllerDelegate?
@@ -58,7 +58,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     override init() {
         super.init()
         setup()
-    
     }
     
     // MARK: - Functions
@@ -77,34 +76,46 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder()
     }
+}
+
+extension GallerySection: ArtDelegate {
     
     // ArtDelegate
     
-    func setArts(arts: [Art]) {
+    func fetchArts(arts: [Art]) {
         self.arts = arts
         self.adapter.performUpdates(animated: true) { (done) in
-            guard self.arts.count != 0 else { return }
+            guard arts.count != 0 else { return }
         }
+    }
+    
+    func removeArt(artId: String) -> Int {
+        if let art = self.arts.filter({$0.id == artId}).first, let index = self.arts.firstIndex(of: art) {
+            self.arts.remove(at: index)
+            self.adapter.performUpdates(animated: true, completion: nil)
+        }
+        return arts.count
     }
     
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art) {
         if direction == .right {
-            self.currentIndex += 1
-            self.vc?.leftButton.isEnabled = true
             self.adapter.collectionView?.scrollToNextItem()
+            self.currentIndex += 1
+            self.vc?.toolbarItems?[1].isEnabled = true
             if self.currentIndex == self.arts.count - 1 {
-                self.vc?.rightButton.isEnabled = false
+                self.vc?.toolbarItems?[5].isEnabled = false
             }
         } else {
-            currentIndex -= 1
-            self.vc?.rightButton.isEnabled = true
             self.adapter.collectionView?.scrollToPreviousItem()
+            currentIndex -= 1
+            self.vc?.toolbarItems?[5].isEnabled = true
             if currentIndex == 0 {
-                self.vc?.leftButton.isEnabled = false
+                self.vc?.toolbarItems?[1].isEnabled = false
             }
         }
+        
         let art = self.arts[currentIndex]
-        self.vc?.art = art
+        self.vc?.currentArt = art
         return (index: currentIndex, count: self.arts.count, art: art)
     }
 }
@@ -131,9 +142,7 @@ extension GallerySection {
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
-        guard let cell = collectionContext?.dequeueReusableCell(of: EmbeddedCollectionViewCell.self, for: self, at: index) as? EmbeddedCollectionViewCell else {
-            fatalError()
-        }
+        guard let cell = collectionContext?.dequeueReusableCell(of: EmbeddedCollectionViewCell.self, for: self, at: index) as? EmbeddedCollectionViewCell else { fatalError() }
         adapter.collectionView = cell.collectionView
         collectionView = cell.collectionView
         return cell

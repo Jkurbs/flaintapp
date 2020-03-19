@@ -9,7 +9,6 @@
 
 import UIKit
 import SceneKit
-import Cartography
 
 class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -62,11 +61,11 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(addButton, contentView) { (addButton, contentView) in
-            addButton.center == contentView.center
-            addButton.width == 100
-            addButton.height == 100
-        }
+//        constrain(addButton, contentView) { (addButton, contentView) in
+//            addButton.center == contentView.center
+//            addButton.width == 100
+//            addButton.height == 100
+//        }
         
         DispatchQueue.main.async {
             self.addButton.layer.cornerRadius = self.addButton.frame.size.width/2

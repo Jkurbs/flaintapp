@@ -8,7 +8,6 @@
 
 import UIKit
 import SceneKit
-import Cartography
 import SDWebImage
 
 class EditArtCell: UITableViewCell {

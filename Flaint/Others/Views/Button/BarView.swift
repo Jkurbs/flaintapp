@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cartography
 
 class BarView: UIView {
 
@@ -35,15 +34,15 @@ class BarView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(separator, label, self) { (separator, label, self) in
-            separator.top == self.top
-            separator.height == 0.5
-            separator.width == self.width
-            
-            label.width == self.width - 60
-            label.center == self.center
-            label.height == 30
-        }
+//        constrain(separator, label, self) { (separator, label, self) in
+//            separator.top == self.top
+//            separator.height == 0.5
+//            separator.width == self.width
+//            
+//            label.width == self.width - 60
+//            label.center == self.center
+//            label.height == 30
+//        }
     }
     
     func configure(first: String?, second: String?) {

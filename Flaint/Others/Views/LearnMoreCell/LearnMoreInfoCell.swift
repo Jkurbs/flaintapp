@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Cartography
 
 class LearnMoreInfoCell: UITableViewCell {
     
@@ -36,13 +35,13 @@ class LearnMoreInfoCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(titleLabel, valueLabel, contentView) { (titleLabel, valueLabel, contentView) in
-            titleLabel.left == contentView.left + 20
-            titleLabel.height == contentView.height
-            
-            valueLabel.right == contentView.right + 20
-            valueLabel.height == contentView.height
-        }
+//        constrain(titleLabel, valueLabel, contentView) { (titleLabel, valueLabel, contentView) in
+//            titleLabel.left == contentView.left + 20
+//            titleLabel.height == contentView.height
+//            
+//            valueLabel.right == contentView.right + 20
+//            valueLabel.height == contentView.height
+//        }
     }
     
     

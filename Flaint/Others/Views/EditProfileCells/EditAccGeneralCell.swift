@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import Cartography
 
 class EditAccountGeneralCell: UITableViewCell {
     
@@ -43,22 +42,24 @@ class EditAccountGeneralCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(titleLabel, textField, valueLabel, separator, contentView) { (titleLabel, textField, valueLabel, separator, contentView) in
-            titleLabel.left == contentView.left + 15
-            titleLabel.height == contentView.height
-            textField.right == contentView.right
-            textField.height == contentView.height
-            textField.width == 260
-            
-            valueLabel.left == textField.left + 15
-            valueLabel.height == contentView.height
-            valueLabel.width == 260
-            
-            separator.right == contentView.right - 10
-            separator.height == 0.5
-            separator.width == textField.width
-            separator.bottom == contentView.bottom
-        }
+        
+        
+//        constrain(titleLabel, textField, valueLabel, separator, contentView) { (titleLabel, textField, valueLabel, separator, contentView) in
+//            titleLabel.left == contentView.left + 15
+//            titleLabel.height == contentView.height
+//            textField.right == contentView.right
+//            textField.height == contentView.height
+//            textField.width == 260
+//
+//            valueLabel.left == textField.left + 15
+//            valueLabel.height == contentView.height
+//            valueLabel.width == 260
+//
+//            separator.right == contentView.right - 10
+//            separator.height == 0.5
+//            separator.width == textField.width
+//            separator.bottom == contentView.bottom
+//        }
     }
     
     func configure(index: Int, title: String, item: AccountModelItem) {
@@ -105,19 +106,19 @@ class EditAccountPrivateCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        constrain(titleLabel, valueLabel, separator, contentView) { (titleLabel, valueLabel, separator, contentView) in
-            titleLabel.left == contentView.left + 15
-            titleLabel.height == contentView.height
-            
-            valueLabel.right == contentView.right
-            valueLabel.height == contentView.height
-            valueLabel.width == 260
-            
-            separator.right == contentView.right - 10
-            separator.height == 0.5
-            separator.width == valueLabel.width
-            separator.bottom == contentView.bottom
-        }
+//        constrain(titleLabel, valueLabel, separator, contentView) { (titleLabel, valueLabel, separator, contentView) in
+//            titleLabel.left == contentView.left + 15
+//            titleLabel.height == contentView.height
+//            
+//            valueLabel.right == contentView.right
+//            valueLabel.height == contentView.height
+//            valueLabel.width == 260
+//            
+//            separator.right == contentView.right - 10
+//            separator.height == 0.5
+//            separator.width == valueLabel.width
+//            separator.bottom == contentView.bottom
+//        }
     }
     
     
