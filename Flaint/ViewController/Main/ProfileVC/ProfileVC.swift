@@ -68,7 +68,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         let viewHeight = self.view.bounds.height
         self.countLabel.frame = CGRect(x: self.view.bounds.width - 45, y: 0, width: 32, height: 20)
         self.countLabel.layer.cornerRadius = 10
@@ -95,7 +94,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
-        let menuButton = UIBarButtonItem(image: UIImage(systemName: "New-menu-filled-20"), style: .plain, target: self, action:  #selector(gotToSettingsVC))
+        let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action:  #selector(gotToSettingsVC))
         
         navigationItem.leftBarButtonItem = reorderButton
         navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]

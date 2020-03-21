@@ -17,7 +17,7 @@ class SettingsVC: UIViewController {
     var tableView: UITableView!
     var userId: String?
     
-    var settings = ["Edit account", "Password", "Log Out"]    
+    var settings = Settings.allCases
     
     // MARK: - View Lifecycle
     
@@ -52,8 +52,8 @@ class SettingsVC: UIViewController {
               
               navigation.modalPresentationStyle = .fullScreen
               self.navigationController?.present(navigation, animated: true, completion: nil)
-          } catch let signOutError as NSError {
-              print ("Error signing out: %@", signOutError)
+          } catch let error as NSError {
+              NSLog("Error signing out: \(error)")
           }
       }
       let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
@@ -81,7 +81,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.id, for: indexPath)
         cell.backgroundColor = .backgroundColor
         cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
-        cell.textLabel?.text = settings[indexPath.row]
+        cell.textLabel?.text = settings[indexPath.row].rawValue
         return cell
     }
     

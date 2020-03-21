@@ -74,7 +74,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
             
             let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String : Any]
             
-            DataService.shared.editArt(userId: userId, artId: artId, data: data) { (success, error) in
+            DataService.shared.editArt(userId: userId, artId: artId, style: style, data: data) { (success, error) in
                 if !success {
                     print("Error updating art")
                 } else {

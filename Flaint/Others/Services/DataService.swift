@@ -253,12 +253,13 @@ class DataService {
         
         // MARK: - Edit Art
         
-        func editArt(userId: String, artId: String, data: [String: Any],  _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
+    func editArt(userId: String, artId: String, style: String, data: [String: Any],  _ completion: @escaping (_ success: Bool, _ error: Error?) -> ()) {
             DataService.shared.RefArts.child(userId).child(artId).updateChildValues(data) { (error, ref) in
                 if let error = error {
-                    print("error:", error.localizedDescription)
+                    NSLog("error: \( error)")
                     completion(false, error)
                 } else {
+                    DataService.shared.RefBase.child(style).child(artId).updateChildValues(data)
                     completion(true, nil)
                 }
             }

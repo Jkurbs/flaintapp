@@ -87,11 +87,13 @@ extension GallerySection: ArtDelegate {
         }
     }
     
-    func removeArt(artId: String){
+    func removeArt(artId: String) {
         if let art = self.arts.filter({$0.id == artId}).first, let index = self.arts.firstIndex(of: art) {
             DispatchQueue.main.async {
                 self.arts.remove(at: index)
-                self.adapter.performUpdates(animated: true, completion: nil)
+                self.adapter.performUpdates(animated: true) { (done) in
+                    self.adapter.reloadData(completion: nil)
+                }
             }
         }
     }
