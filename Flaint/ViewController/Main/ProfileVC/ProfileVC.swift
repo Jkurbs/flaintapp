@@ -50,7 +50,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         self.navigationController?.isToolbarHidden = false
         fetchArts()
-        
         handle = Auth.auth().addStateDidChangeListener { auth, user in
             AuthService.shared.UserID = user?.uid
         }

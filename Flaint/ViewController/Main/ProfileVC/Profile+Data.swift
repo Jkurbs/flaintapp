@@ -27,10 +27,8 @@ extension ProfileVC {
                         self.toolbarItems?[5].isEnabled = true
                     }
                     self.countLabel.text = "1 of \(self.arts.count)"
-                    self.adapter.performUpdates(animated: true, completion: { (done) in
-                        self.currentArt = self.arts.first
-                        self.delegate?.fetchArts(arts: self.arts)
-                    })
+                    self.currentArt = self.arts.first
+                    self.delegate?.fetchArts(arts: self.arts)
                 }
             }
         }

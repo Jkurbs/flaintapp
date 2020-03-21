@@ -70,6 +70,7 @@ extension ProfileVC {
             let editVC = EditArtVC()
             editVC.art = art
             let nav = UINavigationController(rootViewController: editVC)
+            nav.modalPresentationStyle = .fullScreen
             self.navigationController?.present(nav, animated: true, completion: nil)
         }
         

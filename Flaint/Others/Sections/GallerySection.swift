@@ -61,7 +61,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     // MARK: - Functions
     
     func setup() {
-        self.arts.removeAll()
         self.inset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         adapter.dataSource = self
         adapter.scrollViewDelegate = self
@@ -81,9 +80,10 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
 extension GallerySection: ArtDelegate {
     
     func fetchArts(arts: [Art]) {
+        self.arts.removeAll()
         self.arts = arts
         self.adapter.performUpdates(animated: true) { (done) in
-            guard arts.count != 0 else { return }
+            self.adapter.reloadData(completion: nil)
         }
     }
     
