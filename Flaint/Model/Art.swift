@@ -25,6 +25,7 @@ class Art: Codable {
     var date: String!
     var url: String!
     var imgUrl: String!
+    var index: Int!
     var image: Data?
 }
 

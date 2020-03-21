@@ -28,6 +28,8 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
     var artId = ""
     var ref: StorageReference?
     
+    var artsCount: Int?
+    
     // MARK: - View LifeCycle
     
     override func viewDidLoad() {
@@ -91,14 +93,13 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
             self.showMessage("Every value must be filled", type: .error)
             return
         }
-        
-        // Natural language processing
-        //        let sentiment = AI.shared.sentimentAnalysis(string: description) ?? ""
+
         
         self.navigationItem.addActivityIndicator()
         let date = CachedDateFormattingHelper.shared.formatTodayDate()
         
-        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "imgUrl": self.imgUrl] as [String : Any]
+        
+        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String : Any]
         DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { (success, error) in
             if !success {
                 self.showMessage("Error saving painting", type: .error)

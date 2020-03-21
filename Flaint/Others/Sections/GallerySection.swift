@@ -25,7 +25,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     weak var vc: ProfileVC?
     var arts = [Art]()
     
-    
     lazy var adapter: ListAdapter = {
         return ListAdapter(updater:  ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 2)
     }()
@@ -44,7 +43,6 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         label.text = "You have no artwork yet! \n Tap on the + button to add your first."
         return label
     }()
-    
     
     // MARK: - Initializer
     
@@ -78,9 +76,9 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     }
 }
 
+// ArtDelegate
+
 extension GallerySection: ArtDelegate {
-    
-    // ArtDelegate
     
     func fetchArts(arts: [Art]) {
         self.arts = arts
@@ -89,12 +87,13 @@ extension GallerySection: ArtDelegate {
         }
     }
     
-    func removeArt(artId: String) -> Int {
+    func removeArt(artId: String){
         if let art = self.arts.filter({$0.id == artId}).first, let index = self.arts.firstIndex(of: art) {
-            self.arts.remove(at: index)
-            self.adapter.performUpdates(animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.arts.remove(at: index)
+                self.adapter.performUpdates(animated: true, completion: nil)
+            }
         }
-        return arts.count
     }
     
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art) {

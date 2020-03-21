@@ -13,6 +13,15 @@ import FirebaseAuth
 
 extension ProfileVC {
     
+    @objc func gotToReorderVC() {
+        let vc = ReorderVC()
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        vc.arts = self.arts
+        vc.navigationController?.isToolbarHidden = true
+        navigationController?.present(nav, animated: true, completion: nil)
+    }
+    
     // Search Art
     @objc func searchTapped() {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
@@ -30,7 +39,7 @@ extension ProfileVC {
         self.searchBar.text = nil
         self.navigationItem.titleView = nil
         self.navigationItem.rightBarButtonItem = nil
-//        self.navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
+        //        self.navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
         self.adapter.performUpdates(animated: false, completion: nil)
     }
     
@@ -63,7 +72,7 @@ extension ProfileVC {
             let nav = UINavigationController(rootViewController: editVC)
             self.navigationController?.present(nav, animated: true, completion: nil)
         }
-
+        
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
             
             let confirmationAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
@@ -73,20 +82,16 @@ extension ProfileVC {
                 guard let userId = AuthService.shared.UserID, let id = art.id, let title = art.title, let style = art.style else { return }
                 
                 DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { (result) in
-                    let count = self.delegate?.removeArt(artId: id)
+                    self.delegate?.removeArt(artId: id)
                     DispatchQueue.main.async {
-                        self.countLabel.result?.count = count!
                         self.showMessage("\(title) successfully deleted", type: .error)
-                        self.adapter.performUpdates(animated: true, completion: nil)
                     }
                 }
             }))
-            
             confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(confirmationAlert, animated: true, completion: nil)
         }
         
-
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         alert.addAction(edit)
         alert.addAction(delete)
@@ -101,11 +106,13 @@ extension ProfileVC {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    @objc func add() {
-        let vc = AddImageVC()
-        let nav = UINavigationController(rootViewController: vc)
-        nav.modalPresentationStyle = .fullScreen
+    @objc func gotToAddArtVC() {
         DispatchQueue.main.async {
+            let vc = AddImageVC()
+            
+            vc.artsCount = self.countLabel.result?.count
+            let nav = UINavigationController(rootViewController: vc)
+            nav.modalPresentationStyle = .fullScreen
             self.navigationController?.present(nav, animated: true, completion: nil)
         }
     }

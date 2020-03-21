@@ -55,6 +55,7 @@ extension AddImageVC {
                 
         self.navigationItem.addActivityIndicator()
         let vc = AddInfoVC()
+        vc.artsCount = self.artsCount
         
         let userId = Auth.auth().currentUser!.uid
         

@@ -11,7 +11,7 @@ import Foundation
 protocol ArtDelegate: class {
     
     func fetchArts(arts: [Art])
-    func removeArt(artId: String) -> Int
+    func removeArt(artId: String)
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art)
 }
 

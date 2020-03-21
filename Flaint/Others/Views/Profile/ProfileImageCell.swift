@@ -211,21 +211,20 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
 class ProfileArtInfoCell: UICollectionViewCell {
     
-    var titleLabel = UILabel()
+    let titleLabel = UILabel()
     
-    var styleTitleLabel = UILabel()
-    var styleLabel = UILabel()
-    var sizeTitleLabel = UILabel()
-    var sizeLabel = UILabel()
+    let styleTitleLabel = UILabel()
+    let styleLabel = UILabel()
+    let sizeTitleLabel = UILabel()
+    let sizeLabel = UILabel()
     
-    var aboutTitleLabel = UILabel()
-    var aboutLabel = UITextView()
+    let aboutTitleLabel = UILabel()
+    let aboutLabel = UITextView()
     
+    let dateTitleLabel = UILabel()
+    let dateLabel = UILabel()
     
-    var dateTitleLabel = UILabel()
-    var dateLabel = UILabel()
-    
-    var learnMoreButton = UIButton()
+    let learnMoreButton = UIButton()
     var learnMoreLabel = UILabel()
     
     var art: Art? {
@@ -257,7 +256,6 @@ class ProfileArtInfoCell: UICollectionViewCell {
 
         styleLabel.font = regularFont
         styleLabel.translatesAutoresizingMaskIntoConstraints = false
-
         
         sizeTitleLabel.font = font
         sizeTitleLabel.text = "Size"
@@ -265,23 +263,19 @@ class ProfileArtInfoCell: UICollectionViewCell {
 
         sizeLabel.font = regularFont
         sizeLabel.translatesAutoresizingMaskIntoConstraints = false
-
         
         dateTitleLabel.font = font
         dateTitleLabel.text = "Date"
         dateTitleLabel.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
-
         
         learnMoreLabel.text = "Learn more"
         learnMoreLabel.font = font
         learnMoreLabel.translatesAutoresizingMaskIntoConstraints = false
-
         
         learnMoreButton.setImage(UIImage(named:"More-20"), for: .normal)
         learnMoreLabel.isUserInteractionEnabled = true
         learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
-
         
         dateLabel.font = regularFont
         
@@ -299,7 +293,6 @@ class ProfileArtInfoCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         
         NSLayoutConstraint.activate([
         
@@ -326,7 +319,9 @@ class ProfileArtInfoCell: UICollectionViewCell {
 
             learnMoreButton.topAnchor.constraint(equalTo: learnMoreLabel.topAnchor),
             learnMoreButton.leftAnchor.constraint(equalTo: learnMoreLabel.rightAnchor),
-            learnMoreButton.centerYAnchor.constraint(equalTo: learnMoreLabel.centerYAnchor)
+            learnMoreButton.centerYAnchor.constraint(equalTo: learnMoreLabel.centerYAnchor),
+            learnMoreButton.heightAnchor.constraint(equalToConstant: 25),
+            learnMoreButton.widthAnchor.constraint(equalToConstant: 25)
         
         ])
     }

@@ -43,7 +43,7 @@ class ArtRoomScene: SCNScene {
         material.diffuse.contents = image
         let borderMat = SCNMaterial()
         borderMat.diffuse.contents = UIImage(named: "texture")
-        materials = [material, borderMat, borderMat, borderMat, borderMat]
+        materials = [material, borderMat]
         geometry.materials = materials
     }
 }

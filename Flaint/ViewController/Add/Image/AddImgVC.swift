@@ -27,6 +27,8 @@ class AddImageVC: UIViewController {
     var classifications = [String]()
     var imagePicker: ImagePicker!
     
+    var artsCount: Int? 
+    
     // MARK: - Image Classification
     
     lazy var classificationRequest: VNCoreMLRequest = {

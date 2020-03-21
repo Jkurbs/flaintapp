@@ -24,6 +24,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     // MARK: - Properties
     
     var userUID: String?
+    var arts = [Art]()
     var currentArt: Art?
     
     weak var delegate: ArtDelegate? 
@@ -34,6 +35,8 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
+    
+    var handle: AuthStateDidChangeListenerHandle?
     
     // MARK: - View Lifecycle
     
@@ -47,9 +50,15 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         self.navigationController?.isToolbarHidden = false
         fetchArts()
-        Auth.auth().addStateDidChangeListener { (auth, user) in
+        
+        handle = Auth.auth().addStateDidChangeListener { auth, user in
             AuthService.shared.UserID = user?.uid
         }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        Auth.auth().removeStateDidChangeListener(handle!)
     }
     
     override func didReceiveMemoryWarning() {
@@ -62,7 +71,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         super.viewDidLayoutSubviews()
         
         let viewHeight = self.view.bounds.height
-        
         self.countLabel.frame = CGRect(x: self.view.bounds.width - 45, y: 0, width: 32, height: 20)
         self.countLabel.layer.cornerRadius = 10
         countLabel.frame = CGRect(x: 0, y: viewHeight - 120, width: view.frame.width, height: 25)
@@ -83,10 +91,14 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         view.addSubview(countLabel)
         
         // NavBar setup
-        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
-        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(add))
-        let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action:  #selector(gotToSettingsVC))
         
+        let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action:  #selector(gotToReorderVC))
+        
+        let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
+        let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
+        let menuButton = UIBarButtonItem(image: UIImage(systemName: "New-menu-filled-20"), style: .plain, target: self, action:  #selector(gotToSettingsVC))
+        
+        navigationItem.leftBarButtonItem = reorderButton
         navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
         
         // Toolbar setup

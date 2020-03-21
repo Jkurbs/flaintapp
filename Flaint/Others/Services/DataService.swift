@@ -283,6 +283,29 @@ class DataService {
                 }
             }
         }
+    
+    
+    
+    func reorderArt(arts: [Art], userId: String, completion: @escaping (completion) -> () = { _ in }) {
+        for art in arts {
+            guard let index = art.index else { return }
+            RefArts.child(userId).child(art.id).updateChildValues(["index": index]) { (error, ref) in
+                if let error = error {
+                    NSLog("Error reordering arts: \(error)")
+                    completion(.failure(error))
+                    return
+                }
+                completion(.success(true))
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    
+    
         
         func getData(from url: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
             URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
