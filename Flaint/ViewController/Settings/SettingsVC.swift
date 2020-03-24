@@ -11,7 +11,6 @@ import FirebaseAuth
 
 class SettingsVC: UIViewController {
     
-    
     // MARK: - Properties
     
     var tableView: UITableView!
@@ -42,12 +41,16 @@ class SettingsVC: UIViewController {
     
     // MARK: - Functions
             
-    func logoutAlert() {
+     func logoutAlert() {
       let alert = UIAlertController(title: "Log Out", message: nil, preferredStyle: .alert)
       let logOut = UIAlertAction(title: "Log Out", style: .default) { (action) in
           let firebaseAuth = Auth.auth()
+        
+          UserDefaults.standard.removeObject(forKey: .userId)
+        
           do {
-              try firebaseAuth.signOut()              
+              try firebaseAuth.signOut()
+
               let navigation = UINavigationController(rootViewController: LogInVC())
               
               navigation.modalPresentationStyle = .fullScreen

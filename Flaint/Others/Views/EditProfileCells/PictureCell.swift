@@ -18,6 +18,10 @@ class PictureCell: UITableViewCell {
         didSet {
             guard let item = item as? AccountViewModelGeneralItem else { return }
             guard item.imgUrl != "" else { return userImgView.image = UIImage(named: "Avatar") }
+            
+            print("IMAGE URL: \(item.imgUrl)")
+            
+            
             self.userImgView.sd_setImage(with:  URL(string: item.imgUrl), placeholderImage: UIImage(named: "Placeholder"))
         }
     }
@@ -40,8 +44,6 @@ class PictureCell: UITableViewCell {
         userImgView.layer.borderColor = UIColor.lightGray.cgColor
         userImgView.layer.borderWidth = 0.5
         userImgView.translatesAutoresizingMaskIntoConstraints = false
-        
-        
         
         contentView.addSubview(userImgView)
         
@@ -67,26 +69,16 @@ class PictureCell: UITableViewCell {
             userImgView.heightAnchor.constraint(equalToConstant: contentView.frame.height - 70),
             userImgView.widthAnchor.constraint(equalTo: userImgView.heightAnchor),
             userImgView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            userImgView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor)
+            userImgView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            addImgButton.topAnchor.constraint(equalTo: userImgView.bottomAnchor, constant: 8.0),
+            addImgButton.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
+            
+            separator.heightAnchor.constraint(equalToConstant: 0.5),
+            separator.widthAnchor.constraint(equalTo: contentView.widthAnchor),
+            separator.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
-        
-        
-        
-        
-//        constrain(userImgView, addImgButton, separator, contentView) { (userImgView, addImgButton, separator, contentView) in
-//            userImgView.height == contentView.height - 70
-//            userImgView.width == contentView.height - 70
-//            userImgView.center == contentView.center
-//
-//            addImgButton.top == userImgView.bottom + 5
-//            addImgButton.width == contentView.width
-//
-//            separator.right == contentView.right
-//            separator.height == 0.5
-//            separator.width == contentView.width
-//            separator.bottom == contentView.bottom
-//        }
-        
+
         DispatchQueue.main.async {
             self.userImgView.layer.cornerRadius = self.userImgView.frame.width/2
         }

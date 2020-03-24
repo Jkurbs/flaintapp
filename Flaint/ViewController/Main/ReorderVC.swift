@@ -64,6 +64,7 @@ class ReorderVC: UIViewController {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
         let label = UILabel(frame: headerView.frame)
         label.text = "Drag your arts at the position you would\nlike them to show in your gallery"
+        label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
         headerView.addSubview(label)

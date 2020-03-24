@@ -68,39 +68,54 @@ class DataService {
     
     // MARK: - Update user data
     
-    func updateUserData(_ name: String, _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> ()) {
-        if let imageData = image.jpegData(compressionQuality: 1.0) {
-            handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-                if let user = user, let password = UserDefaults.standard.string(forKey: "pwd") {
-                    let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
-                    user.reauthenticate(with: credential, completion:  { (result, error) in
-                        if let error = error {
-                            complete(false, error)
-                        } else {
-                            let ref = DataService.shared.RefStorage.child("profile_images").child(user.uid)
-                            self.saveImg(ref, user.uid, imageData, { result in
-                                
-                                if let url = try? result.get() as? String {
-                                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
-                                    changeRequest?.displayName = name
-                                    changeRequest?.photoURL = URL(string: url)
-                                    changeRequest?.commitChanges { (error) in
-                                        if let err = error  { complete(false, err) }
-                                        let data = ["imgUrl": url, "name": name] as [String : Any]
-                                        self.RefUsers.child(user.uid).updateChildValues(data, withCompletionBlock: { (error, ref) in
-                                            if let error = error {
-                                                complete(false, error)
-                                            } else {
-                                                complete(true, nil)
-                                            }
-                                        })
-                                    }
-                                }
-                            })
-                        }
-                    })
+    func updateUserData(_ userId: String, _ name: String, _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> ()) {
+        if let imageData = image.jpegData(compressionQuality: 1.0) {            
+            
+            let ref = DataService.shared.RefStorage.child("profile_images").child(userId)
+            self.saveImg(ref, userId, imageData, { result in
+                
+                if let url = try? result.get() as? String {
+                    let changeRequest = Auth.auth().currentUser?.createProfileChangeRequest()
+                    changeRequest?.displayName = name
+                    changeRequest?.photoURL = URL(string: url)
+                    changeRequest?.commitChanges { (error) in
+                        if let err = error  { complete(false, err) }
+                        let data = ["imgUrl": url, "name": name] as [String : Any]
+                        self.RefUsers.child(userId).updateChildValues(data, withCompletionBlock: { (error, ref) in
+                            if let error = error {
+                                complete(false, error)
+                            } else {
+                                complete(true, nil)
+                            }
+                        })
+                    }
                 }
-            }
+            })
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
+//            handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+//                if let user = user, let password = UserDefaults.standard.string(forKey: "pwd") {
+//                    let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
+//                    user.reauthenticate(with: credential, completion:  { (result, error) in
+//                        if let error = error {
+//                            complete(false, error)
+//                        } else {
+//
+//
+//                        }
+//                    })
+//                }
+//            }
         }
     }
 

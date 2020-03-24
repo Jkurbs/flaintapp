@@ -15,6 +15,7 @@ class EditAccountGeneralCell: UITableViewCell {
     
     let separator: UIView = {
         let layer = UIView()
+        layer.translatesAutoresizingMaskIntoConstraints = false
         layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1)
         return layer
     }()
@@ -22,15 +23,22 @@ class EditAccountGeneralCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
         titleLabel = UICreator.create.label(nil, 15, .darkText, .natural, .medium, contentView)
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        
         textField.autocapitalizationType = .words
         textField.autocorrectionType = .no
         textField.font = UIFont.normal
+        textField.translatesAutoresizingMaskIntoConstraints = false
+
         valueLabel.font =  UIFont.normal
-        valueLabel.textColor = .darkText 
+        valueLabel.textColor = .darkText
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+
         contentView.addSubview(valueLabel)
         contentView.addSubview(textField)
-        contentView.addSubview(separator)
+//        contentView.addSubview(separator)
     }
     
     
@@ -42,24 +50,15 @@ class EditAccountGeneralCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        
-        
-//        constrain(titleLabel, textField, valueLabel, separator, contentView) { (titleLabel, textField, valueLabel, separator, contentView) in
-//            titleLabel.left == contentView.left + 15
-//            titleLabel.height == contentView.height
-//            textField.right == contentView.right
-//            textField.height == contentView.height
-//            textField.width == 260
-//
-//            valueLabel.left == textField.left + 15
-//            valueLabel.height == contentView.height
-//            valueLabel.width == 260
-//
-//            separator.right == contentView.right - 10
-//            separator.height == 0.5
-//            separator.width == textField.width
-//            separator.bottom == contentView.bottom
-//        }
+        NSLayoutConstraint.activate([
+            
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
+            titleLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            
+            textField.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8.0),
+            textField.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            textField.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -titleLabel.frame.width),
+        ])
     }
     
     func configure(index: Int, title: String, item: AccountModelItem) {
@@ -68,7 +67,6 @@ class EditAccountGeneralCell: UITableViewCell {
         }
         textField.placeholder = title
         titleLabel.text = title
-        
         if index == 1 {
             textField.text = item.name
         } else {
@@ -93,8 +91,13 @@ class EditAccountPrivateCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         titleLabel = UICreator.create.label("", 15, .darkText, .natural, .medium, contentView)
         valueLabel.font = UIFont.normal
+        
+        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        valueLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        
         contentView.addSubview(valueLabel)
-        contentView.addSubview(separator)
+//        contentView.addSubview(separator)
     }
     
     
@@ -106,19 +109,15 @@ class EditAccountPrivateCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-//        constrain(titleLabel, valueLabel, separator, contentView) { (titleLabel, valueLabel, separator, contentView) in
-//            titleLabel.left == contentView.left + 15
-//            titleLabel.height == contentView.height
-//            
-//            valueLabel.right == contentView.right
-//            valueLabel.height == contentView.height
-//            valueLabel.width == 260
-//            
-//            separator.right == contentView.right - 10
-//            separator.height == 0.5
-//            separator.width == valueLabel.width
-//            separator.bottom == contentView.bottom
-//        }
+        NSLayoutConstraint.activate([
+            
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16.0),
+            titleLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            
+            valueLabel.leftAnchor.constraint(equalTo: titleLabel.rightAnchor, constant: 8.0),
+            valueLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor),
+            valueLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -titleLabel.frame.width),
+        ])
     }
     
     

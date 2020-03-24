@@ -38,9 +38,9 @@ enum Direction {
 
 enum Settings: String, CaseIterable {
     
-    case edit
-    case password
-    case logOut
+    case edit = "Edit account"
+    case password = "Password"
+    case logOut = "Log Out"
     
     var values: String {
         switch self {

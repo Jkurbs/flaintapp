@@ -31,15 +31,12 @@ class AccountViewModel: NSObject {
     
     var user: Users? {
         didSet {
-            guard let user = user else {
-                return
-            }
+            guard let user = user else { return }
             if let name = user.name {
                 let imgUrl = user.imgUrl ?? ""
                 let profileItem = AccountViewModelGeneralItem(imgUrl: imgUrl, name: name)
                 self.items.append(profileItem)
             }
-            
             let email = user.email ?? ""
             let phone = user.phone ?? ""
             let emailItem = AccountViewModelPersonalItem(email: email, phone: phone)

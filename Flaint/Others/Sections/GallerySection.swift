@@ -82,8 +82,10 @@ extension GallerySection: ArtDelegate {
     func fetchArts(arts: [Art]) {
         self.arts.removeAll()
         self.arts = arts
-        self.adapter.performUpdates(animated: true) { (done) in
-            self.adapter.reloadData(completion: nil)
+        self.adapter.performUpdates(animated: true, completion: nil)
+        guard arts.isEmpty else {
+            self.adapter.reloadObjects(arts)
+            return
         }
     }
     
