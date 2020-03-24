@@ -47,17 +47,13 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         self.navigationController?.isToolbarHidden = false
         fetchArts()
-        handle = Auth.auth().addStateDidChangeListener { auth, user in
-            AuthService.shared.UserID = user?.uid
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        Auth.auth().removeStateDidChangeListener(handle!)
+
     }
     
     override func didReceiveMemoryWarning() {

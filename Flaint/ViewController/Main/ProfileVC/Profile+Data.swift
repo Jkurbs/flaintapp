@@ -23,7 +23,7 @@ extension ProfileVC {
                         self.toolbarItems?[1].isEnabled = false
                         self.toolbarItems?[5].isEnabled = false
                     } else {
-                        self.toolbarItems?[1].isEnabled = true
+                        self.toolbarItems?[1].isEnabled = false
                         self.toolbarItems?[5].isEnabled = true
                     }
                     self.countLabel.text = "1 of \(self.arts.count)"

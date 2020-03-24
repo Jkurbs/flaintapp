@@ -336,7 +336,7 @@ class ProfileArtInfoCell: UICollectionViewCell {
         titleLabel.text = art.title.capitalized
         titleLabel.sizeToFit()
         styleLabel.text = art.style ?? "Unkown"
-        sizeLabel.text = "\(art.width ?? "")cm x \(art.height ?? "")cm"
+        sizeLabel.text = "\(art.width ?? "") cm x \(art.height ?? "") cm"
         dateLabel.text = "\(art.date ?? "")"
     }
 }

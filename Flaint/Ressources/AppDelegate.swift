@@ -17,15 +17,38 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     let monitor = NWPathMonitor()
+    var handle: AuthStateDidChangeListenerHandle?
+
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
- 
         
 //       ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
        configure()
+       observeAuthorisedState()
        customize()
        return true
+    }
+    
+    private func observeAuthorisedState() {
+        let vc = ProfileVC()
+        self.setupRootViewController(viewController: vc)
+        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+            if user == nil {
+                vc.userUID = user?.uid
+                AuthService.shared.UserID = user?.uid
+                self.setupRootViewController(viewController: LogInVC())
+            } else {
+                self.setupRootViewController(viewController: ProfileVC())
+            }
+        }
+        Auth.auth().removeStateDidChangeListener(handle!)
+    }
+    
+    private func setupRootViewController(viewController: UIViewController) {
+        let navigationController = UINavigationController(rootViewController: viewController)
+        self.window!.rootViewController = navigationController
+        self.window!.makeKeyAndVisible()
     }
     
 //    func application( open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
@@ -60,9 +83,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func configure() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-                print("We're connected!")
+
             } else {
-                print("No connection.")
                 DispatchQueue.main.async {
                     self.window?.rootViewController?.showMessage("No connection", type: .warning)
                 }
@@ -84,20 +106,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         } else {
             let vc = UINavigationController(rootViewController: LogInVC())
             self.window?.rootViewController = vc
-        }
-        
-        if let uid = UserDefaults.standard.string(forKey: "userId") {
-            if !uid.isEmpty {
-                let initialViewController = ProfileVC()
-                let navigationController = UINavigationController(rootViewController: initialViewController)
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            } else {
-                let initialViewController =  LogInVC()
-                let navigationController = UINavigationController(rootViewController: initialViewController)
-                self.window?.rootViewController = navigationController
-                self.window?.makeKeyAndVisible()
-            }
         }
     }
     

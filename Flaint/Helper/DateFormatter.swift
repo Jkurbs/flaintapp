@@ -46,7 +46,7 @@ class CachedDateFormattingHelper {
     // MARK: Today date
     
     func formatTodayDate() -> String {
-        let dateFormatter = cachedDateFormatter(withFormat: "MMMM d yy")
+        let dateFormatter = cachedDateFormatter(withFormat: "MMMM/dd/yy")
         let formattedDate = dateFormatter.string(from: Date())
         return formattedDate
     }

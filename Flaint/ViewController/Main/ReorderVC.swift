@@ -88,7 +88,9 @@ class ReorderVC: UIViewController {
         self.navigationItem.setRightBarButton(barButton, animated: true)
         activityIndicator.startAnimating()
         
-        guard let userId = AuthService.shared.UserID else { return }
+        guard let userId = AuthService.shared.UserID ?? UserDefaults.standard.string(forKey: .userId) else { return }
+        
+        print("User ID: \(userId)")
         
         DataService.shared.reorderArt(arts: arts, userId: userId) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
