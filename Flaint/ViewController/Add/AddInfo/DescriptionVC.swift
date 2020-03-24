@@ -16,7 +16,7 @@ class DescriptionVC: UIViewController {
     
     let separator: CALayer = {
         let layer = CALayer()
-        layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
+        layer.backgroundColor = UIColor.separator.cgColor
         return layer
     }()
     
@@ -27,11 +27,12 @@ class DescriptionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
+        layoutViews()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        layoutViews()
+        
     }
     
     // MARK: - Functions
@@ -42,9 +43,9 @@ class DescriptionVC: UIViewController {
         view.backgroundColor = .white
         view.addSubview(textView)
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.tintColor = .darkText
         textView.backgroundColor = .white
-        textView.translatesAutoresizingMaskIntoConstraints = false 
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.tintColor = .darkText
         view.layer.addSublayer(separator)
         
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))

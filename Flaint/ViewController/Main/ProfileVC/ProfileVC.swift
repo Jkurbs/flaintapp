@@ -36,12 +36,11 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
     
-    var handle: AuthStateDidChangeListenerHandle?
-    
     // MARK: - View Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("USER ID:\(userUID)")
         setupViews()
     }
     
@@ -49,11 +48,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         super.viewWillAppear(animated)
         self.navigationController?.isToolbarHidden = false
         fetchArts()
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -123,8 +117,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         collectionView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         collectionView.backgroundColor = .backgroundColor
-        
-        collectionView.isScrollEnabled = true
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self

@@ -197,9 +197,8 @@ class DataService {
         
         // MARK: - Fetch current user arts
         
-        func fetchCurrentUserArt(complete: @escaping (completion) -> ()) {
-            guard let userId = UserDefaults.standard.string(forKey: "userId") else {return}
-            
+    func fetchCurrentUserArt(userId: String?, complete: @escaping (completion) -> ()) {
+        guard let userId = userId ?? AuthService.shared.UserID else {return}
             RefArts.child(userId).observeSingleEvent(of: .value) { (snapshot) in
                 self.RefArts.keepSynced(true)
                 if snapshot.exists() {

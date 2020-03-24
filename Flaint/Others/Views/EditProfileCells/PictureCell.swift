@@ -18,17 +18,13 @@ class PictureCell: UITableViewCell {
         didSet {
             guard let item = item as? AccountViewModelGeneralItem else { return }
             guard item.imgUrl != "" else { return userImgView.image = UIImage(named: "Avatar") }
-            
-            print("IMAGE URL: \(item.imgUrl)")
-            
-            
             self.userImgView.sd_setImage(with:  URL(string: item.imgUrl), placeholderImage: UIImage(named: "Placeholder"))
         }
     }
     
-    
     let separator: UIView = {
         let layer = UIView()
+        layer.translatesAutoresizingMaskIntoConstraints = false 
         layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1)
         return layer
     }()
@@ -55,6 +51,8 @@ class PictureCell: UITableViewCell {
         addImgButton.addTarget(self, action: #selector(pickImage(_:)), for: .touchUpInside)
         contentView.addSubview(addImgButton)
         contentView.addSubview(separator)
+        
+        
     }
     
     @objc func pickImage(_ sender: UIButton) {
@@ -66,6 +64,7 @@ class PictureCell: UITableViewCell {
         super.layoutSubviews()
         
         NSLayoutConstraint.activate([
+            
             userImgView.heightAnchor.constraint(equalToConstant: contentView.frame.height - 70),
             userImgView.widthAnchor.constraint(equalTo: userImgView.heightAnchor),
             userImgView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),

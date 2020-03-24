@@ -47,7 +47,7 @@ class PhoneStepVC: UIViewController {
         
         let height = (navigationController?.toolbar.frame.size.height)! * 2
         barView.frame = CGRect(x: 0, y: self.view.frame.height - height, width: view.frame.width, height: height)
-        barView.configure(first: nil, second: "Back")
+        barView.configure(string: nil, comment: "Back")
         barView.label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(back)))
         view.addSubview(barView)
     }

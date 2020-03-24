@@ -19,41 +19,40 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let monitor = NWPathMonitor()
     var handle: AuthStateDidChangeListenerHandle?
 
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+ 
         
 //       ApplicationDelegate.shared.application(application, didFinishLaunchingWithOptions: launchOptions)
        configure()
-       observeAuthorisedState()
        customize()
+       observeAuthorisedState()
        return true
     }
     
+    
     private func observeAuthorisedState() {
-        let vc = ProfileVC()
-        self.setupRootViewController(viewController: vc)
         handle = Auth.auth().addStateDidChangeListener { (auth, user) in
             if user == nil {
-                vc.userUID = user?.uid
-                AuthService.shared.UserID = user?.uid
                 self.setupRootViewController(viewController: LogInVC())
             } else {
-                self.setupRootViewController(viewController: ProfileVC())
+                DispatchQueue.main.async {
+                     let vc = ProfileVC()
+                     vc.userUID = user?.uid
+                     AuthService.shared.UserID = user?.uid
+                     self.setupRootViewController(viewController: vc)
+                }
             }
+            Auth.auth().removeStateDidChangeListener(self.handle!)
         }
-        Auth.auth().removeStateDidChangeListener(handle!)
     }
     
     private func setupRootViewController(viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: viewController)
-        self.window!.rootViewController = navigationController
-        self.window!.makeKeyAndVisible()
+        self.window?.rootViewController = navigationController
+        self.window?.makeKeyAndVisible()
     }
-    
-//    func application( open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
-//        return ApplicationDelegate.shared.application( app, open: url, options: options)
-//    }
+
     
     @available(iOS 13.0, *)
     func customize() {
@@ -83,8 +82,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func configure() {
         monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
-
+                print("We're connected!")
             } else {
+                print("No connection.")
                 DispatchQueue.main.async {
                     self.window?.rootViewController?.showMessage("No connection", type: .warning)
                 }
@@ -98,15 +98,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         FirebaseApp.configure()
 //        Database.database().isPersistenceEnabled = true
         
-        let firstTime = UserDefaults.standard.bool(forKey: "first_time")
+//        let firstTime = UserDefaults.standard.bool(forKey: "first_time")
         
-        if firstTime == true {
-            let vc = UINavigationController(rootViewController: LogInVC())
-            self.window?.rootViewController = vc
-        } else {
-            let vc = UINavigationController(rootViewController: LogInVC())
-            self.window?.rootViewController = vc
-        }
+//        if firstTime == true {
+//            let vc = UINavigationController(rootViewController: LogInVC())
+//            self.window?.rootViewController = vc
+//        } else {
+//            let vc = UINavigationController(rootViewController: LogInVC())
+//            self.window?.rootViewController = vc
+//        }
+//
+//        if let uid = UserDefaults.standard.string(forKey: "userId") {
+//            if !uid.isEmpty {
+//                let initialViewController = ProfileVC()
+//                let navigationController = UINavigationController(rootViewController: initialViewController)
+//                self.window?.rootViewController = navigationController
+//                self.window?.makeKeyAndVisible()
+//            } else {
+//                let initialViewController =  LogInVC()
+//                let navigationController = UINavigationController(rootViewController: initialViewController)
+//                self.window?.rootViewController = navigationController
+//                self.window?.makeKeyAndVisible()
+//            }
+//        }
     }
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

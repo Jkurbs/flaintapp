@@ -67,11 +67,13 @@ extension ProfileVC {
         
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
         let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
-            let editVC = EditArtVC()
-            editVC.art = art
-            let nav = UINavigationController(rootViewController: editVC)
-            nav.modalPresentationStyle = .fullScreen
-            self.navigationController?.present(nav, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                let editVC = EditArtVC()
+                editVC.art = art
+                let nav = UINavigationController(rootViewController: editVC)
+                nav.modalPresentationStyle = .fullScreen
+                self.navigationController?.present(nav, animated: true, completion: nil)
+            }
         }
         
         let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in

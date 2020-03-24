@@ -15,7 +15,6 @@ import UIKit
 
 class EditArtVC: UITableViewController, ArtDescDelegate {
     
-    
     // MARK: - Properties
     
     var artImg: UIImage?
@@ -24,7 +23,6 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     var artProperties = ArtProperties.self
     
     var titles = ["Title", "Price"]
-    
     var array = ["Title", "Price", "Description", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
     
     
@@ -107,6 +105,7 @@ extension EditArtVC {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let section = indexPath.section
         let cell = PickerCell(type: .default, reuseIdentifier: PickerCell.id)
         
@@ -163,6 +162,7 @@ extension EditArtVC {
             break
         }
         return UITableViewCell()
+
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

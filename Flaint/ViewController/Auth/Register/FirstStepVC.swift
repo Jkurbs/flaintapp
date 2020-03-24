@@ -86,7 +86,7 @@ class FirstStepVC: UIViewController, CountryListDelegate {
         
         let height = (navigationController?.toolbar.frame.size.height)! * 2
         barView.frame = CGRect(x: 0, y: self.view.frame.height - height, width: view.frame.width, height: height)
-        barView.configure(first: "Already have an account?  ", second: "Log In.")
+        barView.configure(string: "Already have an account?  ", comment: "Log In.")
         barView.label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(back)))
         view.addSubview(barView)
     }

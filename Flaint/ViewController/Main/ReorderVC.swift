@@ -72,9 +72,6 @@ class ReorderVC: UIViewController {
         view.addSubview(tableView)
     }
     
-    
-    // MARK: Actions
-    
     @objc func cancel() {
         self.navigationController?.dismiss(animated: true, completion: nil)
     }
@@ -89,9 +86,6 @@ class ReorderVC: UIViewController {
         activityIndicator.startAnimating()
         
         guard let userId = AuthService.shared.UserID ?? UserDefaults.standard.string(forKey: .userId) else { return }
-        
-        print("User ID: \(userId)")
-        
         DataService.shared.reorderArt(arts: arts, userId: userId) { _ in
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.navigationController?.dismiss(animated: true, completion: nil)
@@ -223,5 +217,4 @@ class ReorderCell: UITableViewCell {
         }
         titleLabel.text = art.title
     }
-    
 }

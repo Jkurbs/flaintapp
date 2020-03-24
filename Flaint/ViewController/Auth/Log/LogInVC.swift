@@ -54,10 +54,9 @@ class LogInVC: UIViewController {
         
         view.addSubview(nextButton)
         
-        let height = (navigationController?.toolbar.frame.size.height)! * 2
-        barView.frame = CGRect(x: 0, y: self.view.frame.height - height, width: view.frame.width, height: height)
-        barView.configure(first: "Dont have an account?  ", second: "Sign up.")
+        barView.configure(string: "Dont have an account?  ", comment: "Sign up.")
         barView.label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(back)))
+        
         view.addSubview(barView)
     }
     
@@ -98,7 +97,11 @@ class LogInVC: UIViewController {
             nextButton.topAnchor.constraint(equalTo: pwdField.bottomAnchor, constant: 16.0),
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextButton.widthAnchor.constraint(equalTo: label.widthAnchor),
-            nextButton.heightAnchor.constraint(equalToConstant: 46.0)
+            nextButton.heightAnchor.constraint(equalToConstant: 46.0),
+            
+            barView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            barView.widthAnchor.constraint(equalTo: view.widthAnchor),
+            barView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             
         ])
     }
