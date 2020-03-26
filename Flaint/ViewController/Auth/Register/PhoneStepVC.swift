@@ -59,6 +59,7 @@ class PhoneStepVC: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
+        
         NSLayoutConstraint.activate([
             
             label.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0),

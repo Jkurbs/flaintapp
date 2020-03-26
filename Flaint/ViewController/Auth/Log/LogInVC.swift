@@ -30,7 +30,6 @@ class LogInVC: UIViewController {
         label.sizeToFit()
         label.translatesAutoresizingMaskIntoConstraints = false
         
-        view.addSubview(detailField)
         detailField.keyboardType = .emailAddress
         detailField.autocorrectionType = .no
         detailField.autocapitalizationType = .none
@@ -38,14 +37,15 @@ class LogInVC: UIViewController {
         detailField.placeholder = "Phone number or email"
         detailField.textContentType = .username
         detailField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(detailField)
 
         
-        view.addSubview(pwdField)
         pwdField.isSecureTextEntry = true
         pwdField.backgroundColor = .fieldBackgroundColor
         pwdField.placeholder = "Password"
         pwdField.textContentType = .password
         pwdField.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(pwdField)
         
         nextButton.setTitle("Log In", for: .normal)
         nextButton.addTarget(self, action: #selector(self.nextStep), for: .touchUpInside)
@@ -99,7 +99,7 @@ class LogInVC: UIViewController {
             nextButton.widthAnchor.constraint(equalTo: label.widthAnchor),
             nextButton.heightAnchor.constraint(equalToConstant: 46.0),
             
-            barView.heightAnchor.constraint(equalTo: view.heightAnchor),
+            barView.heightAnchor.constraint(equalToConstant: 60.0),
             barView.widthAnchor.constraint(equalTo: view.widthAnchor),
             barView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
             
