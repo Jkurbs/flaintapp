@@ -33,8 +33,8 @@ class  ChangePwdVC: UITableViewController {
     // MARK: - Actions
     
     @objc func save() {
-        guard let currentPass = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldCell, let repeatPass = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TextFieldCell, let newPass = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TextFieldCell, currentPass != repeatPass else {return}
-        Auth.auth().currentUser?.updatePassword(to: newPass.textField.text!, completion: { (error) in
+        guard let currentPass = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? TextFieldCell, let repeatPass = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TextFieldCell, let newPass = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? TextFieldCell, currentPass != repeatPass else { return }
+        Auth.auth().currentUser?.updatePassword(to: newPass.textField.text!, completion: { error in
             if let err = error {
                 self.showMessage(err.localizedDescription, type: .error)
             } else {
@@ -49,11 +49,11 @@ class  ChangePwdVC: UITableViewController {
 extension ChangePwdVC {
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return data.count
+        data.count
     }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +64,6 @@ extension ChangePwdVC {
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50.0
+        50.0
     }
 }
-

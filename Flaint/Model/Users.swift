@@ -20,15 +20,15 @@ class Users: Codable {
 
 extension Users: Equatable {
     
-    static public func ==(rhs: Users, lhs: Users) -> Bool {
-        return  rhs.userId == lhs.userId
+    public static func ==(rhs: Users, lhs: Users) -> Bool {
+        rhs.userId == lhs.userId
     }
 }
 
 extension Users: ListDiffable {
     
     public func diffIdentifier() -> NSObjectProtocol {
-        return userId as NSObjectProtocol
+        userId as NSObjectProtocol
     }
     
     public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
@@ -37,4 +37,3 @@ extension Users: ListDiffable {
         return self.userId == object.userId
     }
 }
-

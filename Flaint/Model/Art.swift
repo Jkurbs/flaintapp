@@ -32,15 +32,15 @@ class Art: Codable {
 
 extension Art: Equatable {
     
-    static public func ==(rhs: Art, lhs: Art) -> Bool {
-        return rhs.id != lhs.id
+    public static func ==(rhs: Art, lhs: Art) -> Bool {
+        rhs.id != lhs.id
     }
 }
 
 extension Art: ListDiffable {
     
     public func diffIdentifier() -> NSObjectProtocol {
-        return id as NSObjectProtocol
+        id as NSObjectProtocol
     }
     
     public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {

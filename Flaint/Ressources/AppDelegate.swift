@@ -32,9 +32,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     private func observeAuthorisedState() {
-        handle = Auth.auth().addStateDidChangeListener { (auth, user) in
+        handle = Auth.auth().addStateDidChangeListener { auth, user in
             if user == nil {
-                self.setupRootViewController(viewController: LogInVC())
+                self.setupRootViewController(viewController: AuthVC())
             } else {
                 DispatchQueue.main.async {
                      let vc = ProfileVC()
@@ -61,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         let color = UIColor.darkText
         UINavigationBar.appearance().tintColor = color
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor : color]
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().backgroundColor = .backgroundColor
@@ -97,31 +97,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
 //        Database.database().isPersistenceEnabled = true
-        
-//        let firstTime = UserDefaults.standard.bool(forKey: "first_time")
-        
-//        if firstTime == true {
-//            let vc = UINavigationController(rootViewController: LogInVC())
-//            self.window?.rootViewController = vc
-//        } else {
-//            let vc = UINavigationController(rootViewController: LogInVC())
-//            self.window?.rootViewController = vc
-//        }
-//
-//        if let uid = UserDefaults.standard.string(forKey: "userId") {
-//            if !uid.isEmpty {
-//                let initialViewController = ProfileVC()
-//                let navigationController = UINavigationController(rootViewController: initialViewController)
-//                self.window?.rootViewController = navigationController
-//                self.window?.makeKeyAndVisible()
-//            } else {
-//                let initialViewController =  LogInVC()
-//                let navigationController = UINavigationController(rootViewController: initialViewController)
-//                self.window?.rootViewController = navigationController
-//                self.window?.makeKeyAndVisible()
-//            }
-//        }
     }
+    
+    
+    // MARK: - State Restoration
+    
+    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
+        true
+    }
+    
+    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
+        true
+    }
+    
     
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // Pass device token to auth
@@ -130,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // ...
     }
     
-    func application(_ application: UIApplication, didReceiveRemoteNotification notification: [AnyHashable : Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+    func application(_ application: UIApplication, didReceiveRemoteNotification notification: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         if Auth.auth().canHandleNotification(notification) {
             completionHandler(UIBackgroundFetchResult.noData)
             return
@@ -138,7 +126,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This notification is not auth related, developer should handle it.
     }
     
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any]) -> Bool {
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
         if Auth.auth().canHandle(url) {
             return true
         }
@@ -177,4 +165,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
 }
-

@@ -72,7 +72,7 @@ extension AddImageVC {
         self.ref = ref
         
         DispatchQueue.global(qos: .background).async {
-            DataService.shared.saveImg(ref, userId, imgData) { (result) in
+            DataService.shared.saveImg(ref, userId, imgData) { result in
                 if let url = try? result.get() as? String {
                     vc.imgUrl = url
                 }
@@ -94,9 +94,9 @@ extension AddImageVC {
     
     func alert() {
         let alert = UIAlertController(title: "", message: "Are you sure want to cancel?", preferredStyle: .alert)
-        let yes = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let yes = UIAlertAction(title: "Yes", style: .default) { _ in
             if self.ref != nil {
-                self.ref.delete { (error) in
+                self.ref.delete { error in
                     if error != nil {
                         self.navigationController?.dismiss(animated: true, completion: nil)
                     } else {

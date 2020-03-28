@@ -18,13 +18,13 @@ class PictureCell: UITableViewCell {
         didSet {
             guard let item = item as? AccountViewModelGeneralItem else { return }
             guard item.imgUrl != "" else { return userImgView.image = UIImage(named: "Avatar") }
-            self.userImgView.sd_setImage(with:  URL(string: item.imgUrl), placeholderImage: UIImage(named: "Placeholder"))
+            self.userImgView.sd_setImage(with: URL(string: item.imgUrl), placeholderImage: UIImage(named: "Placeholder"))
         }
     }
     
     let separator: UIView = {
         let layer = UIView()
-        layer.translatesAutoresizingMaskIntoConstraints = false 
+        layer.translatesAutoresizingMaskIntoConstraints = false
         layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1)
         return layer
     }()
@@ -79,7 +79,7 @@ class PictureCell: UITableViewCell {
         ])
 
         DispatchQueue.main.async {
-            self.userImgView.layer.cornerRadius = self.userImgView.frame.width/2
+            self.userImgView.layer.cornerRadius = self.userImgView.frame.width / 2
         }
     }
     
@@ -92,7 +92,7 @@ class PictureCell: UITableViewCell {
 extension PictureCell: ImagePickerDelegate {
     
     func didSelect(image: UIImage?) {
-        if (image != nil) {
+        if image != nil {
             self.userImgView.image = image
         }
     }

@@ -31,6 +31,6 @@ class FetchImageOperation: BlockOperation {
             }
         }
         guard let url = URL(string: urlString) else { return }
-        self.imageView.sd_setImage(with: url, placeholderImage: nil , options: .continueInBackground, completed: myBlock)
+        self.imageView.sd_setImage(with: url, placeholderImage: nil, options: .continueInBackground, completed: myBlock)
     }
 }

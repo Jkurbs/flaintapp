@@ -27,10 +27,10 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     var arts = [Art]()
     var currentArt: Art?
     
-    weak var delegate: ArtDelegate? 
+    weak var delegate: ArtDelegate?
     
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater: ListAdapterUpdater(), viewController: self)
+        ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -40,7 +40,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print("USER ID:\(userUID)")
         setupViews()
     }
     
@@ -80,11 +79,11 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         // NavBar setup
         
-        let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action:  #selector(gotToReorderVC))
+        let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action: #selector(gotToReorderVC))
         
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
-        let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action:  #selector(gotToSettingsVC))
+        let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action: #selector(gotToSettingsVC))
         
         navigationItem.leftBarButtonItem = reorderButton
         navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
@@ -121,6 +120,5 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         adapter.collectionView = collectionView
         adapter.dataSource = self
         self.view.addSubview(countLabel)
-    }    
+    }
 }
-

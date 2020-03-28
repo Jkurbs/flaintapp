@@ -1,5 +1,5 @@
 //
-//  PhoneTextField.swift
+//  BgTextField.swift
 //  Flaint
 //
 //  Created by Kerby Jean on 7/7/19.
@@ -16,8 +16,7 @@ class BgTextField: UITextField, UITextFieldDelegate {
         setup()
     }
     
-    
-    required override init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)
         delegate = self
         setup()
@@ -69,7 +68,6 @@ class BgTextField: UITextField, UITextFieldDelegate {
             self.rightViewMode = .always
             self.rightView = button
         }
-        
         return button
     }
     
@@ -82,18 +80,10 @@ class BgTextField: UITextField, UITextFieldDelegate {
     
     @IBInspectable public var rightViewImage: UIView {
         get {
-            return self.rightView!
+            self.rightView!
         }
         set {
             self.rightView = newValue
         }
     }
 }
-
-
-
-
-
-
-
-

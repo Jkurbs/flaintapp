@@ -16,7 +16,7 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
     
     var scnView: SCNView!
     var artRoomScene = ArtRoomScene(create: true)
-    var viewController: UIViewController! 
+    var viewController: UIViewController!
     
     //HANDLE PAN CAMERA
     var lastWidthRatio: Float = 0
@@ -68,7 +68,7 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
 //        }
         
         DispatchQueue.main.async {
-            self.addButton.layer.cornerRadius = self.addButton.frame.size.width/2
+            self.addButton.layer.cornerRadius = self.addButton.frame.size.width / 2
         }
     }
     
@@ -91,7 +91,7 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
     }
     
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
         picker.dismiss(animated: true)
         let image = info[.originalImage] as! UIImage
         addButton.removeFromSuperview()
@@ -121,27 +121,26 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
     }
     
     
-    
     @objc func handlePan(gestureRecognize: UIPanGestureRecognizer) {
         let numberOfTouches = gestureRecognize.numberOfTouches
         let translation = gestureRecognize.translation(in: gestureRecognize.view!)
         var widthRatio = Float(translation.x) / Float(gestureRecognize.view!.frame.size.width) - lastWidthRatio
         var heightRatio = Float(translation.y) / Float(gestureRecognize.view!.frame.size.height) - lastHeightRatio
         
-        if (numberOfTouches == fingersNeededToPan) {
+        if numberOfTouches == fingersNeededToPan {
             //  HEIGHT constraints
-            if (heightRatio >= maxHeightRatioXUp ) {
+            if heightRatio >= maxHeightRatioXUp {
                 heightRatio = maxHeightRatioXUp
             }
-            if (heightRatio <= maxHeightRatioXDown ) {
+            if heightRatio <= maxHeightRatioXDown {
                 heightRatio = maxHeightRatioXDown
             }
             
             //  WIDTH constraints
-            if(widthRatio >= maxWidthRatioRight) {
+            if widthRatio >= maxWidthRatioRight {
                 widthRatio = maxWidthRatioRight
             }
-            if(widthRatio <= maxWidthRatioLeft) {
+            if widthRatio <= maxWidthRatioLeft {
                 widthRatio = maxWidthRatioLeft
             }
             
@@ -151,9 +150,9 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
             lastFingersNumber = fingersNeededToPan
         }
         
-        lastFingersNumber = (numberOfTouches>0 ? numberOfTouches : lastFingersNumber)
+        lastFingersNumber = (numberOfTouches > 0 ? numberOfTouches : lastFingersNumber)
         
-        if (gestureRecognize.state == .ended && lastFingersNumber==fingersNeededToPan) {
+        if gestureRecognize.state == .ended && lastFingersNumber == fingersNeededToPan {
             lastWidthRatio = widthRatio
             lastHeightRatio = heightRatio
         }

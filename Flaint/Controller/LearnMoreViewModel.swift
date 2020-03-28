@@ -65,11 +65,11 @@ class LearnMoreViewModel: NSObject {
 extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items[section].rowCount
+        items[section].rowCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -166,18 +166,17 @@ extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-
 class LearnViewModelGeneralItem: LearnModelItem {
     var type: LearnModelItemType {
-        return .primary
+        .primary
     }
     
     var sectionTitle: String? {
-        return nil
+        nil
     }
     
     var rowCount: Int {
-        return 7
+        7
     }
     
     var title: String
@@ -204,15 +203,15 @@ class LearnViewModelGeneralItem: LearnModelItem {
 
 class LearnViewModelMoreItem: LearnModelItem {
     var type: LearnModelItemType {
-        return .secondary
+        .secondary
     }
     
     var sectionTitle: String? {
-        return "Description"
+        "Description"
     }
     
     var rowCount: Int {
-        return 1
+        1
     }
     
     var description: String
@@ -222,6 +221,3 @@ class LearnViewModelMoreItem: LearnModelItem {
         self.description = description
     }
 }
-
-
-

@@ -49,9 +49,8 @@ class ShareVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        2
     }
-    
     
        
    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +63,7 @@ class ShareVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
            }
        }
                      
-       let cell : UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+       let cell: UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "cell")!
        cell.imageView?.image = UIImage(named: "Instagram")
        cell.textLabel?.text = "Instagram stories"
        cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -74,7 +73,7 @@ class ShareVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.row == 0 {
-            return tableView.frame.height/3
+            return tableView.frame.height / 3
         }
         return UITableView.automaticDimension
     }
@@ -113,4 +112,3 @@ extension ShareVC {
         }
     }
 }
-

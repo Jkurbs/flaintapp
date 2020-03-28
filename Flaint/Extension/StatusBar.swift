@@ -7,11 +7,11 @@
 //
 
 
-import UIKit 
+import UIKit
 
 // gives control of the status bar appearance to the top controller
 extension UINavigationController {
     override open var childForStatusBarHidden: UIViewController? {
-        return self.topViewController
+        self.topViewController
     }
 }

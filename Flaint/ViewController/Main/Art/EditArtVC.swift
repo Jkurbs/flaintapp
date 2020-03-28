@@ -18,7 +18,11 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     // MARK: - Properties
     
     var artImg: UIImage?
-    var art: Art?
+    var art: Art? {
+        didSet {
+            tableView.reloadData()
+        }
+    }
     
     var artProperties = ArtProperties.self
     
@@ -33,6 +37,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         
         view.backgroundColor = .backgroundColor
         self.title = "Edit Painting"
+        self.restorationIdentifier = "EditArtVCRestorationID"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -55,7 +60,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.addActivityIndicator()
         // Save Edit Art
         
-        guard let userId = UserDefaults.standard.string(forKey: "userId"), let artId = self.art?.id else {return}
+        guard let userId = UserDefaults.standard.string(forKey: "userId"), let artId = self.art?.id else { return }
         
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! InfoTextFieldCell
         let priceCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as! InfoTextFieldCell
@@ -70,9 +75,9 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         
         if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text, let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "") {
             
-            let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String : Any]
+            let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String: Any]
             
-            DataService.shared.editArt(userId: userId, artId: artId, style: style, data: data) { (success, error) in
+            DataService.shared.editArt(userId: userId, artId: artId, style: style, data: data) { success, _ in
                 if !success {
                     print("Error updating art")
                 } else {
@@ -91,7 +96,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
 extension EditArtVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 9
+        9
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -168,7 +173,7 @@ extension EditArtVC {
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         let section = indexPath.section
         if section == 0 {
-            return view.frame.height/4
+            return view.frame.height / 4
         } else if section == 1 {
             return 45.0
         } else if section == 2 {

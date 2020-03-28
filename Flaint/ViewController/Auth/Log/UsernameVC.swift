@@ -1,5 +1,5 @@
 //
-//  FourthStepVC.swift
+//  UsernameVC.swift
 //  Flaint
 //
 //  Created by Kerby Jean on 7/10/19.
@@ -9,13 +9,12 @@
 import UIKit
 import FirebaseAuth
 
-class FourthStepVC: UIViewController {
+class UsernameVC: UIViewController {
     
     var label = UILabel()
     var textField = BgTextField()
     var errorLabel = UILabel()
     var nextButton = NextButton()
-    var barView = BarView()
     var data = [String]()
     
     override func viewDidLoad() {
@@ -41,12 +40,6 @@ class FourthStepVC: UIViewController {
         nextButton.addTarget(self, action: #selector(nextStep), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(self.textChanged), name: UITextField.textDidChangeNotification, object: nil)
         view.addSubview(nextButton)
-        
-        let height = (navigationController?.toolbar.frame.size.height)! * 2
-        barView.frame = CGRect(x: 0, y: self.view.frame.height - height, width: view.frame.width, height: height)
-        barView.configure(string: "Already have an account?  ", comment: "Log In.")
-        barView.label.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(back)))
-        view.addSubview(barView)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,21 +51,21 @@ class FourthStepVC: UIViewController {
         super.viewDidLayoutSubviews()
         
 //        constrain(label, textField, errorLabel, nextButton, view) { (label, textField, errorLabel, nextButton, view) in
-//            
+//
 //            label.top == view.top + 80
 //            label.width == view.width - 60
 //            label.height == 30
 //            label.centerX == view.centerX
-//            
+//
 //            textField.top == label.bottom + 20
 //            textField.centerX == view.centerX
 //            textField.width == label.width
 //            textField.height == 45
-//            
+//
 //            errorLabel.top == textField.bottom + 5
 //            errorLabel.width == view.width - 50
 //            errorLabel.left == textField.left
-//            
+//
 //            nextButton.top == errorLabel.bottom + 15
 //            nextButton.width == textField.width
 //            nextButton.height == 45
@@ -91,7 +84,7 @@ class FourthStepVC: UIViewController {
             let name = data[3]
             let pwd = data[4]
             
-            AuthService.shared.createAccount(phone: phone, code: code, name: name, username: username, email: email, pwd: pwd) { (success, error) in
+            AuthService.shared.createAccount(phone: phone, code: code, name: name, username: username, email: email, pwd: pwd) { _, error in
                 if let error = error {
                     print("error:", error.localizedDescription)
                     self.nextButton.hideLoading()
@@ -137,12 +130,12 @@ class FourthStepVC: UIViewController {
 //    }
 }
 
-extension FourthStepVC: UITextFieldDelegate {
+extension UsernameVC: UITextFieldDelegate {
     
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.hasText {
             let username = textField.text!.lowercased().trimmingCharacters(in: .whitespaces)
-            DataService.shared.checkUsername(username) { (success) in
+            DataService.shared.checkUsername(username) { success in
                 if !success {
                     DispatchQueue.main.async {
                         self.errorLabel.text = "Username already taken"
@@ -153,11 +146,10 @@ extension FourthStepVC: UITextFieldDelegate {
                     DispatchQueue.main.async {
                         self.errorLabel.text = "Username available"
                         self.nextButton.enable()
-                        self.errorLabel.textColor = .success 
+                        self.errorLabel.textColor = .success
                     }
                 }
             }
         }
     }
 }
-

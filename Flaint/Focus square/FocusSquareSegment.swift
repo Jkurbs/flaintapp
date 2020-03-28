@@ -93,12 +93,12 @@ extension FocusSquare {
 
         var openDirection: Direction {
             switch (corner, alignment) {
-                case (.topLeft,     .horizontal):   return .left
-                case (.topLeft,     .vertical):     return .up
-                case (.topRight,    .horizontal):   return .right
-                case (.topRight,    .vertical):     return .up
-                case (.bottomLeft,  .horizontal):   return .left
-                case (.bottomLeft,  .vertical):     return .down
+                case (.topLeft, .horizontal):   return .left
+                case (.topLeft, .vertical):     return .up
+                case (.topRight, .horizontal):   return .right
+                case (.topRight, .vertical):     return .up
+                case (.bottomLeft, .horizontal):   return .left
+                case (.bottomLeft, .vertical):     return .down
                 case (.bottomRight, .horizontal):   return .right
                 case (.bottomRight, .vertical):     return .down
             }

@@ -32,7 +32,7 @@ class EditAccountGeneralCell: UITableViewCell {
         textField.font = UIFont.normal
         textField.translatesAutoresizingMaskIntoConstraints = false
 
-        valueLabel.font =  UIFont.normal
+        valueLabel.font = UIFont.normal
         valueLabel.textColor = .darkText
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
 

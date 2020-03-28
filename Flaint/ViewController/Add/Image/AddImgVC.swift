@@ -27,7 +27,7 @@ class AddImageVC: UIViewController {
     var classifications = [String]()
     var imagePicker: ImagePicker!
     
-    var artsCount: Int? 
+    var artsCount: Int?
     
     // MARK: - Image Classification
     
@@ -39,7 +39,7 @@ class AddImageVC: UIViewController {
             })
             request.imageCropAndScaleOption = .centerCrop
             return request
-        } catch  {
+        } catch {
             fatalError("Failed to load Vision ML Model:\(error)")
         }
     }()
@@ -73,13 +73,12 @@ class AddImageVC: UIViewController {
     
     func setupView() {
         
+        self.restorationIdentifier = UIView.id
+        
         self.extendedLayoutIncludesOpaqueBars = true
         
         view.backgroundColor = .backgroundColor
         self.title = "Add Painting"
-        
-        //        self.navigationController?.isToolbarHidden = true
-        //        self.navigationController?.toolbar.tintColor = .darkText
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         
@@ -122,7 +121,7 @@ class AddImageVC: UIViewController {
 extension AddImageVC: ImagePickerDelegate {
     
     func didSelect(image: UIImage?) {
-        if (image != nil) {
+        if image != nil {
             //            self.updateClassifications(for: image!)
             self.navigationItem.titleView = self.cropButton
             self.navigationItem.rightBarButtonItem?.isEnabled = true

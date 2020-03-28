@@ -13,10 +13,10 @@ import MaterialComponents.MaterialActivityIndicator
 
 class ProfileImageCell: UICollectionViewCell {
     
-    var imageView =  UIImageView()
+    var imageView = UIImageView()
     
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
     
     var item: AccountModelItem? {
@@ -29,12 +29,12 @@ class ProfileImageCell: UICollectionViewCell {
     }
     
     
-    required override init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)
-        imageView = UICreator.create.imageView(nil, contentView)        
+        imageView = UICreator.create.imageView(nil, contentView)
     }
     
-    required init(coder aDecoder: NSCoder) {super.init(coder: aDecoder)!}
+    required init(coder aDecoder: NSCoder) { super.init(coder: aDecoder)! }
     
     override func layoutSubviews() {
         super.layoutSubviews()
@@ -55,7 +55,7 @@ class ProfileImageCell: UICollectionViewCell {
 
 class DetailsCell: UICollectionViewCell {
     
-    var label =  UILabel()
+    var label = UILabel()
     var artCountLabel = UILabel()
     var quoteLabel = UILabel()
     
@@ -65,7 +65,7 @@ class DetailsCell: UICollectionViewCell {
         
     }
     
-    required override init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)
         label = UICreator.create.label("", 17, .darkText, .center, .regular, contentView)
         artCountLabel = UICreator.create.label("", 17, .darkText, .center, .regular, contentView)
@@ -111,7 +111,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     var art: Art? {
         didSet {
             guard let art = art else { return }
-            guard let url = URL(string: art.imgUrl) else {return}
+            guard let url = URL(string: art.imgUrl) else { return }
 
             let myBlock: SDExternalCompletionBlock! = { [weak self] (image: UIImage?, error: Error?, cacheType: SDImageCacheType, imageUrl: URL?) -> Void in
                 if let img = image {
@@ -126,7 +126,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                         
                         let newImage = imageResizeOperation.image
                         
-                        self?.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width , position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0,0,0,0))
+                        self?.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width, position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0, 0, 0, 0))
                     }
                     
                     updateImageOperation.addDependency(imageResizeOperation)
@@ -134,15 +134,15 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                     OperationQueue.main.addOperation(updateImageOperation)
                 }
             }
-            self.imageView.sd_setImage(with: url, placeholderImage: nil , options: .continueInBackground, completed: myBlock)
+            self.imageView.sd_setImage(with: url, placeholderImage: nil, options: .continueInBackground, completed: myBlock)
         }
     }
     
-    //MARK: - Initializer
+    // MARK: - Initializer
     
-    required init(coder aDecoder: NSCoder) { super.init(coder: aDecoder)!}
+    required init(coder aDecoder: NSCoder) { super.init(coder: aDecoder)! }
     
-    required override init(frame: CGRect) {
+    override required init(frame: CGRect) {
         super.init(frame: frame)
         
         contentView.backgroundColor = .backgroundColor
@@ -163,7 +163,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         scnView.backgroundColor = .backgroundColor
         scnView.antialiasingMode = .multisampling4X
         
-        contentView.addSubview(scnView)        
+        contentView.addSubview(scnView)
         
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePan(sender:)))
         panGesture.delegate = self
@@ -183,20 +183,20 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                 
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
         
-        if (numberOfTouches == fingersNeededToPan) {
+        if numberOfTouches == fingersNeededToPan {
             
-            if(widthRatio >= maxWidthRatioRight) {
+            if widthRatio >= maxWidthRatioRight {
                 widthRatio = maxWidthRatioRight
             }
-            if(widthRatio <= maxWidthRatioLeft) {
+            if widthRatio <= maxWidthRatioLeft {
                 widthRatio = maxWidthRatioLeft
             }
             
-            self.artRoomScene.boxnode.eulerAngles.y = (Float(2 * Double.pi) * (widthRatio)) 
+            self.artRoomScene.boxnode.eulerAngles.y = (Float(2 * Double.pi) * (widthRatio))
             lastFingersNumber = fingersNeededToPan
         }
         
-        lastFingersNumber = (numberOfTouches>0 ? numberOfTouches : lastFingersNumber)
+        lastFingersNumber = (numberOfTouches > 0 ? numberOfTouches : lastFingersNumber)
     
         if sender.state == .ended && lastFingersNumber == fingersNeededToPan {
             lastWidthRatio = widthRatio
@@ -273,7 +273,7 @@ class ProfileArtInfoCell: UICollectionViewCell {
         learnMoreLabel.font = font
         learnMoreLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        learnMoreButton.setImage(UIImage(named:"More-20"), for: .normal)
+        learnMoreButton.setImage(UIImage(named: "More-20"), for: .normal)
         learnMoreLabel.isUserInteractionEnabled = true
         learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -351,7 +351,7 @@ class ProfileArtAboutCell: UICollectionViewCell {
     fileprivate static let font = UIFont.normal
     
     static var singleLineHeight: CGFloat {
-        return font.lineHeight + insets.top + insets.bottom
+        font.lineHeight + insets.top + insets.bottom
     }
     
     static func textHeight(_ text: String, width: CGFloat) -> CGFloat {
@@ -377,13 +377,13 @@ class ProfileArtAboutCell: UICollectionViewCell {
         aboutLabel.adjustsFontSizeToFitWidth = true
         
         let attrs = [
-            NSAttributedString.Key.font : UIFont.normal,
-            NSAttributedString.Key.foregroundColor : UIColor.gray,
-            NSAttributedString.Key.underlineStyle : 1] as [NSAttributedString.Key : Any]
+            NSAttributedString.Key.font: UIFont.normal,
+            NSAttributedString.Key.foregroundColor: UIColor.gray,
+            NSAttributedString.Key.underlineStyle: 1] as [NSAttributedString.Key: Any]
         
-        let attributedString = NSMutableAttributedString(string:"")
+        let attributedString = NSMutableAttributedString(string: "")
         
-        let buttonTitleStr = NSMutableAttributedString(string:"Show more", attributes:attrs)
+        let buttonTitleStr = NSMutableAttributedString(string: "Show more", attributes: attrs)
         attributedString.append(buttonTitleStr)
         moreButton.setAttributedTitle(attributedString, for: .normal)
         moreButton.isUserInteractionEnabled = false

@@ -431,7 +431,7 @@ private func pulseAction() -> SCNAction {
 }
 
 private func flashAnimation(duration: TimeInterval) -> SCNAction {
-    let action = SCNAction.customAction(duration: duration) { (node, elapsedTime) -> Void in
+    let action = SCNAction.customAction(duration: duration) { node, elapsedTime -> Void in
         // animate color from HSB 48/100/100 to 48/30/100 and back
         let elapsedTimePercentage = elapsedTime / CGFloat(duration)
         let saturation = 2.8 * (elapsedTimePercentage - 0.5) * (elapsedTimePercentage - 0.5) + 0.3
@@ -441,4 +441,3 @@ private func flashAnimation(duration: TimeInterval) -> SCNAction {
     }
     return action
 }
-

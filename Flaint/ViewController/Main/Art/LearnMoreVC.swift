@@ -7,10 +7,9 @@
 //
 
 import UIKit
-import FirebaseAuth 
+import FirebaseAuth
 
 class LearnMoreVC: UIViewController {
-    
     
     
     // MARK: - Properties
@@ -79,8 +78,7 @@ class LearnMoreVC: UIViewController {
     
     @objc func options() {
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
-        
-        let editAction = UIAlertAction(title: "Edit", style: .default) { (action) in
+        let editAction = UIAlertAction(title: "Edit", style: .default) { _ in
             // Edit Art
             let vc = EditArtVC()
             vc.artImg = self.artImg
@@ -89,17 +87,18 @@ class LearnMoreVC: UIViewController {
             self.navigationController?.present(nav, animated: true, completion: nil)
         }
         
-        _ = UIAlertAction(title: "Share", style: .default) { (action) in
+        _ = UIAlertAction(title: "Share", style: .default) { _ in
             // Take Picture
             
             // Share Art
             let activityViewController = UIActivityViewController(activityItems: ["test" as NSString], applicationActivities: nil)
             self.present(activityViewController, animated: true, completion: nil)
         }
-        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+        let deleteAction = UIAlertAction(title: "Delete", style: .destructive) { action in
             let deleteAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
-            let yesAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            let yesAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 // Delete art
+                                
 //                DataService.shared.deleteArt(userId: Auth.auth().currentUser!.uid, artId: self.art!.id, { (success, error) in
 //                    if !success {
 //                        // Show error message
@@ -118,7 +117,6 @@ class LearnMoreVC: UIViewController {
         let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         
         alert.addAction(editAction)
-        //        alert.addAction(shareAction)
         alert.addAction(deleteAction)
         alert.addAction(cancelAction)
         self.present(alert, animated: true, completion: nil)

@@ -29,7 +29,7 @@ extension float4x4 {
      Factors out the orientation component of the transform.
     */
     var orientation: simd_quatf {
-        return simd_quaternion(self)
+        simd_quaternion(self)
     }
     
     /**
@@ -53,6 +53,6 @@ extension CGPoint {
 
     /// Returns the length of a point when considered as a vector. (Used with gesture recognizers.)
     var length: CGFloat {
-        return sqrt(x * x + y * y)
+        sqrt(x * x + y * y)
     }
 }

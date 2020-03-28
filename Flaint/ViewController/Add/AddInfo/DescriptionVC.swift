@@ -20,7 +20,7 @@ class DescriptionVC: UIViewController {
         return layer
     }()
     
-    var delegate: ArtDescDelegate?
+    weak var delegate: ArtDescDelegate?
     
     // MARK: - View Lifecycle
     
@@ -50,11 +50,6 @@ class DescriptionVC: UIViewController {
         
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         navigationItem.rightBarButtonItem = doneBtn
-        
-        let deadline = DispatchTime.now() + .milliseconds(5)
-        DispatchQueue.main.asyncAfter(deadline: deadline) {
-            self.textView.becomeFirstResponder()
-        }
     }
     
     func layoutViews() {

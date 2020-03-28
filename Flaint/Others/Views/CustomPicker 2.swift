@@ -31,7 +31,7 @@ class CustomPicker: UIView {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.count(_:)), name: NSNotification.Name(rawValue: "count"), object: nil)
         
-        indicatorView.backgroundColor = UIColor(red: 200.0/255.0, green: 201.0/255.0, blue: 202.0/255.0, alpha: 1.0)
+        indicatorView.backgroundColor = UIColor(red: 200.0 / 255.0, green: 201.0 / 255.0, blue: 202.0 / 255.0, alpha: 1.0)
         
         pickerView = CollectionPickerView()
         
@@ -42,7 +42,7 @@ class CustomPicker: UIView {
         pickerView.cellSpacing = 100
         pickerView.cellSize = 60
         pickerView.viewDepth = 3000
-        pickerView.selectItem(at: rotationNumber/2)
+        pickerView.selectItem(at: rotationNumber / 2)
         
         pickerView.collectionView.reloadData()
         pickerView.collectionView.register(TickCell.self, forCellWithReuseIdentifier: "cell")
@@ -74,10 +74,10 @@ class CustomPicker: UIView {
         
         let height = self.frame.size.height - 35
         let width = self.frame.size.width
-        pickerView.frame = CGRect(x: 0, y: 10 , width: self.frame.size.width, height: height)
-        indicatorView.frame = CGRect(x: pickerView.frame.width/2, y: 0, width: 5, height: 5)
-        indicatorView.layer.cornerRadius = self.indicatorView.frame.size.width/2
-        shimmeringView.frame = CGRect(x: 0, y: self.bounds.size.height - 25, width: width , height: 20)
+        pickerView.frame = CGRect(x: 0, y: 10, width: self.frame.size.width, height: height)
+        indicatorView.frame = CGRect(x: pickerView.frame.width / 2, y: 0, width: 5, height: 5)
+        indicatorView.layer.cornerRadius = self.indicatorView.frame.size.width / 2
+        shimmeringView.frame = CGRect(x: 0, y: self.bounds.size.height - 25, width: width, height: 20)
     }
     
     @objc func count(_ notification: Notification) {
@@ -92,11 +92,11 @@ class CustomPicker: UIView {
 extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
     
     public func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
+        1
     }
     
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return rotationNumber
+        rotationNumber
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -121,7 +121,7 @@ extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func setTimer() {
-        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] (timer) in
+        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
             UIView.animate(withDuration: 0.5) {
                 self?.slideLabel.alpha = 1.0
             }
@@ -129,7 +129,7 @@ extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     func pickerTimer() {
-        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] (timer) in
+        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
             UIView.animate(withDuration: 0.5) {
                 self?.slideLabel.alpha = 1.0
             }
@@ -140,7 +140,7 @@ extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: false)
         var index: [String: Int]
-        let rotationNumber = self.rotationNumber/2
+        let rotationNumber = self.rotationNumber / 2
         let row = indexPath.row
         let diff = row - rotationNumber
         
@@ -163,7 +163,7 @@ extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
         self.slideLabel.alpha = 0.0
         self.indicatorView.alpha = 1.0
         self.pickerView.alpha = 1.0
-        }) { (done) in
+        }) { _ in
             self.setTimer()
         }
     }
@@ -172,5 +172,3 @@ extension CustomPicker: UICollectionViewDelegate, UICollectionViewDataSource {
         print("DESELECTED")
     }
 }
-
-

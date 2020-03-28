@@ -31,14 +31,13 @@ class LearnMoreInfoCell: UITableViewCell {
     }
     
     
-    
     override func layoutSubviews() {
         super.layoutSubviews()
         
 //        constrain(titleLabel, valueLabel, contentView) { (titleLabel, valueLabel, contentView) in
 //            titleLabel.left == contentView.left + 20
 //            titleLabel.height == contentView.height
-//            
+//
 //            valueLabel.right == contentView.right + 20
 //            valueLabel.height == contentView.height
 //        }
@@ -51,7 +50,7 @@ class LearnMoreInfoCell: UITableViewCell {
     
     func configure(title: String, value: String) {
         titleLabel.text = title
-        valueLabel.text =  value
+        valueLabel.text = value
     }
 }
 
@@ -89,7 +88,6 @@ class LearnMoreDescCell: UITableViewCell {
         descLabel.numberOfLines = 0
         contentView.addSubview(descLabel)
     }
-    
     
     
     override func layoutSubviews() {

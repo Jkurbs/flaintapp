@@ -15,7 +15,7 @@ extension UINavigationItem {
         if #available(iOS 13.0, *) {
             activityIndicator.style = UIActivityIndicatorView.Style.medium
         } else {
-            activityIndicator.style = .gray 
+            activityIndicator.style = .gray
         }
         let barButton = UIBarButtonItem(customView: activityIndicator)
         self.setRightBarButton(barButton, animated: true)

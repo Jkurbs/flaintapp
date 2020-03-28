@@ -207,7 +207,7 @@ public class AUPickerCell: UITableViewCell {
     public var values = [String]()
     
     /// A class that receives notifications from an AUPickerCell instance. The class must implement the required protocol method "auPickerCell(_ cell: AUPickerCell, didPick row: Int, value: Any)"
-    public var delegate: AUPickerCellDelegate?
+    public weak var delegate: AUPickerCellDelegate?
     
     /**
      The currently selected row of string picker.
@@ -216,7 +216,7 @@ public class AUPickerCell: UITableViewCell {
      */
     public var selectedRow: Int {
         get {
-            return _selectedRow
+            _selectedRow
         }
         set {
             setSelectedRow(newValue, animated: true)
@@ -335,7 +335,7 @@ public class AUPickerCell: UITableViewCell {
      */
     public var date: Date {
         get {
-            return _date
+            _date
         }
         set {
             setDate(newValue, animated: true)
@@ -417,7 +417,7 @@ public class AUPickerCell: UITableViewCell {
         if !expanded {
             rightLabelTextColor = rightLabel.textColor
         }
-        expanded = !expanded
+        expanded.toggle()
         
         UIView.transition(with: rightLabel, duration: 0.25, options: .transitionCrossDissolve, animations: { [unowned self] in
             self.rightLabel.textColor = self.expanded ? self.tintColor : self.rightLabelTextColor
@@ -466,7 +466,7 @@ public class AUPickerCell: UITableViewCell {
 extension AUPickerCell: UIPickerViewDelegate {
     
     public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return values[row]
+        values[row]
     }
     
     public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
@@ -478,21 +478,21 @@ extension AUPickerCell: UIPickerViewDelegate {
 extension AUPickerCell: UIPickerViewDataSource {
     
     public func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
+        1
     }
     
     public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return values.count
+        values.count
     }
 }
 
 private class ColorLockedView: UIView {
-    var lockedBackgroundColor:UIColor {
+    var lockedBackgroundColor: UIColor {
         set { super.backgroundColor = newValue }
-        get { return super.backgroundColor! }
+        get { super.backgroundColor! }
     }
-    override var backgroundColor:UIColor? {
+    override var backgroundColor: UIColor? {
         set { }
-        get { return super.backgroundColor }
+        get { super.backgroundColor }
     }
 }

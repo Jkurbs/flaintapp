@@ -48,11 +48,11 @@ class AccountViewModel: NSObject {
 extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return items.count
+        items.count
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return items[section].rowCount
+        items[section].rowCount
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -138,18 +138,17 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-
 class AccountViewModelGeneralItem: AccountModelItem {
     var type: AccountModelItemType {
-        return .general
+        .general
     }
     
     var sectionTitle: String? {
-        return nil
+        nil
     }
     
     var rowCount: Int {
-        return 2
+        2
     }
     
     var imgUrl: String
@@ -164,15 +163,15 @@ class AccountViewModelGeneralItem: AccountModelItem {
 
 class AccountViewModelPersonalItem: AccountModelItem {
     var type: AccountModelItemType {
-        return .personal
+        .personal
     }
     
     var sectionTitle: String? {
-        return "Private Information"
+        "Private Information"
     }
     
     var rowCount: Int {
-        return 2
+        2
     }
     
     var email: String
@@ -184,5 +183,3 @@ class AccountViewModelPersonalItem: AccountModelItem {
         self.phone = phone
     }
 }
-
-

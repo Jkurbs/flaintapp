@@ -36,7 +36,7 @@ class ErrorHandler {
         return alert
     }
     
-    func internetError() -> UIAlertController  {
+    func internetError() -> UIAlertController {
         let alert = UIAlertController(title: "Error", message: "No internet connection", preferredStyle: .alert)
         let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
         alert.addAction(okAction)

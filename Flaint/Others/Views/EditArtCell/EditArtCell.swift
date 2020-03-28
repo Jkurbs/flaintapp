@@ -75,10 +75,10 @@ class InfoTextFieldCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         titleLabel.frame = CGRect(x: 20, y: 0, width: 90, height: contentView.frame.height)
-        textField.frame = CGRect(x: titleLabel.layer.position.x + 20, y: 0, width: contentView.frame.size.width - 90, height:  contentView.frame.height)
+        textField.frame = CGRect(x: titleLabel.layer.position.x + 20, y: 0, width: contentView.frame.size.width - 90, height: contentView.frame.height)
     }
     
-    func configure(title: String, art: Art?)  {
+    func configure(title: String, art: Art?) {
         titleLabel.text = title
         textField.placeholder = title
         switch title {
@@ -99,4 +99,3 @@ class InfoTextFieldCell: UITableViewCell {
         }
     }
 }
-

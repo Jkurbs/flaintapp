@@ -42,7 +42,7 @@ class AddArtInfoCell: UITableViewCell {
         contentView.addSubview(priceField)
         
         artImageView.contentMode = .scaleAspectFit
-        artImageView.isUserInteractionEnabled = true 
+        artImageView.isUserInteractionEnabled = true
         artImageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(imageViewTapped)))
         artImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(artImageView)
@@ -61,7 +61,7 @@ class AddArtInfoCell: UITableViewCell {
         NSLayoutConstraint.activate([
             
             titleField.topAnchor.constraint(equalTo: contentView.topAnchor),
-            titleField.widthAnchor.constraint(equalToConstant: contentView.frame.width/2),
+            titleField.widthAnchor.constraint(equalToConstant: contentView.frame.width / 2),
             titleField.heightAnchor.constraint(equalToConstant: 48.0),
             
             priceField.topAnchor.constraint(equalTo: titleField.bottomAnchor),
@@ -75,7 +75,7 @@ class AddArtInfoCell: UITableViewCell {
         ])
         
         let height: CGFloat = 0.5
-        separator.frame = CGRect(x: 15, y: 45, width: bounds.width/2, height: height)
+        separator.frame = CGRect(x: 15, y: 45, width: bounds.width / 2, height: height)
     }
     
     @objc func imageViewTapped() {

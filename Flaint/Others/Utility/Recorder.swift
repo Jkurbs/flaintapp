@@ -24,7 +24,7 @@ class RecorderView: UIView {
     
     lazy var recordView: UIView = {
         let view = UIView()
-        view.clipsToBounds = true 
+        view.clipsToBounds = true
         view.backgroundColor = .red
         return view
     }()
@@ -63,13 +63,13 @@ class RecorderView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        timerLabel.frame = CGRect(x: 190/2, y: 15, width: 0, height: 0)
+        timerLabel.frame = CGRect(x: 190 / 2, y: 15, width: 0, height: 0)
         timerLabel.adjustsFontSizeToFitWidth = true
         timerLabel.sizeToFit()
         
         recordView.frame = CGRect(x: 85, y: 0, width: 7, height: 7)
         recordView.center.y = timerLabel.center.y
-        recordView.layer.cornerRadius = recordView.frame.height/2
+        recordView.layer.cornerRadius = recordView.frame.height / 2
         
     }
     
@@ -77,7 +77,7 @@ class RecorderView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    @objc func startRecording(complete: @escaping () -> ()) {
+    @objc func startRecording(complete: @escaping () -> Void) {
      
         guard recorder.isAvailable else {
             print("Recording is not available at this time.")
@@ -86,7 +86,7 @@ class RecorderView: UIView {
         
         self.isHidden = false
         
-        recorder.startRecording {  (error) in
+        recorder.startRecording {  error in
             guard error == nil else {
                 print("There was an error starting the recording.")
                 return
@@ -108,10 +108,7 @@ class RecorderView: UIView {
         print("STOP")
         
         
-        recorder.stopRecording {(preview, error) in
-            
-            
-            
+        recorder.stopRecording {preview, _ in
             
             
             print("STOP")
@@ -133,7 +130,7 @@ class RecorderView: UIView {
             
             let alert = UIAlertController(title: "Recording Finished", message: "Would you like to edit or delete your recording?", preferredStyle: .alert)
             
-            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (action: UIAlertAction) in
+            let deleteAction = UIAlertAction(title: "Delete", style: .destructive, handler: { (_: UIAlertAction) in
                 self.recorder.discardRecording(handler: { () -> Void in
                     DispatchQueue.main.async {
                         self.viewController.showMessage("Recording successfully deleted.", type: .success)
@@ -143,7 +140,7 @@ class RecorderView: UIView {
                 })
             })
             
-            let editAction = UIAlertAction(title: "Edit", style: .default, handler: { (action: UIAlertAction) -> Void in
+            let editAction = UIAlertAction(title: "Edit", style: .default, handler: { (_: UIAlertAction) -> Void in
                 preview?.previewControllerDelegate = self
                 self.viewController.present(preview!, animated: true, completion: nil)
             })
@@ -164,7 +161,7 @@ class RecorderView: UIView {
     }
 }
 
-extension RecorderView : RPPreviewViewControllerDelegate {
+extension RecorderView: RPPreviewViewControllerDelegate {
     
     func previewControllerDidFinish(_ previewController: RPPreviewViewController) {
         previewController.dismiss(animated: true, completion: nil)

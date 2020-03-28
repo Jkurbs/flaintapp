@@ -11,31 +11,31 @@
 //import Cartography
 //
 //class ViewVC: UIViewController {
-//    
+//
 //   // MARK: IBOutlets
-//    
+//
 //   @IBOutlet var sceneView: ARSCNView!
 //   @IBOutlet weak var upperControlsView: UIView!
-//    
+//
 //   // MARK: - UI Elements
-//   
+//
 //   let coachingOverlay = ARCoachingOverlayView()
-//      
+//
 //   /// The view controller that displays the status and "restart experience" UI.
 //   lazy var statusViewController: StatusViewController = {
 //    return children.lazy.compactMap({ $0 as? StatusViewController }).first!
 //   }()
-//    
-//    
-//    
-//// MARK: - View Controller Life Cycle
+//
+//
+//
+// MARK: - View Controller Life Cycle
 //
 //override func viewDidLoad() {
 //    super.viewDidLoad()
-//    
+//
 //    sceneView.delegate = self
 //    sceneView.session.delegate = self
-//    
+//
 //    // Set up coaching overlay.
 //    setupCoachingOverlay()
 //
@@ -46,40 +46,40 @@
 //    statusViewController.restartExperienceHandler = { [unowned self] in
 //        self.restartExperience()
 //    }
-//    
+//
 //    let tapGesture = UITapGestureRecognizer(target: self, action: #selector(showVirtualObjectSelectionViewController))
 //    // Set the delegate to ensure this gesture is only used when there are no virtual objects in the scene.
 //    tapGesture.delegate = self
 //    sceneView.addGestureRecognizer(tapGesture)
 //}
 //
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
-//    
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 ////    var sceneView: ARSCNView!
 ////    var grids = [Grid]()
 ////    var scene: SCNScene?
@@ -404,6 +404,3 @@
 ////        sceneView.session.run(configuration, options: [.resetTracking, .removeExistingAnchors])
 ////    }
 //}
-
-
-

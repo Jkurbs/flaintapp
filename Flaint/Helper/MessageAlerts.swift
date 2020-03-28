@@ -52,7 +52,7 @@ public enum GSMessageOption {
     case cornerRadius(Double)
     case height(Double)
     case hideOnTap(Bool)
-    case handleTap(()->())
+    case handleTap(() -> Void)
     case isInsideSafeAreaInsets(Bool)
     case margin(UIEdgeInsets)
     case padding(UIEdgeInsets)
@@ -108,12 +108,12 @@ extension UIView {
 
 public class GSMessage: NSObject {
     
-    public static var font : UIFont = UIFont.systemFont(ofSize: 14)
+    public static var font: UIFont = UIFont.systemFont(ofSize: 14)
     
-    public static var successBackgroundColor : UIColor = UIColor(red: 142.0/255, green: 183.0/255, blue: 64.0/255,  alpha: 0.95)
-    public static var warningBackgroundColor : UIColor = UIColor(red: 230.0/255, green: 189.0/255, blue: 1.0/255,   alpha: 0.95)
-    public static var errorBackgroundColor   : UIColor = UIColor(red: 219.0/255, green: 36.0/255,  blue: 27.0/255,  alpha: 0.70)
-    public static var infoBackgroundColor    : UIColor = UIColor(red: 44.0/255,  green: 187.0/255, blue: 255.0/255, alpha: 0.90)
+    public static var successBackgroundColor: UIColor = UIColor(red: 142.0 / 255, green: 183.0 / 255, blue: 64.0 / 255, alpha: 0.95)
+    public static var warningBackgroundColor: UIColor = UIColor(red: 230.0 / 255, green: 189.0 / 255, blue: 1.0 / 255, alpha: 0.95)
+    public static var errorBackgroundColor: UIColor = UIColor(red: 219.0 / 255, green: 36.0 / 255, blue: 27.0 / 255, alpha: 0.70)
+    public static var infoBackgroundColor: UIColor = UIColor(red: 44.0 / 255, green: 187.0 / 255, blue: 255.0 / 255, alpha: 0.90)
     
     public class func showMessageAddedTo(text: String,
                                          type: GSMessageType,
@@ -248,7 +248,7 @@ public class GSMessage: NSObject {
     public private(set) var cornerRadius: CGFloat = 0
     public private(set) var height: CGFloat = 44
     public private(set) var hideOnTap: Bool = true
-    public private(set) var handleTap:  (() -> ())?
+    public private(set) var handleTap:  (() -> Void)?
     public private(set) var isInsideSafeAreaInsets: Bool = true
     public private(set) var margin: UIEdgeInsets = .zero
     public private(set) var padding: UIEdgeInsets = .init(top: 10, left: 30, bottom: 10, right: 30)
@@ -257,11 +257,11 @@ public class GSMessage: NSObject {
     public private(set) var textColor: UIColor = .white
     public private(set) var textNumberOfLines: Int = 1
     
-    public var messageWidth:  CGFloat {
-        return inView.frame.width - margin.horizontal
+    public var messageWidth: CGFloat {
+        inView.frame.width - margin.horizontal
     }
     public var messageHeight: CGFloat {
-        return abs(offsetY) + height
+        abs(offsetY) + height
     }
     
     fileprivate var y: CGFloat = 0
@@ -269,7 +269,7 @@ public class GSMessage: NSObject {
     fileprivate var observingTableVC: UITableViewController?
     
     fileprivate var textWidth: CGFloat {
-        return messageWidth - padding.horizontal
+        messageWidth - padding.horizontal
     }
     
     public init(attributedText: NSAttributedString,
@@ -279,7 +279,7 @@ public class GSMessage: NSObject {
                 inViewController: UIViewController?) {
         
         for option in options ?? [] {
-            switch (option) {
+            switch option {
             case let .accessibilityIdentifier(value): accessibilityIdentifier = value
             case let .animations(value): animations = value
             case let .animationDuration(value): animationDuration = value
@@ -364,7 +364,7 @@ public class GSMessage: NSObject {
     
     @objc fileprivate func updateFrames() {
         guard inView != nil else { return }
-        y       = 0
+        y = 0
         offsetY = 0
         
         
@@ -422,7 +422,7 @@ public class GSMessage: NSObject {
                 let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
                 if !isNavBarHidden && isNavBarTranslucent && !isStatusBarHidden { offsetY += statusBarHeight }
                 if !isNavBarHidden && isNavBarTranslucent { offsetY += navBarHeight }
-                if (isNavBarHidden && !isStatusBarHidden) { offsetY += statusBarHeight }
+                if isNavBarHidden && !isStatusBarHidden { offsetY += statusBarHeight }
             } else {
                 y += margin.top
                 
@@ -481,7 +481,7 @@ public class GSMessage: NSObject {
         let cornerLayer = CAShapeLayer()
         
         cornerLayer.path = UIBezierPath(
-            roundedRect:containerView.bounds,
+            roundedRect: containerView.bounds,
             byRoundingCorners: corners,
             cornerRadii: CGSize(width: cornerRadius, height: cornerRadius)
         ).cgPath
@@ -547,7 +547,7 @@ public class GSMessage: NSObject {
 
 extension GSMessage {
     
-    public override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+    override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey: Any]?, context: UnsafeMutableRawPointer?) {
         guard context == &observerContext else {
             super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
             return
@@ -564,12 +564,12 @@ extension GSMessage {
 fileprivate extension UIView {
     
     var installedMessage: GSMessage? {
-        get { return objc_getAssociatedObject(self, &installedMessageKey) as? GSMessage }
+        get { objc_getAssociatedObject(self, &installedMessageKey) as? GSMessage }
         set { objc_setAssociatedObject(self, &installedMessageKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
     var uninstallMessage: GSMessage? {
-        get { return objc_getAssociatedObject(self, &uninstallMessageKey) as? GSMessage }
+        get { objc_getAssociatedObject(self, &uninstallMessageKey) as? GSMessage }
         set { objc_setAssociatedObject(self, &uninstallMessageKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC) }
     }
     
@@ -588,15 +588,15 @@ fileprivate extension GSMessageTextAlignment {
 }
 
 fileprivate extension UIEdgeInsets {
-    var horizontal: CGFloat { return left + right }
-    var vertical:   CGFloat { return top + bottom }
+    var horizontal: CGFloat { left + right }
+    var vertical: CGFloat { top + bottom }
 }
 
 private var installedMessageKey = ""
 private var uninstallMessageKey = ""
 private var observerContext = ""
 
-private func GS_GCDAfter(_ delay:Double, closure:@escaping ()->()) {
+private func GS_GCDAfter(_ delay: Double, closure:@escaping () -> Void) {
     DispatchQueue.main.asyncAfter(
         deadline: DispatchTime.now() + Double(Int64(delay * Double(NSEC_PER_SEC))) / Double(NSEC_PER_SEC), execute: closure)
 }

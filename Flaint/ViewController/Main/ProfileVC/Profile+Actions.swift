@@ -66,7 +66,7 @@ extension ProfileVC {
         guard let art = self.currentArt else { return }
         
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
-        let edit = UIAlertAction(title: "Edit", style: .default) { (action) in
+        let edit = UIAlertAction(title: "Edit", style: .default) { _ in
             DispatchQueue.main.async {
                 let editVC = EditArtVC()
                 editVC.art = art
@@ -76,15 +76,15 @@ extension ProfileVC {
             }
         }
         
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { (action) in
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { action in
             
             let confirmationAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
             
-            confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 
                 guard let userId = AuthService.shared.UserID, let id = art.id, let title = art.title, let style = art.style else { return }
                 
-                DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { (result) in
+                DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { _ in
                     self.delegate?.removeArt(artId: id)
                     DispatchQueue.main.async {
                         self.showMessage("\(title) successfully deleted", type: .error)

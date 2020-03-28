@@ -24,6 +24,7 @@ class SettingsVC: UIViewController {
         super.viewDidLoad()
         
         self.title = "Options"
+        self.restorationIdentifier = UIView.id
         
         view.backgroundColor = .backgroundColor
         
@@ -43,7 +44,7 @@ class SettingsVC: UIViewController {
             
      func logoutAlert() {
       let alert = UIAlertController(title: "Log Out", message: nil, preferredStyle: .alert)
-      let logOut = UIAlertAction(title: "Log Out", style: .default) { (action) in
+      let logOut = UIAlertAction(title: "Log Out", style: .default) { _ in
           let firebaseAuth = Auth.auth()
         
           UserDefaults.standard.removeObject(forKey: .userId)
@@ -51,7 +52,7 @@ class SettingsVC: UIViewController {
           do {
               try firebaseAuth.signOut()
 
-              let navigation = UINavigationController(rootViewController: LogInVC())
+              let navigation = UINavigationController(rootViewController: AuthVC())
               
               navigation.modalPresentationStyle = .fullScreen
               self.navigationController?.present(navigation, animated: true, completion: nil)
@@ -72,12 +73,12 @@ class SettingsVC: UIViewController {
 extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
     
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return settings.count
+        settings.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,7 +105,6 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        60.0
     }
 }
-

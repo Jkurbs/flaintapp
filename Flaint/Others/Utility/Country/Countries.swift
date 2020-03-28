@@ -283,4 +283,3 @@ class Countries {
         return countries
     }()
 }
-

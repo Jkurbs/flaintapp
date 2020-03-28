@@ -43,7 +43,7 @@ class AddDescCell: UITableViewCell {
     
     var textString: String {
         get {
-            return textView.text
+            textView.text
         }
         set {
             textView.text = newValue
@@ -72,7 +72,7 @@ extension AddDescCell: UITextViewDelegate {
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
-        let currentText:String = textView.text
+        let currentText: String = textView.text
         let updatedText = (currentText as NSString).replacingCharacters(in: range, with: text)
 
         if updatedText.isEmpty {
@@ -81,8 +81,7 @@ extension AddDescCell: UITextViewDelegate {
             textView.textColor = UIColor.lightGray
             
             textView.selectedTextRange = textView.textRange(from: textView.beginningOfDocument, to: textView.beginningOfDocument)
-        }
-        else if textView.textColor == UIColor.lightGray && !text.isEmpty {
+        } else if textView.textColor == UIColor.lightGray && !text.isEmpty {
             textView.textColor = UIColor.black
             textView.text = text
         } else {

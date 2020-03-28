@@ -11,7 +11,7 @@ import IGListKit
 import FirebaseDatabase
 
 
-class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate,  UISearchBarDelegate, SearchSectionControllerDelegate {
+class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollViewDelegate, UISearchBarDelegate, SearchSectionControllerDelegate {
     
     // MARK: - Properties
     
@@ -26,7 +26,7 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     var arts = [Art]()
     
     lazy var adapter: ListAdapter = {
-        return ListAdapter(updater:  ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 2)
+        ListAdapter(updater: ListAdapterUpdater(), viewController: self.viewController, workingRangeSize: 2)
     }()
     
     weak var delegate: SearchSectionControllerDelegate?
@@ -90,10 +90,10 @@ extension GallerySection: ArtDelegate {
     }
     
     func removeArt(artId: String) {
-        if let art = self.arts.filter({$0.id == artId}).first, let index = self.arts.firstIndex(of: art) {
+        if let art = self.arts.filter({ $0.id == artId }).first, let index = self.arts.firstIndex(of: art) {
             DispatchQueue.main.async {
                 self.arts.remove(at: index)
-                self.adapter.performUpdates(animated: true) { (done) in
+                self.adapter.performUpdates(animated: true) { _ in
                     self.adapter.reloadData(completion: nil)
                 }
             }
@@ -141,7 +141,7 @@ extension GallerySection {
 extension GallerySection {
     
     override func numberOfItems() -> Int {
-        return 1
+        1
     }
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
@@ -167,12 +167,12 @@ extension GallerySection {
     
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
-        return SearchArtSection()
+        SearchArtSection()
     }
     
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return emptyLabel
+        emptyLabel
     }
     
     func searchSectionController(_ sectionController: GallerySection, didChangeText text: String) {
@@ -196,11 +196,9 @@ extension UICollectionView {
         self.moveToFrame(contentOffset: contentOffset)
     }
     
-    func moveToFrame(contentOffset : CGFloat) {
+    func moveToFrame(contentOffset: CGFloat) {
         guard contentOffset <= self.contentSize.width - self.bounds.size.width else { return }
         guard contentOffset >= 0 else { return }
         self.setContentOffset(CGPoint(x: contentOffset, y: self.contentOffset.y), animated: true)
     }
 }
-
-

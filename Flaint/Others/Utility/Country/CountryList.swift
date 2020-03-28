@@ -8,7 +8,7 @@
 
 import UIKit
 
-public protocol CountryListDelegate: class {
+public protocol CountryListDelegate: AnyObject {
     func selectedCountry(country: Country)
 }
 
@@ -41,7 +41,7 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
         tableView.backgroundColor = UIColor.clear
         self.view.addSubview(tableView)
         
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action:  #selector(handleCancel))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(handleCancel))
         setUpSearchBar()
     }
     
@@ -106,4 +106,3 @@ public class CountryList: UIViewController, UITableViewDelegate, UITableViewData
         self.dismiss(animated: true, completion: nil)
     }
 }
-

@@ -62,11 +62,11 @@ class UpdateGeneralInfoVC: UIViewController {
 //            detailField.centerX == view.centerX
 //            detailField.width == view.width - 80
 //            detailField.height == 45
-//            
+//
 //            errorLabel.top == detailField.bottom + 5
 //            errorLabel.width == view.width - 50
 //            errorLabel.left == detailField.left
-//        
+//
 //            nextButton.top == errorLabel.bottom + 15
 //            nextButton.width == detailField.width
 //            nextButton.height == 45
@@ -76,7 +76,7 @@ class UpdateGeneralInfoVC: UIViewController {
     
     
     @objc func nextStep() {
-        Auth.auth().addStateDidChangeListener { auth, user in
+        Auth.auth().addStateDidChangeListener { _, user in
             if let currentUser = user {
                 self.updateUsername(user: currentUser)
             } else {
@@ -95,8 +95,8 @@ class UpdateGeneralInfoVC: UIViewController {
         // Save new auth username
         DataService.shared.updateUsernameAuth(username)
         // Update username
-        DataService.shared.RefUsers.child(user.uid).updateChildValues(["username": username]) { (error, ref) in
-            if error != nil {self.showMessage("An error occured, try again", type: .success)}
+        DataService.shared.RefUsers.child(user.uid).updateChildValues(["username": username]) { error, _ in
+            if error != nil { self.showMessage("An error occured, try again", type: .success) }
             // Save to keychain
             UserDefaults.standard.removeObject(forKey: "username")
             UserDefaults.standard.set(username, forKey: "username")
@@ -124,7 +124,7 @@ extension UpdateGeneralInfoVC: UITextFieldDelegate {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.hasText {
             let username = textField.text!.lowercased().trimmingCharacters(in: .whitespaces)
-            DataService.shared.checkUsername(username) { (success) in
+            DataService.shared.checkUsername(username) { success in
                 if !success {
                     DispatchQueue.main.async {
                         self.errorLabel.text = "Username already taken"

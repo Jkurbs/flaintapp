@@ -24,10 +24,10 @@ class CachedDateFormattingHelper {
     
     // MARK: - Cached Formatters
     
-    private var cachedDateFormatters = [String : DateFormatterType]()
+    private var cachedDateFormatters = [String: DateFormatterType]()
     
     private func cachedDateFormatter(withFormat format: String) -> DateFormatterType {
-        return cachedDateFormattersQueue.sync {
+        cachedDateFormattersQueue.sync {
             let key = format
             if let cachedFormatter = cachedDateFormatters[key] {
                 return cachedFormatter

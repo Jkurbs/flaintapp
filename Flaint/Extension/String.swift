@@ -10,13 +10,10 @@ import UIKit
 
 
 extension String {
-    
-    
-    
+
     // UserID
     
     static var userId = "UserID"
-    
     
     
     // formatting text for currency textField
@@ -33,7 +30,7 @@ extension String {
         
         // remove from String: "$", ".", ","
         let regex = try! NSRegularExpression(pattern: "[^0-9]", options: .caseInsensitive)
-        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSMakeRange(0, self.count), withTemplate: "")
+        amountWithPrefix = regex.stringByReplacingMatches(in: amountWithPrefix, options: NSRegularExpression.MatchingOptions(rawValue: 0), range: NSRange(location: 0, length: self.count), withTemplate: "")
         
         let double = (amountWithPrefix as NSString).doubleValue
         number = NSNumber(value: (double / 100))
@@ -54,11 +51,10 @@ extension String {
     }
     
     func capitalizingFirstLetter() -> String {
-        return prefix(1).capitalized + dropFirst()
+        prefix(1).capitalized + dropFirst()
     }
     
     mutating func capitalizeFirstLetter() {
         self = self.capitalizingFirstLetter()
     }
 }
-

@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol ArtDelegate: class {
+protocol ArtDelegate: AnyObject {
     
     func fetchArts(arts: [Art])
     func removeArt(artId: String)
@@ -16,13 +16,13 @@ protocol ArtDelegate: class {
 }
 
 
-// Called to add description to art 
-protocol ArtDescDelegate: class {
+// Called to add description to art
+protocol ArtDescDelegate: AnyObject {
     func finishPassing(description: String)
 }
 
 
 // Called for searching arts
-protocol SearchSectionControllerDelegate: class {
+protocol SearchSectionControllerDelegate: AnyObject {
     func searchSectionController(_ sectionController: GallerySection, didChangeText text: String)
 }

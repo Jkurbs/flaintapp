@@ -29,7 +29,7 @@ class ProfileSection: ListSectionController {
     }
     
     override func numberOfItems() -> Int {
-        return 2
+        2
     }
     
     

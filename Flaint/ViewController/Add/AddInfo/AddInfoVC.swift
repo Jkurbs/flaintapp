@@ -52,6 +52,7 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
     func setup() {
         
         self.title = "Add details"
+        self.restorationIdentifier = UIView.id
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
@@ -99,8 +100,8 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         let date = CachedDateFormattingHelper.shared.formatTodayDate()
         
         
-        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String : Any]
-        DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { (success, error) in
+        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String: Any]
+        DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { success, error in
             if !success {
                 self.showMessage("Error saving painting", type: .error)
             } else {
@@ -112,9 +113,9 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
     
     func alert() {
         let alert = UIAlertController(title: "Are you sure want to cancel?", message: nil, preferredStyle: .alert)
-        let yes = UIAlertAction(title: "Yes", style: .default) { (action) in
+        let yes = UIAlertAction(title: "Yes", style: .default) { _ in
             if self.ref != nil {
-                self.ref!.delete { (error) in
+                self.ref!.delete { error in
                     if error != nil {
                         self.navigationController?.dismiss(animated: true, completion: nil)
                     } else {
@@ -158,7 +159,7 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
 extension AddInfoVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        return 7
+        7
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

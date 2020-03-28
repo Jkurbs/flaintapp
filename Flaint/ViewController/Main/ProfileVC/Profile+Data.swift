@@ -10,7 +10,7 @@ import UIKit
 
 extension ProfileVC {
 
-    // Fetch user current arts 
+    // Fetch user current arts
     @objc func fetchArts() {
         self.arts.removeAll()
         DataService.shared.fetchCurrentUserArt(userId: userUID!) { result in

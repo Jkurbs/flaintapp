@@ -27,7 +27,7 @@ class ArNotSupporterVC: UIViewController {
         label.center = view.center
         view.addSubview(label)
         
-        cameraButton = UIButton(frame: CGRect(x: 0, y: label.layer.position.y + 40, width:  view.frame.width, height: 0))
+        cameraButton = UIButton(frame: CGRect(x: 0, y: label.layer.position.y + 40, width: view.frame.width, height: 0))
         cameraButton.setTitle("Experience 2d instead", for: .normal)
         cameraButton.contentHorizontalAlignment = .center
         cameraButton.titleLabel?.font = UIFont.systemFont(ofSize: 15)
@@ -70,7 +70,7 @@ class ArNotSupporterVC: UIViewController {
     @objc func rotate() {
         UIView.animate(withDuration: 0.2, animations: {
             self.rotateButton.transform = CGAffineTransform(rotationAngle: .pi)
-        }) { (action) in
+        }) { _ in
             self.navigationController?.dismiss(animated: true, completion: nil)
             
         }

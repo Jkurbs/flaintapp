@@ -19,7 +19,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
     override func sizeForItem(at index: Int) -> CGSize {
        
         let width = collectionContext!.containerSize.width
-        let infoHeight:CGFloat = 150
+        let infoHeight: CGFloat = 150
         
         if index == 0 {
             return CGSize(width: width, height: 430)
@@ -36,7 +36,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
     
     
     override func numberOfItems() -> Int {
-        return 2
+        2
     }
     
     
@@ -88,5 +88,3 @@ extension SearchArtSection {
         
     }
 }
-
-

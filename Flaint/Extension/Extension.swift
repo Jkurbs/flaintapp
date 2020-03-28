@@ -13,7 +13,7 @@ import FirebaseDatabase
 
 extension UIView {
     static var id: String {
-        return String(describing: self)
+        String(describing: self)
     }
 }
 
@@ -24,12 +24,12 @@ extension DataSnapshot {
         return try? JSONSerialization.data(withJSONObject: value)
     }
     var json: String? {
-        return data?.string
+        data?.string
     }
 }
 
 extension Data {
     var string: String? {
-        return String(data: self, encoding: .utf8)
+        String(data: self, encoding: .utf8)
     }
 }

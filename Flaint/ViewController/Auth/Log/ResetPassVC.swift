@@ -29,7 +29,7 @@ class ResetPassVC: UIViewController {
         
         emailField = UICreator.create.textField("Email address", .emailAddress, view)
         emailField.addTarget(self, action: #selector(edited(_:)), for: .editingChanged)
-        emailField.backgroundColor = UIColor(red: 245.0/255.0, green: 246.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+        emailField.backgroundColor = UIColor(red: 245.0 / 255.0, green: 246.0 / 255.0, blue: 250.0 / 255.0, alpha: 1.0)
         emailField.text = email ?? ""
         emailField.becomeFirstResponder()
     }
@@ -62,16 +62,3 @@ class ResetPassVC: UIViewController {
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

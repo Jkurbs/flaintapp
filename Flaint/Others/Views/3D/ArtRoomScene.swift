@@ -17,7 +17,7 @@ class ArtRoomScene: SCNScene {
         self.init()
     }
     
-    func setup(image: UIImage?, height: CGFloat? = nil, width: CGFloat? = nil, position: SCNVector3, rotation: SCNVector4)  {
+    func setup(image: UIImage?, height: CGFloat? = nil, width: CGFloat? = nil, position: SCNVector3, rotation: SCNVector4) {
         
        let camera = SCNCamera()
        var materials = [SCNMaterial]()
@@ -57,5 +57,3 @@ extension SCNNode {
         geometry = nil
     }
 }
-
-

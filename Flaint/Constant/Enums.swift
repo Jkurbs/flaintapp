@@ -9,7 +9,6 @@
 import Foundation
 
 
-
 enum ArtProperties: String, CaseIterable {
  
     case style

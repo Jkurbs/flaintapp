@@ -17,7 +17,7 @@ class UpdatePersonalInfoVC: UIViewController {
     var detailField = BgTextField()
     var nextButton = NextButton()
     
-    var isEmail = false 
+    var isEmail = false
     private var handle: AuthStateDidChangeListenerHandle!
     
     func setupUI() {
@@ -79,7 +79,7 @@ class UpdatePersonalInfoVC: UIViewController {
     
     
     @objc func nextStep() {
-        Auth.auth().addStateDidChangeListener { auth, user in
+        Auth.auth().addStateDidChangeListener { _, user in
             if let currentUser = user {
                 self.enterPwd(currentUser)
             } else {
@@ -97,11 +97,11 @@ class UpdatePersonalInfoVC: UIViewController {
         } else {
             // Show alert for password
             let alert = UIAlertController(title: "Enter password", message: "Enter your password for \(user.email!)", preferredStyle: .alert)
-            alert.addTextField(configurationHandler: { (textField) -> Void in
+            alert.addTextField(configurationHandler: { textField -> Void in
                 textField.placeholder = "Password"
                 textField.isSecureTextEntry = true
             })
-            let done = UIAlertAction(title: "Done", style: .default) { (action) in
+            let done = UIAlertAction(title: "Done", style: .default) { _ in
                 if let pwd = alert.textFields?.first?.text {
                     self.authenticate(user: user, pwd: pwd)
                 }
@@ -117,18 +117,18 @@ class UpdatePersonalInfoVC: UIViewController {
         let newEmail = self.detailField.text!
         let username = UserDefaults.standard.string(forKey: "username")
         let credential = EmailAuthProvider.credential(withEmail: user.email!, password: pwd)
-        user.reauthenticate(with: credential, completion: { (result, error) in
+        user.reauthenticate(with: credential, completion: { _, error in
             if let err = error {
                 self.showMessage("An error occured, \(err.localizedDescription)", type: .error)
                 self.nextButton.hideLoading()
             } else {
                 if self.isEmail {
-                    user.updateEmail(to: newEmail, completion: { (error) in
+                    user.updateEmail(to: newEmail, completion: { error in
                         if let err = error {
                             self.showMessage("Error updating email, \(err.localizedDescription)", type: .error)
                             self.nextButton.hideLoading()
                         }
-                        DataService.shared.RefUsers.child(user.uid).updateChildValues(["email": newEmail], withCompletionBlock: { (error, ref) in
+                        DataService.shared.RefUsers.child(user.uid).updateChildValues(["email": newEmail], withCompletionBlock: { error, _ in
                             if let err = error {
                                 self.showMessage("\(err.localizedDescription)", type: .error)
                                 self.nextButton.hideLoading()
@@ -144,19 +144,19 @@ class UpdatePersonalInfoVC: UIViewController {
                     })
                 } else {
                     let phone = self.detailField.text!
-                    AuthService.shared.PhoneAuth(phone: phone, complete: { (success, error) in
+                    AuthService.shared.PhoneAuth(phone: phone, complete: { success, error in
                         if let err = error {
                             self.showMessage("Error: \(err.localizedDescription)", type: .error)
                         } else {
                             let alert = UIAlertController(title: "Code sent", message: "Enter the code we've sent to \n \(phone)", preferredStyle: .alert)
-                            alert.addTextField(configurationHandler: { (textField) -> Void in
+                            alert.addTextField(configurationHandler: { textField -> Void in
                                 textField.placeholder = "Code"
                             })
-                            let done = UIAlertAction(title: "Done", style: .default) { action in
+                            let done = UIAlertAction(title: "Done", style: .default) { _ in
                                 if let code = alert.textFields?.first?.text {
                                     let defaults = UserDefaults.standard
                                     let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: defaults.string(forKey: "authVerificationID")!, verificationCode: code)
-                                    user.updatePhoneNumber(credential, completion: { (error) in
+                                    user.updatePhoneNumber(credential, completion: { error in
                                         if let err = error {
                                             print("Error:", err.localizedDescription)
                                             self.showMessage("Error updating phone try again", type: .error)
@@ -178,7 +178,6 @@ class UpdatePersonalInfoVC: UIViewController {
         })
     }
     
-    
 
     @objc func textChanged() {
         if detailField.hasText {
@@ -188,4 +187,3 @@ class UpdatePersonalInfoVC: UIViewController {
         }
     }
 }
-

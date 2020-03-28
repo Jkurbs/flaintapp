@@ -38,7 +38,7 @@ final class EditProfileVC: UITableViewController {
     func setupUI() {
         
         self.title = "Edit Account"
-        self.view.backgroundColor = .backgroundColor        
+        self.view.backgroundColor = .backgroundColor
         
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         navigationItem.rightBarButtonItem = saveButton
@@ -75,13 +75,13 @@ final class EditProfileVC: UITableViewController {
     @objc func save() {
 //        let username = usernameCell.textField.text?.trimmingCharacters(in: .whitespaces)
         self.navigationItem.addActivityIndicator()
-        if let pictureCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PictureCell, let displayNameCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? EditAccountGeneralCell, let emailCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EditAccountPrivateCell, let phoneCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as? EditAccountPrivateCell  {
+        if let pictureCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PictureCell, let displayNameCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? EditAccountGeneralCell, let emailCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EditAccountPrivateCell, let phoneCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as? EditAccountPrivateCell {
             
             guard let displayname = displayNameCell.textField.text, let email = emailCell.valueLabel.text, let phone = phoneCell.valueLabel.text, let image = pictureCell.userImgView.image, let userId = self.userId else {
                 return
             }
             
-            DataService.shared.updateUserData(userId, displayname, email, phone, image) { (success, error) in
+            DataService.shared.updateUserData(userId, displayname, email, phone, image) { success, error in
                 if !success {
                     self.showMessage("An error occured", type: .error)
                 } else {

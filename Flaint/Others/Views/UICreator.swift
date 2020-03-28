@@ -14,7 +14,7 @@ class UICreator {
     private static let _create = UICreator()
     
     static var create: UICreator {
-        return _create
+        _create
     }
     
     func button(_ title: String?, _ image: UIImage?, _ color: UIColor?, _ backgroundColor: UIColor?, _ contentView: UIView) -> UIButton {
@@ -35,11 +35,10 @@ class UICreator {
         label.textColor = textColor
         label.textAlignment = alignment
         label.numberOfLines = 4
-        label.translatesAutoresizingMaskIntoConstraints = false 
+        label.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(label)
         return label
     }
-    
     
     
     func imageView(_ image: UIImage?, _ contentView: UIView) -> UIImageView {
@@ -79,4 +78,3 @@ class UICreator {
         return field
     }
 }
-

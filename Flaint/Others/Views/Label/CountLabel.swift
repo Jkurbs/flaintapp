@@ -26,13 +26,12 @@ class CountLabel: UILabel {
     }
     
     func hideLabel() {
-        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] (timer) in
+        Timer.scheduledTimer(withTimeInterval: 4.0, repeats: false) { [weak self] _ in
             UIView.animate(withDuration: 0.5) {
                 self?.alpha = 0.0
             }
         }
     }
-    
     
     @objc func showLabel() {
         guard let result = result else { return }

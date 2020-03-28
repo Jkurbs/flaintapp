@@ -13,7 +13,7 @@ extension ProfileVC {
     // MARK: - ListAdapterDataSource
     
     func objects(for listAdapter: ListAdapter) -> [ListDiffable] {
-        return [1] as [ListDiffable]
+        [1] as [ListDiffable]
     }
     
     func listAdapter(_ listAdapter: ListAdapter, sectionControllerFor object: Any) -> ListSectionController {
@@ -23,6 +23,6 @@ extension ProfileVC {
     }
     
     func emptyView(for listAdapter: ListAdapter) -> UIView? {
-        return nil
+        nil
     }
 }

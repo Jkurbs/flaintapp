@@ -99,11 +99,11 @@ class ReorderVC: UIViewController {
 extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
+        1
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return arts.count
+        arts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -117,7 +117,7 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60.0
+        60.0
     }
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -131,20 +131,20 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return heightForHeader
+        heightForHeader
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return heightForHeader
+        heightForHeader
     }
     
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
-        return .none
+        .none
     }
     
     func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
-        return false
+        false
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
@@ -163,7 +163,6 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
 }
 
 
-
 import UIKit
 import SDWebImage
 
@@ -174,7 +173,7 @@ class ReorderCell: UITableViewCell {
     var positionLabel: UILabel!
     
     static var identifier: String {
-        return String(describing: self)
+        String(describing: self)
     }
     
     var art: Art? {

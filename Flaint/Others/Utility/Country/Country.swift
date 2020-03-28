@@ -15,11 +15,11 @@ public class Country: NSObject {
     
     public var name: String? {
         let current = Locale(identifier: "en_US")
-        return current.localizedString(forRegionCode: countryCode) ?? nil
+        return current.localizedString(forRegionCode: countryCode)
     }
     
     public var flag: String? {
-        return flag(country: countryCode)
+        flag(country: countryCode)
     }
     
     init(countryCode: String, phoneExtension: String) {
@@ -27,8 +27,8 @@ public class Country: NSObject {
         self.phoneExtension = phoneExtension
     }
     
-    private func flag(country:String) -> String {
-        let base : UInt32 = 127397
+    private func flag(country: String) -> String {
+        let base: UInt32 = 127397
         var s = ""
         for v in country.unicodeScalars {
             s.unicodeScalars.append(UnicodeScalar(base + v.value)!)

@@ -57,4 +57,3 @@ class CountryCell: UITableViewCell {
         extensionLabel?.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15).isActive = true
     }
 }
-
