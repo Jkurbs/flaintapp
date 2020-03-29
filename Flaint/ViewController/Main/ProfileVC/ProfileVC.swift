@@ -45,7 +45,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationController?.isToolbarHidden = false
         fetchArts()
     }
     
@@ -113,6 +112,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         self.navigationController?.toolbar.barTintColor = .backgroundColor
         self.toolbarItems = items
+        self.navigationController?.isToolbarHidden = true
         
         collectionView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
         collectionView.backgroundColor = .backgroundColor

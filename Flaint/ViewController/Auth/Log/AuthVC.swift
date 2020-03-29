@@ -135,7 +135,7 @@ class AuthVC: UIViewController {
             if authChoice == .login {
                 login(detail: email, pwd: pwd)
             } else {
-                
+                registerNext()
             }
         }
     }
@@ -157,9 +157,11 @@ class AuthVC: UIViewController {
     }
     
     func registerNext() {
-        let vc = UsernameVC()
-        
-        
+        if let email = detailField.text, let password = pwdField.text {
+            let vc = UsernameVC()
+            vc.data = [email, password]
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
     
     

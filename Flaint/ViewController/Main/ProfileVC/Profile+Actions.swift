@@ -77,19 +77,18 @@ extension ProfileVC {
         }
         
         let delete = UIAlertAction(title: "Delete", style: .destructive) { action in
-            
             let confirmationAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
-            
             confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
-                
-                guard let userId = AuthService.shared.UserID, let id = art.id, let title = art.title, let style = art.style else { return }
-                
-                DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { _ in
-                    self.delegate?.removeArt(artId: id)
-                    DispatchQueue.main.async {
-                        self.showMessage("\(title) successfully deleted", type: .error)
+                guard  let userId = AuthService.shared.UserID, let id = art.id, let title = art.title, let style = art.style else { return }
+                self.delegate?.removeArt(art, { (done) in
+                    if done {
+                        DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { _ in
+                            DispatchQueue.main.async {
+                                self.showMessage("\(title) successfully deleted", type: .error)
+                            }
+                        }
                     }
-                }
+                })
             }))
             confirmationAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             self.present(confirmationAlert, animated: true, completion: nil)

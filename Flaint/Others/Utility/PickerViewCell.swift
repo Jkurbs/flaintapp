@@ -11,7 +11,7 @@ import UIKit
 /**
  The delegate of an AUPickerCell object must adopt this protocol and implement its methods to retrieve the currently selected values.
  */
-public protocol AUPickerCellDelegate {
+public protocol AUPickerCellDelegate: NSObject {
     /**
      Called by the picker view when the user selects a value.
      - Parameter cell: An object representing the table view cell that contains the picker view.

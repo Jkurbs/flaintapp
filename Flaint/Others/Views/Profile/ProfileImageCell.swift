@@ -162,6 +162,9 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         scnView.isJitteringEnabled = true
         scnView.backgroundColor = .backgroundColor
         scnView.antialiasingMode = .multisampling4X
+        let overlayScene = OverlayScene(size: contentView.bounds.size)
+        overlayScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        scnView.overlaySKScene = overlayScene
         
         contentView.addSubview(scnView)
         

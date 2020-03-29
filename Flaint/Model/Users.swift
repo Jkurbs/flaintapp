@@ -11,7 +11,8 @@ import IGListKit
 
 class Users: Codable {
     var userId: String!
-    var name: String!
+    var firstName: String!
+    var lastName: String!
     var username: String?
     var email: String?
     var phone: String?

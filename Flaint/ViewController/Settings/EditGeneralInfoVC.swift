@@ -17,7 +17,7 @@ class UpdateGeneralInfoVC: UIViewController {
     var nextButton = NextButton()
     var errorLabel = UILabel()
     var currentUser: Users?
-
+    
     func setupUI() {
         
         view.backgroundColor = .backgroundColor
@@ -38,11 +38,10 @@ class UpdateGeneralInfoVC: UIViewController {
         nextButton.addTarget(self, action: #selector(self.nextStep), for: .touchUpInside)
         NotificationCenter.default.addObserver(self, selector: #selector(self.textChanged), name: UITextField.textDidChangeNotification, object: nil)
         view.addSubview(nextButton)
-        
     }
-
+    
     // MARK: - View Controller Life Cycle
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
@@ -52,26 +51,27 @@ class UpdateGeneralInfoVC: UIViewController {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
     }
-
-
+    
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
-//        constrain(detailField, nextButton, errorLabel, view) { (detailField, nextButton, errorLabel, view) in
-//            detailField.top == view.top + 40
-//            detailField.centerX == view.centerX
-//            detailField.width == view.width - 80
-//            detailField.height == 45
-//
-//            errorLabel.top == detailField.bottom + 5
-//            errorLabel.width == view.width - 50
-//            errorLabel.left == detailField.left
-//
-//            nextButton.top == errorLabel.bottom + 15
-//            nextButton.width == detailField.width
-//            nextButton.height == 45
-//            nextButton.centerX == view.centerX
-//        }
+        NSLayoutConstraint.activate([
+            
+            detailField.topAnchor.constraint(equalTo: view.topAnchor, constant: 40.0),
+            detailField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailField.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -80.0),
+            detailField.heightAnchor.constraint(equalToConstant: 48.0),
+            
+            errorLabel.topAnchor.constraint(equalTo: detailField.bottomAnchor, constant: 8.0),
+            errorLabel.widthAnchor.constraint(equalTo: detailField.widthAnchor),
+            errorLabel.leftAnchor.constraint(equalTo: detailField.leftAnchor),
+            
+            nextButton.topAnchor.constraint(equalTo: errorLabel.bottomAnchor, constant: 16.0),
+            nextButton.widthAnchor.constraint(equalTo: detailField.widthAnchor),
+            nextButton.heightAnchor.constraint(equalTo: detailField.heightAnchor),
+            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor)
+        ])
     }
     
     
@@ -108,8 +108,8 @@ class UpdateGeneralInfoVC: UIViewController {
             }
         }
     }
-
-
+    
+    
     @objc func textChanged() {
         if detailField.hasText {
             nextButton.enable()

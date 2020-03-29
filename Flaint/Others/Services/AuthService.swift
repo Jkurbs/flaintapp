@@ -19,7 +19,7 @@ class AuthService {
     }
     
     // MARK: - Phone verification
-
+    
     func PhoneAuth(phone: String, complete: @escaping (Bool, Error?) -> Void) {
         PhoneAuthProvider.provider().verifyPhoneNumber(phone, uiDelegate: nil) { verificationID, error in
             if let error = error {
@@ -34,7 +34,7 @@ class AuthService {
     }
     
     // MARK: Email register
-
+    
     func EmailAuth(username: String, name: String, email: String, phone: String, pwd: String, code: String, complete: @escaping (Bool, Error?) -> Void) {
         Auth.auth().createUser(withEmail: email, password: pwd) { result, error in
             if let error = error {
@@ -43,9 +43,9 @@ class AuthService {
             } else {
                 if let user = result?.user {
                     
-                /// Link email with phone credential
+                    /// Link email with phone credential
                     
-                let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: UserDefaults.standard.string(forKey: "authVerificationID")!, verificationCode: code)
+                    let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: UserDefaults.standard.string(forKey: "authVerificationID")!, verificationCode: code)
                     
                     user.link(with: credential, completion: { _, error in
                         if let err = error {
@@ -95,7 +95,7 @@ class AuthService {
     
     func phoneLogIn(code: String, complete: @escaping (Bool, Error?, String?) -> Void) {
         let defaults = UserDefaults.standard
-          let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: defaults.string(forKey: "authVerificationID")!, verificationCode: code)
+        let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: defaults.string(forKey: "authVerificationID")!, verificationCode: code)
         Auth.auth().signIn(with: credential) { result, error in
             if let err = error {
                 print(err)
@@ -108,50 +108,35 @@ class AuthService {
             }
         }
     }
-
+    
     
     // MARK: - Create account
-
-    func createAccount(phone: String, code: String, name: String, username: String, email: String, pwd: String, complete: @escaping (Bool, Error?) -> Void) {
-        let defaults = UserDefaults.standard
+    
+    func createAccount(firstName: String, lastName: String? ,username: String, email: String, pwd: String, complete: @escaping (Bool, Error?) -> Void) {
         
-        let credential: PhoneAuthCredential = PhoneAuthProvider.provider().credential(withVerificationID: defaults.string(forKey: "authVerificationID")!, verificationCode: code)
-        
-        Auth.auth().signIn(with: credential) { result, error in
-            if let err = error {
-                complete(false, err)
+        Auth.auth().createUser(withEmail: email, password: pwd) { (result, error) in
+            if let error = error {
+                NSLog("Error creating user: \(error)")
+                complete(false, error)
                 return
             } else {
                 if let user = result?.user {
-                    let emailCredential = EmailAuthProvider.credential(withEmail: email, password: pwd)
-                    // Link phone with email credential
-                    user.link(with: emailCredential, completion: { _, error in
-                        if let err = error {
-                            print("Error:", err.localizedDescription)
-                        } else {
-                            let changeRequest = user.createProfileChangeRequest()
-                            changeRequest.displayName = name
-                            // Commit change to profile
-                            changeRequest.commitChanges { error in
-                                // Create user profile link
-                                DataService.shared.createLink(Id: user.uid, completion: { success, error, link in
-                                    let data: [String: Any] = ["phone": phone, "email": email, "name": name, "username": username, "link": link]
-                                                                        
-                                    // Save user data
-                                    DataService.shared.saveUserData(user.uid, data, complete: { success, error in
-                                        if !success {
-                                            print(" SAVING:", error!.localizedDescription)
-                                            complete(false, error)
-                                        } else {
-                                            // Save Auth link
-                                            DataService.shared.authLink(username: username, email: email)
-                                            complete(true, nil)
-                                        }
-                                    })
-                                })
+                    print("USERID: \(user.uid)")
+                    let changeRequest = user.createProfileChangeRequest()
+                    changeRequest.displayName = "\(firstName) \(lastName ?? "")"
+                    changeRequest.commitChanges { error in
+
+                        let data: [String: Any] = ["email": email, "firstName": firstName,  "lastName": firstName, "username": username]
+                        DataService.shared.saveUserData(user.uid, data, complete: { success, error in
+                            if !success {
+                                NSLog("Error while saving userData: \(error!)")
+                                complete(false, error)
+                            } else {
+                                DataService.shared.authLink(username: username, email: email)
+                                complete(true, nil)
                             }
-                        }
-                    })
+                        })
+                    }
                 }
             }
         }

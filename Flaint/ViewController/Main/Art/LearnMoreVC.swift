@@ -98,16 +98,14 @@ class LearnMoreVC: UIViewController {
             let deleteAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
             let yesAction = UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 // Delete art
-                                
-//                DataService.shared.deleteArt(userId: Auth.auth().currentUser!.uid, artId: self.art!.id, { (success, error) in
-//                    if !success {
-//                        // Show error message
-//                        self.showMessage("Error while deleting", type: .error)
-//                    } else {
-//                        // Show success message
-//                        self.showMessage("Successfully deleted", type: .success)
-//                    }
-//                })
+                
+                DataService.shared.deleteArt(userId: self.userId ?? Auth.auth().currentUser!.uid , artId: self.art.id, artStyle: self.art.style) { (result) in
+                    if let _ = try? result.get() {
+                        self.showMessage("Successfully deleted", type: .success)
+                    } else {
+                        self.showMessage("Error while deleting", type: .error)
+                    }
+                }
             })
             let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
             deleteAlert.addAction(yesAction)

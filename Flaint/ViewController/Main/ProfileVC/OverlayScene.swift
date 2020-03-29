@@ -13,17 +13,18 @@ import SceneKit
 class OverlayScene: SKScene {
     
     var slideNode: SKShapeNode!
-    
     var boxNode: SCNNode!
-    
     var texture: SKTexture!
-    
     var image = UIImage()
     var sprite: SKSpriteNode!
     
     override init(size: CGSize) {
         super.init(size: size)
-        configure()
+        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
+        let randomNumber = Int.random(in: currentCount/2...currentCount)
+        if currentCount == 1 || randomNumber == currentCount {
+            configure()
+        }
     }
     
     required init?(coder aDecoder: NSCoder) {

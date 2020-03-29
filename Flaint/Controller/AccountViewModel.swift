@@ -32,11 +32,11 @@ class AccountViewModel: NSObject {
     var user: Users? {
         didSet {
             guard let user = user else { return }
-            if let name = user.name {
-                let imgUrl = user.imgUrl ?? ""
-                let profileItem = AccountViewModelGeneralItem(imgUrl: imgUrl, name: name)
-                self.items.append(profileItem)
-            }
+            let firstName = user.firstName ?? ""
+            let imgUrl = user.imgUrl ?? ""
+            let lastName = user.lastName ?? ""
+            let profileItem = AccountViewModelGeneralItem(imgUrl: imgUrl, name: "\(firstName) \(lastName)")
+            self.items.append(profileItem)
             let email = user.email ?? ""
             let phone = user.phone ?? ""
             let emailItem = AccountViewModelPersonalItem(email: email, phone: phone)
@@ -61,12 +61,14 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
         case .general:
             switch indexPath.row {
             case 0:
+                print("ITEM: \(item)")
                 if let cell = tableView.dequeueReusableCell(withIdentifier: PictureCell.id, for: indexPath) as? PictureCell {
                     cell.item = item
                     cell.imagePicker = ImagePicker(presentationController: self.viewController, delegate: cell, allowsEditing: true)
                     return cell
                 }
             case 1:
+                print("ITEM: \(item)")
                 if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountGeneralCell.id, for: indexPath) as? EditAccountGeneralCell {
                     cell.configure(index: 1, title: "Name", item: item)
                     return cell
@@ -77,6 +79,7 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
         case .personal:
             if indexPath.row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
+                    print("ITEM: \(item)")
                     cell.configure(index: 0, title: "Email", item: item)
                     return cell
                 }

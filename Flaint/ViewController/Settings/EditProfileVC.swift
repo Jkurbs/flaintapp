@@ -73,7 +73,6 @@ final class EditProfileVC: UITableViewController {
     // MARK: - Actions
     
     @objc func save() {
-//        let username = usernameCell.textField.text?.trimmingCharacters(in: .whitespaces)
         self.navigationItem.addActivityIndicator()
         if let pictureCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? PictureCell, let displayNameCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as? EditAccountGeneralCell, let emailCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as? EditAccountPrivateCell, let phoneCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as? EditAccountPrivateCell {
             

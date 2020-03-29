@@ -78,7 +78,7 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
 // ArtDelegate
 
 extension GallerySection: ArtDelegate {
-    
+
     func fetchArts(arts: [Art]) {
         self.arts.removeAll()
         self.arts = arts
@@ -88,14 +88,13 @@ extension GallerySection: ArtDelegate {
             return
         }
     }
-    
-    func removeArt(artId: String) {
-        if let art = self.arts.filter({ $0.id == artId }).first, let index = self.arts.firstIndex(of: art) {
-            DispatchQueue.main.async {
+        
+    func removeArt(_ currentArt: Art, _ completion: @escaping (Bool) -> ()) {
+        self.adapter.performUpdates(animated: true) { (done) in
+            if let index = self.arts.firstIndex(of: currentArt) {
                 self.arts.remove(at: index)
-                self.adapter.performUpdates(animated: true) { _ in
-                    self.adapter.reloadData(completion: nil)
-                }
+                self.adapter.reloadObjects(self.arts)
+                completion(true)
             }
         }
     }
