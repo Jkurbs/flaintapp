@@ -13,7 +13,7 @@
 		6D0487DF2410D41D003E4414 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0487DE2410D41D003E4414 /* Enums.swift */; };
 		6D0487E12410D426003E4414 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0487E02410D426003E4414 /* Protocols.swift */; };
 		6D0487E32410D5A7003E4414 /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0487E22410D5A7003E4414 /* Extension.swift */; };
-		6D0579D42290D84800F34E75 /* CountLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579D32290D84800F34E75 /* CountLabel.swift */; };
+		6D0579D42290D84800F34E75 /* OrientationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579D32290D84800F34E75 /* OrientationView.swift */; };
 		6D0579D62290DDB300F34E75 /* TopBarHeight.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579D52290DDB300F34E75 /* TopBarHeight.swift */; };
 		6D0579D82290EEA800F34E75 /* AddInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579D72290EEA800F34E75 /* AddInfoVC.swift */; };
 		6D0579DB2290F3CD00F34E75 /* AddArtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579DA2290F3CD00F34E75 /* AddArtCell.swift */; };
@@ -132,7 +132,7 @@
 		6D0487DE2410D41D003E4414 /* Enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
 		6D0487E02410D426003E4414 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		6D0487E22410D5A7003E4414 /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		6D0579D32290D84800F34E75 /* CountLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountLabel.swift; sourceTree = "<group>"; };
+		6D0579D32290D84800F34E75 /* OrientationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrientationView.swift; sourceTree = "<group>"; };
 		6D0579D52290DDB300F34E75 /* TopBarHeight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBarHeight.swift; sourceTree = "<group>"; };
 		6D0579D72290EEA800F34E75 /* AddInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInfoVC.swift; sourceTree = "<group>"; };
 		6D0579DA2290F3CD00F34E75 /* AddArtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArtCell.swift; sourceTree = "<group>"; };
@@ -627,7 +627,7 @@
 		6DE60E0C22D2A14300AB0E85 /* Label */ = {
 			isa = PBXGroup;
 			children = (
-				6D0579D32290D84800F34E75 /* CountLabel.swift */,
+				6D0579D32290D84800F34E75 /* OrientationView.swift */,
 			);
 			path = Label;
 			sourceTree = "<group>";
@@ -1009,7 +1009,7 @@
 				6DE39D9F22AC1B4E00636B47 /* UIButton+UIImage.swift in Sources */,
 				6DD1281622A72FEF0068195C /* AddDescCell.swift in Sources */,
 				6D1962D5231E140C0073EC3D /* FocusSquareSegment.swift in Sources */,
-				6D0579D42290D84800F34E75 /* CountLabel.swift in Sources */,
+				6D0579D42290D84800F34E75 /* OrientationView.swift in Sources */,
 				6DE60E0A22D29BA800AB0E85 /* Countries.swift in Sources */,
 				6D626E1422DB7C17003F083E /* ErrorHandler.swift in Sources */,
 				6DE419BA2283B43F00EE6AAB /* EmbeddedCollectionViewCell.swift in Sources */,

@@ -91,7 +91,7 @@ class UsernameVC: UIViewController {
         
         nextButton.showLoading()
         
-        if let name = nameTextField.text?.split(separator: " "), let firstName = name.first?.description, let lastName = name.last?.description, let username = usernameTextField.text?.lowercased().trimmingCharacters(in: .whitespaces),   let email = data.first,
+        if let name = nameTextField.text?.split(separator: " "), let firstName = name.first?.description, let lastName = name.last?.description, let username = usernameTextField.text?.lowercased().trimmingCharacters(in: .whitespaces), let email = data.first,
             let password = data.last {
             AuthService.shared.createAccount(firstName: firstName, lastName: lastName, username: username, email: email, pwd: password) { _, error in
                 if let error = error {

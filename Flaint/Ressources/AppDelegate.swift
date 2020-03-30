@@ -23,7 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
  
        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
-       UserDefaults.standard.set(currentCount + 1 , forKey:"launchCount")
+       UserDefaults.standard.set(currentCount + 1, forKey: "launchCount")
        configure()
        customize()
        observeAuthorisedState()

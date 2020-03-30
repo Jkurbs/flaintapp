@@ -21,7 +21,7 @@ class OverlayScene: SKScene {
     override init(size: CGSize) {
         super.init(size: size)
         let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
-        let randomNumber = Int.random(in: currentCount/2...currentCount)
+        let randomNumber = Int.random(in: currentCount / 2...currentCount)
         if currentCount == 1 || randomNumber == currentCount {
             configure()
         }

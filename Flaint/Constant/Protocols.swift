@@ -11,7 +11,7 @@ import Foundation
 protocol ArtDelegate: AnyObject {
     
     func fetchArts(arts: [Art])
-    func removeArt(_ currentArt: Art, _ completion: @escaping(_ done: Bool)->())
+    func removeArt(_ currentArt: Art, _ completion: @escaping(_ done: Bool) -> Void)
     func slide(_ direction: Direction) -> (index: Int, count: Int, art: Art)
 }
 

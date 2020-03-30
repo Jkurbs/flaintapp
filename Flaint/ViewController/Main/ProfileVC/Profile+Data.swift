@@ -20,7 +20,7 @@ extension ProfileVC {
                     self.arts.append(art)
                     self.showHideUI()
                     self.arts = self.arts.sorted { $0.index < $1.index }
-                    self.countLabel.text = "1 of \(self.arts.count)"
+                    self.orientationView.label.text = "1 of \(self.arts.count)"
                     self.currentArt = self.arts.first
                     self.delegate?.fetchArts(arts: self.arts)
                 }

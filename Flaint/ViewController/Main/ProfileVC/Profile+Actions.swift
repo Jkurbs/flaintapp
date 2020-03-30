@@ -58,7 +58,7 @@ extension ProfileVC {
     
     func slide(_ direction: Direction) {
         let result = delegate?.slide(direction)
-        countLabel.result = result
+        orientationView.result = result
     }
     
     @objc func more() {
@@ -76,11 +76,11 @@ extension ProfileVC {
             }
         }
         
-        let delete = UIAlertAction(title: "Delete", style: .destructive) { action in
+        let delete = UIAlertAction(title: "Delete", style: .destructive) { _ in
             let confirmationAlert = UIAlertController(title: "Are you sure you want to delete it from your gallery?", message: nil, preferredStyle: .actionSheet)
             confirmationAlert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { _ in
                 guard  let userId = AuthService.shared.UserID, let id = art.id, let title = art.title, let style = art.style else { return }
-                self.delegate?.removeArt(art, { (done) in
+                self.delegate?.removeArt(art, { done in
                     if done {
                         DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { _ in
                             DispatchQueue.main.async {
@@ -112,7 +112,7 @@ extension ProfileVC {
         DispatchQueue.main.async {
             let vc = AddImageVC()
             
-            vc.artsCount = self.countLabel.result?.count
+            vc.artsCount = self.orientationView.result?.count
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen
             self.navigationController?.present(nav, animated: true, completion: nil)

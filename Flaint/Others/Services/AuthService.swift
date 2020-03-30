@@ -112,9 +112,9 @@ class AuthService {
     
     // MARK: - Create account
     
-    func createAccount(firstName: String, lastName: String? ,username: String, email: String, pwd: String, complete: @escaping (Bool, Error?) -> Void) {
+    func createAccount(firstName: String, lastName: String?, username: String, email: String, pwd: String, complete: @escaping (Bool, Error?) -> Void) {
         
-        Auth.auth().createUser(withEmail: email, password: pwd) { (result, error) in
+        Auth.auth().createUser(withEmail: email, password: pwd) { result, error in
             if let error = error {
                 NSLog("Error creating user: \(error)")
                 complete(false, error)
@@ -126,7 +126,7 @@ class AuthService {
                     changeRequest.displayName = "\(firstName) \(lastName ?? "")"
                     changeRequest.commitChanges { error in
 
-                        let data: [String: Any] = ["email": email, "firstName": firstName,  "lastName": firstName, "username": username]
+                        let data: [String: Any] = ["email": email, "firstName": firstName, "lastName": firstName, "username": username]
                         DataService.shared.saveUserData(user.uid, data, complete: { success, error in
                             if !success {
                                 NSLog("Error while saving userData: \(error!)")

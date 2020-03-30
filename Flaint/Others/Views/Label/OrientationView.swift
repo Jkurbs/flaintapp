@@ -9,7 +9,9 @@
 import Foundation
 import UIKit
 
-class CountLabel: UILabel {
+class OrientationView: UIView {
+    
+    var label = UILabel()
     
     var result: (index: Int, count: Int, art: Art)? {
         didSet {
@@ -20,9 +22,16 @@ class CountLabel: UILabel {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.font = UIFont.systemFont(ofSize: 13)
-        self.textColor = .gray
-        self.textAlignment = .center
+        backgroundColor = .white
+        label.font = UIFont.systemFont(ofSize: 13)
+        label.textColor = .gray
+        label.textAlignment = .center
+        label.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(label)
+        NSLayoutConstraint.activate([
+            label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10),
+            label.centerXAnchor.constraint(equalTo: centerXAnchor)
+        ])
     }
     
     func hideLabel() {
@@ -35,7 +44,7 @@ class CountLabel: UILabel {
     
     @objc func showLabel() {
         guard let result = result else { return }
-        self.text = "\(result.index + 1) of \(result.count)"
+        label.text = "\(result.index + 1) of \(result.count)"
         UIView.animate(withDuration: 0.5) {
             self.alpha = 1.0
         }

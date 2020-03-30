@@ -19,7 +19,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     // MARK: - UI Elements
     
-    lazy var countLabel = CountLabel()
+    lazy var orientationView = OrientationView()
     
     // MARK: - Properties
     
@@ -57,11 +57,8 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let viewHeight = self.view.bounds.height
-        self.countLabel.frame = CGRect(x: self.view.bounds.width - 45, y: 0, width: 32, height: 20)
-        self.countLabel.layer.cornerRadius = 10
-        countLabel.frame = CGRect(x: 0, y: viewHeight - 120, width: view.frame.width, height: 25)
+        orientationView.frame = CGRect(x: 0, y: viewHeight - 120, width: view.frame.width, height: 46)
     }
-    
     
     // MARK: - Functions
     
@@ -74,7 +71,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         searchBar.returnKeyType = .done
                 
         view.backgroundColor = .backgroundColor
-        view.addSubview(countLabel)
         
         // NavBar setup
         
@@ -119,6 +115,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
-        self.view.addSubview(countLabel)
+        self.view.addSubview(orientationView)
     }
 }
