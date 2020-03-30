@@ -22,7 +22,6 @@ extension ProfileVC {
         navigationController?.present(nav, animated: true, completion: nil)
     }
     
-    // Search Art
     @objc func searchTapped() {
         let doneButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
         self.navigationItem.rightBarButtonItems = []
@@ -62,7 +61,6 @@ extension ProfileVC {
     }
     
     @objc func more() {
-        
         guard let art = self.currentArt else { return }
         
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
@@ -111,7 +109,6 @@ extension ProfileVC {
     @objc func gotToAddArtVC() {
         DispatchQueue.main.async {
             let vc = AddImageVC()
-            
             vc.artsCount = self.orientationView.result?.count
             let nav = UINavigationController(rootViewController: vc)
             nav.modalPresentationStyle = .fullScreen

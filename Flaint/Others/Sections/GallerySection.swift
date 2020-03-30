@@ -90,12 +90,9 @@ extension GallerySection: ArtDelegate {
     }
         
     func removeArt(_ currentArt: Art, _ completion: @escaping (Bool) -> Void) {
+        self.arts.remove(at: currentIndex)
         self.adapter.performUpdates(animated: true) { _ in
-            if let index = self.arts.firstIndex(of: currentArt) {
-                self.arts.remove(at: index)
-                self.adapter.reloadObjects(self.arts)
-                completion(true)
-            }
+               completion(true)
         }
     }
     
