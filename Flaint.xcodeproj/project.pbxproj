@@ -71,6 +71,7 @@
 		6DE39D9F22AC1B4E00636B47 /* UIButton+UIImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE39D9E22AC1B4E00636B47 /* UIButton+UIImage.swift */; };
 		6DE39DA122AC5BC100636B47 /* LearnMoreVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE39DA022AC5BC100636B47 /* LearnMoreVC.swift */; };
 		6DE39DA422ACA4F200636B47 /* LearnMoreInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE39DA322ACA4F200636B47 /* LearnMoreInfoCell.swift */; };
+		6DE3C1D22433B585007DDCFE /* ReorderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE3C1D12433B585007DDCFE /* ReorderCell.swift */; };
 		6DE419B42282584C00EE6AAB /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE419B32282584C00EE6AAB /* String.swift */; };
 		6DE419B822830CA500EE6AAB /* Recorder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE419B722830CA500EE6AAB /* Recorder.swift */; };
 		6DE419BA2283B43F00EE6AAB /* EmbeddedCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE419B92283B43E00EE6AAB /* EmbeddedCollectionViewCell.swift */; };
@@ -193,6 +194,7 @@
 		6DE39D9E22AC1B4E00636B47 /* UIButton+UIImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+UIImage.swift"; sourceTree = "<group>"; };
 		6DE39DA022AC5BC100636B47 /* LearnMoreVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnMoreVC.swift; sourceTree = "<group>"; };
 		6DE39DA322ACA4F200636B47 /* LearnMoreInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LearnMoreInfoCell.swift; sourceTree = "<group>"; };
+		6DE3C1D12433B585007DDCFE /* ReorderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderCell.swift; sourceTree = "<group>"; };
 		6DE3F9E9227FCB2400507AA8 /* Flaint-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Flaint-Bridging-Header.h"; sourceTree = "<group>"; };
 		6DE419B32282584C00EE6AAB /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		6DE419B722830CA500EE6AAB /* Recorder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Recorder.swift; sourceTree = "<group>"; };
@@ -306,14 +308,14 @@
 			path = Constant;
 			sourceTree = "<group>";
 		};
-		6D0579D92290F3BE00F34E75 /* AddCell */ = {
+		6D0579D92290F3BE00F34E75 /* Add */ = {
 			isa = PBXGroup;
 			children = (
 				6D0579DA2290F3CD00F34E75 /* AddArtCell.swift */,
 				6D0579DC2290F59400F34E75 /* AddArtInfoCell.swift */,
 				6DD1281522A72FEF0068195C /* AddDescCell.swift */,
 			);
-			path = AddCell;
+			path = Add;
 			sourceTree = "<group>";
 		};
 		6D16970724215D3200FDE4CD /* Controller */ = {
@@ -402,13 +404,13 @@
 			path = Art;
 			sourceTree = "<group>";
 		};
-		6D30556C2289287B00C0A7BF /* EditArtCell */ = {
+		6D30556C2289287B00C0A7BF /* EditArt */ = {
 			isa = PBXGroup;
 			children = (
 				6D30556D2289288A00C0A7BF /* EditArtCell.swift */,
 				6D9ACC80241EC583001B904C /* PickerCell.swift */,
 			);
-			path = EditArtCell;
+			path = EditArt;
 			sourceTree = "<group>";
 		};
 		6D4AF40923275BDC00D40A57 /* Image */ = {
@@ -464,19 +466,13 @@
 		6D80FCCF226D04C0008C6005 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6DE60DE422CBEEA800AB0E85 /* EditProfileCells */,
-				6D0579D92290F3BE00F34E75 /* AddCell */,
-				6D30556C2289287B00C0A7BF /* EditArtCell */,
-				6DE39DA222ACA4E100636B47 /* LearnMoreCell */,
+				6DE3C1CF2433B56E007DDCFE /* Cells */,
 				6DE60E1022D2C57B00AB0E85 /* Button */,
 				6DE60E0C22D2A14300AB0E85 /* Label */,
 				6DE60E0622D2987600AB0E85 /* Text */,
 				6DE39D9D22AC1B3E00636B47 /* UIButton */,
 				6D80FCD7226E17E1008C6005 /* 3D */,
-				6D80FCD0226D04C8008C6005 /* Profile */,
 				6D80FCD3226D05A7008C6005 /* UICreator.swift */,
-				6DE60DE222CBEBF000AB0E85 /* TextFieldCell.swift */,
-				6DE60E0122D2527500AB0E85 /* CountryCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -538,12 +534,35 @@
 			path = UIButton;
 			sourceTree = "<group>";
 		};
-		6DE39DA222ACA4E100636B47 /* LearnMoreCell */ = {
+		6DE39DA222ACA4E100636B47 /* LearnMore */ = {
 			isa = PBXGroup;
 			children = (
 				6DE39DA322ACA4F200636B47 /* LearnMoreInfoCell.swift */,
 			);
-			path = LearnMoreCell;
+			path = LearnMore;
+			sourceTree = "<group>";
+		};
+		6DE3C1CF2433B56E007DDCFE /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				6DE60E0122D2527500AB0E85 /* CountryCell.swift */,
+				6DE60DE222CBEBF000AB0E85 /* TextFieldCell.swift */,
+				6DE39DA222ACA4E100636B47 /* LearnMore */,
+				6D30556C2289287B00C0A7BF /* EditArt */,
+				6DE60DE422CBEEA800AB0E85 /* EditProfile */,
+				6D0579D92290F3BE00F34E75 /* Add */,
+				6D80FCD0226D04C8008C6005 /* Profile */,
+				6DE3C1D02433B576007DDCFE /* Reorder */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		6DE3C1D02433B576007DDCFE /* Reorder */ = {
+			isa = PBXGroup;
+			children = (
+				6DE3C1D12433B585007DDCFE /* ReorderCell.swift */,
+			);
+			path = Reorder;
 			sourceTree = "<group>";
 		};
 		6DE419AF22808E0E00EE6AAB /* Utility */ = {
@@ -583,14 +602,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		6DE60DE422CBEEA800AB0E85 /* EditProfileCells */ = {
+		6DE60DE422CBEEA800AB0E85 /* EditProfile */ = {
 			isa = PBXGroup;
 			children = (
 				6DE60DE522CBEEBE00AB0E85 /* PictureCell.swift */,
 				6DE60DE922CBFC4400AB0E85 /* ProfileInfoCell.swift */,
 				6DE60DF722CE6C5A00AB0E85 /* EditAccGeneralCell.swift */,
 			);
-			path = EditProfileCells;
+			path = EditProfile;
 			sourceTree = "<group>";
 		};
 		6DE60DF922CE728E00AB0E85 /* Services */ = {
@@ -990,6 +1009,7 @@
 				6D0487E32410D5A7003E4414 /* Extension.swift in Sources */,
 				6DE419B42282584C00EE6AAB /* String.swift in Sources */,
 				6D1962E3231E7BB00073EC3D /* Profile+IGListKit.swift in Sources */,
+				6DE3C1D22433B585007DDCFE /* ReorderCell.swift in Sources */,
 				6D39E47E2305B08800533490 /* LearnMoreViewModel.swift in Sources */,
 				6D80FCDC226E1825008C6005 /* Art.swift in Sources */,
 				6D626E0E22D66674003F083E /* Validation+String.swift in Sources */,
