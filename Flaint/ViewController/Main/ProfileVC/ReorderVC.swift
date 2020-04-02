@@ -13,7 +13,6 @@ class ReorderVC: UIViewController {
     // MARK: - Properties
     
     var tableView: UITableView!
-    
     var arts = [Art]()
     
     private let heightForHeader: CGFloat = 30.0
@@ -122,11 +121,9 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
-        
         let label = UICreator.create.label("Arts will show from top to bottom.", 12.5, .lightGray, .center, .regular, headerView)
         label.frame = headerView.frame
         headerView.addSubview(label)
-        
         return headerView
     }
     

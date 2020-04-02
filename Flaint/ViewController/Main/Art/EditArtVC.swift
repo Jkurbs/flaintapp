@@ -13,6 +13,10 @@
 
 import UIKit
 
+protocol ArtEdited: NSObjectProtocol {
+    var newArt: Art? { get set }
+}
+
 class EditArtVC: UITableViewController, ArtDescDelegate {
     
     // MARK: - Properties
@@ -29,6 +33,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     var titles = ["Title", "Price"]
     var array = ["Title", "Price", "Description", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
     
+    weak var delegate: ArtEdited?
     
     // MARK: - View Lifecycle
     

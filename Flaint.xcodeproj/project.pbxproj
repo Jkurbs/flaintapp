@@ -18,7 +18,6 @@
 		6D0579D82290EEA800F34E75 /* AddInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579D72290EEA800F34E75 /* AddInfoVC.swift */; };
 		6D0579DB2290F3CD00F34E75 /* AddArtCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579DA2290F3CD00F34E75 /* AddArtCell.swift */; };
 		6D0579DD2290F59400F34E75 /* AddArtInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D0579DC2290F59400F34E75 /* AddArtInfoCell.swift */; };
-		6D16970924215D4600FDE4CD /* ArtController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D16970824215D4600FDE4CD /* ArtController.swift */; };
 		6D17A779242284C4008AAC4F /* test.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A778242284C4008AAC4F /* test.swift */; };
 		6D17A77D24230E2B008AAC4F /* DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A77C24230E2B008AAC4F /* DateFormatter.swift */; };
 		6D17A7802423272D008AAC4F /* MessageAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D17A77F2423272D008AAC4F /* MessageAlerts.swift */; };
@@ -138,7 +137,6 @@
 		6D0579D72290EEA800F34E75 /* AddInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddInfoVC.swift; sourceTree = "<group>"; };
 		6D0579DA2290F3CD00F34E75 /* AddArtCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArtCell.swift; sourceTree = "<group>"; };
 		6D0579DC2290F59400F34E75 /* AddArtInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddArtInfoCell.swift; sourceTree = "<group>"; };
-		6D16970824215D4600FDE4CD /* ArtController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtController.swift; sourceTree = "<group>"; };
 		6D17A778242284C4008AAC4F /* test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = test.swift; sourceTree = "<group>"; };
 		6D17A77C24230E2B008AAC4F /* DateFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateFormatter.swift; sourceTree = "<group>"; };
 		6D17A77F2423272D008AAC4F /* MessageAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageAlerts.swift; sourceTree = "<group>"; };
@@ -323,7 +321,6 @@
 			children = (
 				6D39E47D2305B08800533490 /* LearnMoreViewModel.swift */,
 				6DE60DEC22CE616A00AB0E85 /* AccountViewModel.swift */,
-				6D16970824215D4600FDE4CD /* ArtController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -373,8 +370,8 @@
 				6D4AF3FF232734EC00D40A57 /* Profile+Data.swift */,
 				6D1962E2231E7BB00073EC3D /* Profile+IGListKit.swift */,
 				6D1962E4231E7C050073EC3D /* Profile+Actions.swift */,
-				6DD1281922A9A88D0068195C /* OverlayScene.swift */,
 				6DE0BF54242474FB00BB863F /* ReorderVC.swift */,
+				6DD1281922A9A88D0068195C /* OverlayScene.swift */,
 			);
 			path = ProfileVC;
 			sourceTree = "<group>";
@@ -384,10 +381,10 @@
 			children = (
 				6DF0A5A8226C012100C892C4 /* Main.storyboard */,
 				6DF0A5AD226C012300C892C4 /* LaunchScreen.storyboard */,
+				6DF0A5A4226C012100C892C4 /* AppDelegate.swift */,
+				6DE3F9E9227FCB2400507AA8 /* Flaint-Bridging-Header.h */,
 				6DE60E1822D3FD2700AB0E85 /* GoogleService-Info.plist */,
 				6DF0A5B0226C012300C892C4 /* Info.plist */,
-				6DE3F9E9227FCB2400507AA8 /* Flaint-Bridging-Header.h */,
-				6DF0A5A4226C012100C892C4 /* AppDelegate.swift */,
 				6D1A326122FCA905002FE383 /* Flaint.entitlements */,
 				6D70BB1123DE83360046CC66 /* ImageClassifier.mlmodel */,
 				6DF0A5AB226C012300C892C4 /* Assets.xcassets */,
@@ -437,8 +434,8 @@
 		6D626E0F22D68EFB003F083E /* Log */ = {
 			isa = PBXGroup;
 			children = (
-				6DE60DD822CB30AE00AB0E85 /* ResetPassVC.swift */,
 				6DFED988229CC60500E76D29 /* AuthVC.swift */,
+				6DE60DD822CB30AE00AB0E85 /* ResetPassVC.swift */,
 				6D626E0B22D65407003F083E /* UsernameVC.swift */,
 			);
 			path = Log;
@@ -684,9 +681,9 @@
 		6DF0A5A3226C012100C892C4 /* Flaint */ = {
 			isa = PBXGroup;
 			children = (
-				6D17A77E24230E32008AAC4F /* Helper */,
 				6DAF1B1B22865B45000874C6 /* ViewController */,
 				6D80FCDA226E181A008C6005 /* Model */,
+				6D17A77E24230E32008AAC4F /* Helper */,
 				6D16970724215D3200FDE4CD /* Controller */,
 				6DE419B22282583500EE6AAB /* Extension */,
 				6D0487DD2410D411003E4414 /* Constant */,
@@ -1040,7 +1037,6 @@
 				6DF0A5A5226C012100C892C4 /* AppDelegate.swift in Sources */,
 				6D0579DD2290F59400F34E75 /* AddArtInfoCell.swift in Sources */,
 				6D9ACC81241EC583001B904C /* PickerCell.swift in Sources */,
-				6D16970924215D4600FDE4CD /* ArtController.swift in Sources */,
 				6DE60DE122CBE8F500AB0E85 /* ChangePwdVC.swift in Sources */,
 				6D35AE4C22A4A7C60044ABAE /* ArNotSupporterVC.swift in Sources */,
 				6D1962D9231E1C450073EC3D /* Utilities.swift in Sources */,

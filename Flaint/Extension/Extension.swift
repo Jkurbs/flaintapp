@@ -10,7 +10,6 @@ import UIKit
 import FirebaseDatabase
 
 // Return UIView Id
-
 extension UIView {
     static var id: String {
         String(describing: self)

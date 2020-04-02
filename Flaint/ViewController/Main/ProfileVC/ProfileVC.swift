@@ -69,11 +69,9 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         searchBar.isTranslucent = true
         searchBar.barTintColor = .backgroundColor
         searchBar.returnKeyType = .done
-                
         view.backgroundColor = .backgroundColor
         
         // NavBar setup
-        
         let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action: #selector(gotToReorderVC))
         
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
@@ -85,7 +83,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         // Toolbar setup
         var items = [UIBarButtonItem]()
-//        let symbolConfig = UIImage.SymbolConfiguration(textStyle: .title1)
                 
         let leftButton = UIBarButtonItem(image: UIImage(named: "Left-30"), style: .done, target: self, action: #selector(action(_:)))
         leftButton.isEnabled = false

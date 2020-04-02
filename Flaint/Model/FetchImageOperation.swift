@@ -26,7 +26,6 @@ class FetchImageOperation: BlockOperation {
     override func main() {
         let myBlock: SDExternalCompletionBlock! = { [weak self] (image: UIImage?, error: Error?, cacheType: SDImageCacheType, imageUrl: URL?) -> Void in
             if let img = image {
-                print("IMAGE FETCHED")
                 self?.imageData = img.jpegData(compressionQuality: 1.0)
             }
         }

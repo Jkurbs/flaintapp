@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -15,18 +15,18 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ios-marketing" translatesAutoresizingMaskIntoConstraints="NO" id="2xG-cJ-y6h">
-                                <rect key="frame" x="138.5" y="214" width="98" height="92"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Instagram" translatesAutoresizingMaskIntoConstraints="NO" id="RkT-aP-Okp">
+                                <rect key="frame" x="147.5" y="200" width="80" height="80"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="92" id="esP-PS-4Rs"/>
-                                    <constraint firstAttribute="width" constant="98" id="waM-56-Q8Q"/>
+                                    <constraint firstAttribute="width" constant="80" id="X4j-Pt-q9P"/>
+                                    <constraint firstAttribute="height" constant="80" id="unj-Zg-Hj6"/>
                                 </constraints>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="2xG-cJ-y6h" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="HGB-qU-7kW"/>
-                            <constraint firstItem="2xG-cJ-y6h" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="214" id="adA-gq-aBx"/>
+                            <constraint firstItem="RkT-aP-Okp" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="PcX-Lb-kPu"/>
+                            <constraint firstItem="RkT-aP-Okp" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="200" id="cdb-gp-g4t"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -37,6 +37,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="ios-marketing" width="1024" height="1024"/>
+        <image name="Instagram" width="334" height="335"/>
     </resources>
 </document>

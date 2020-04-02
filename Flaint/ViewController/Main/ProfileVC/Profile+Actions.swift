@@ -10,7 +10,6 @@ import UIKit
 import ARKit
 import FirebaseAuth
 
-
 extension ProfileVC {
     
     @objc func gotToReorderVC() {

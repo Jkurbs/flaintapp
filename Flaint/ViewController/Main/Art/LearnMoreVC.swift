@@ -11,7 +11,6 @@ import FirebaseAuth
 
 class LearnMoreVC: UIViewController {
     
-    
     // MARK: - Properties
     
     var tableView: UITableView!
@@ -72,7 +71,6 @@ class LearnMoreVC: UIViewController {
          headerView.addSubview(label)
          self.tableView.tableHeaderView = headerView
          view.addSubview(tableView)
-        
     }
     
     
