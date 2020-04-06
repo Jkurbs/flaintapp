@@ -40,6 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                      let vc = ProfileVC()
                      vc.userUID = user?.uid
                      AuthService.shared.UserID = user?.uid
+                     UserDefaults.standard.set(user?.uid, forKey: .userId)
                      self.setupRootViewController(viewController: vc)
                 }
             }

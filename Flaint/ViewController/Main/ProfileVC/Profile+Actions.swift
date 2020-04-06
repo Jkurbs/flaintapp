@@ -66,6 +66,7 @@ extension ProfileVC {
         let edit = UIAlertAction(title: "Edit", style: .default) { _ in
             DispatchQueue.main.async {
                 let editVC = EditArtVC()
+                editVC.userUID = self.userUID
                 editVC.art = art
                 let nav = UINavigationController(rootViewController: editVC)
                 nav.modalPresentationStyle = .fullScreen

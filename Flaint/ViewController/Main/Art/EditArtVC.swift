@@ -28,6 +28,8 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         }
     }
     
+    var userUID: String?
+    
     var artProperties = ArtProperties.self
     
     var titles = ["Title", "Price"]
@@ -65,7 +67,9 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.addActivityIndicator()
         // Save Edit Art
         
-        guard let userId = UserDefaults.standard.string(forKey: "userId"), let artId = self.art?.id else { return }
+        guard let userId = userUID ?? UserDefaults.standard.string(forKey: .userId), let artId = self.art?.id else { return }
+        
+        print("USER ID: \(userId)")
         
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! InfoTextFieldCell
         let priceCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as! InfoTextFieldCell
