@@ -84,7 +84,7 @@ extension GallerySection: ArtDelegate {
         self.arts = arts
         self.adapter.performUpdates(animated: true, completion: nil)
         guard arts.isEmpty else {
-            self.adapter.reloadObjects(arts)
+            self.adapter.reloadData(completion: nil)
             return
         }
     }
