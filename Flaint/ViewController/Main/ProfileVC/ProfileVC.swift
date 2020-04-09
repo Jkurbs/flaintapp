@@ -27,6 +27,9 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     var arts = [Art]()
     var currentArt: Art?
     
+    var leftBarButtonItems: [UIBarButtonItem]!
+    var rightBarButtonItems: [UIBarButtonItem]!
+    
     weak var delegate: ArtDelegate?
     
     lazy var adapter: ListAdapter = {
@@ -73,13 +76,14 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         // NavBar setup
         let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action: #selector(gotToReorderVC))
-        
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
         let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action: #selector(gotToSettingsVC))
         
-        navigationItem.leftBarButtonItem = reorderButton
-        navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
+        leftBarButtonItems = [reorderButton]
+        rightBarButtonItems = [menuButton, addButton, searchButton]
+        navigationItem.leftBarButtonItems = leftBarButtonItems
+        navigationItem.rightBarButtonItems = rightBarButtonItems
         
         // Toolbar setup
         var items = [UIBarButtonItem]()

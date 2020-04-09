@@ -22,9 +22,10 @@ extension ProfileVC {
     }
     
     @objc func searchTapped() {
-        let doneButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
+        let cancelButton = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancelSearch))
+        self.navigationItem.leftBarButtonItems = []
         self.navigationItem.rightBarButtonItems = []
-        self.navigationItem.rightBarButtonItem = doneButton
+        self.navigationItem.rightBarButtonItem = cancelButton
         self.navigationItem.titleView = searchBar
         self.searchBar.sizeToFit()
         let deadline = DispatchTime.now() + .milliseconds(5)
@@ -36,8 +37,8 @@ extension ProfileVC {
     @objc func cancelSearch() {
         self.searchBar.text = nil
         self.navigationItem.titleView = nil
-        self.navigationItem.rightBarButtonItem = nil
-        //        self.navigationItem.rightBarButtonItems = [menuButton, addButton, searchButton]
+        self.navigationItem.leftBarButtonItems = leftBarButtonItems
+        self.navigationItem.rightBarButtonItems = rightBarButtonItems
         self.adapter.performUpdates(animated: false, completion: nil)
     }
     
