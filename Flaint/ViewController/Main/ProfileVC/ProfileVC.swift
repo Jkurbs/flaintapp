@@ -87,7 +87,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         // Toolbar setup
         var items = [UIBarButtonItem]()
-                
+        
         let leftButton = UIBarButtonItem(image: UIImage(named: "Left-30"), style: .done, target: self, action: #selector(action(_:)))
         leftButton.isEnabled = false
         

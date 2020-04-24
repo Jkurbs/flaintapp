@@ -56,7 +56,7 @@ class AddImageVC: UIViewController {
         super.viewDidLayoutSubviews()
         
         NSLayoutConstraint.activate([
-        
+            
             imageView.widthAnchor.constraint(equalTo: view.widthAnchor),
             imageView.heightAnchor.constraint(equalTo: view.widthAnchor),
             imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -132,7 +132,7 @@ extension AddImageVC: ImagePickerDelegate {
     }
     
     @objc func learnmore() {
-//        let svc = SFSafariViewController(url: URL(string: "https://flaintapp.com")!)
-//        present(svc, animated: true, completion: nil)
+        //        let svc = SFSafariViewController(url: URL(string: "https://flaintapp.com")!)
+        //        present(svc, animated: true, completion: nil)
     }
 }

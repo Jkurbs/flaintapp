@@ -10,7 +10,7 @@ import UIKit
 import FirebaseAuth
 
 extension ProfileVC {
-
+    
     // Fetch user current arts
     @objc func fetchArts() {
         self.arts.removeAll()

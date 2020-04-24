@@ -99,7 +99,6 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.addActivityIndicator()
         let date = CachedDateFormattingHelper.shared.formatTodayDate()
         
-        
         let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String: Any]
         DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { success, error in
             if !success {

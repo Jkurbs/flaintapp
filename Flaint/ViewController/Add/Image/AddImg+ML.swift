@@ -15,10 +15,10 @@ extension AddImageVC {
     
     /// - Tag: PerformRequests
     func updateClassifications(for image: UIImage) {
-
+        
         let orientation = CGImagePropertyOrientation(rawValue: UInt32(image.imageOrientation.rawValue))!
         guard let ciImage = CIImage(image: image) else { fatalError("Unable to create \(CIImage.self) from \(image).") }
-
+        
         DispatchQueue.global(qos: .userInitiated).async {
             let handler = VNImageRequestHandler(ciImage: ciImage, orientation: orientation)
             do {
@@ -33,7 +33,7 @@ extension AddImageVC {
             }
         }
     }
-
+    
     /// Updates the UI with the results of the classification.
     /// - Tag: ProcessClassifications
     func processClassifications(for request: VNRequest, error: Error?) {
@@ -43,7 +43,7 @@ extension AddImageVC {
             }
             // The `results` will always be `VNClassificationObservation`s, as specified by the Core ML model in this project.
             let classifications = results as! [VNClassificationObservation]
-
+            
             if classifications.isEmpty {
                 //                self.label.text = "Nothing recognized."
             } else {

@@ -90,6 +90,8 @@ class DetailsCell: UICollectionViewCell {
     }
 }
 
+import FirebaseStorage
+
 class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - UI Elements
@@ -114,23 +116,26 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             guard let url = URL(string: art.imgUrl) else { return }
 
             let myBlock: SDExternalCompletionBlock! = { [weak self] (image: UIImage?, error: Error?, cacheType: SDImageCacheType, imageUrl: URL?) -> Void in
+                guard let self = self else { return }
+
                 if let img = image {
-                    /// Scale image to contentWidth
-                    let width = self?.contentView.frame.width
-                    let height = self?.contentView.frame.height
-                    self?.queue.name = "com.Kurbs.Flaintartist.ImageResizing"
-                    let imageResizeOperation = ImageResizeOperation(image: img, width: width!, height: height!)
+                    self.queue.name = "com.Kurbs.Flaintartist.ImageResizing"
+
+                    let width = self.contentView.frame.width
+                    let height = self.contentView.frame.height
+
+                    let imageResizeOperation = ImageResizeOperation(image: img, width: width, height: height)
+
                     let updateImageOperation = BlockOperation { [weak self] in
-                        
-                        self?.activityIndicator.isHidden = true
-                        
+                        guard let self = self else { return }
+
+                        self.activityIndicator.isHidden = true
                         let newImage = imageResizeOperation.image
-                        
-                        self?.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width, position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0, 0, 0, 0))
+                        self.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width, position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0, 0, 0, 0))
                     }
-                    
+
                     updateImageOperation.addDependency(imageResizeOperation)
-                    self?.queue.addOperation(imageResizeOperation)
+                    self.queue.addOperation(imageResizeOperation)
                     OperationQueue.main.addOperation(updateImageOperation)
                 }
             }

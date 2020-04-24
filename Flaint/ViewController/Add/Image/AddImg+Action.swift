@@ -52,7 +52,9 @@ extension AddImageVC {
     
     
     @objc func nextStep() {
-                
+        
+        guard let imageData = self.imageView.image!.jpegData(compressionQuality: 1.0) else { return }
+        
         self.navigationItem.addActivityIndicator()
         let vc = AddInfoVC()
         vc.artsCount = self.artsCount
@@ -64,26 +66,25 @@ extension AddImageVC {
         vc.styles = self.classifications
         
         // Save image
-        let imgData = self.imageView.image!.jpegData(compressionQuality: 1.0)!
-        
+
         let imgUID = NSUUID().uuidString
         vc.artId = imgUID
         let ref = DataService.shared.RefStorage.child("Arts").child(userId).child(imgUID)
         self.ref = ref
         
         DispatchQueue.global(qos: .background).async {
-            DataService.shared.saveImg(ref, userId, imgData) { result in
+            DataService.shared.saveImg(ref, userId, imageData) { result in
                 if let url = try? result.get() as? String {
                     vc.imgUrl = url
                 }
             }
             DispatchQueue.main.async {
+                self.navigationItem.removeActivityIndicator("Next", #selector(self.nextStep))
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
-        self.navigationItem.removeActivityIndicator("Next", #selector(self.nextStep))
     }
-
+    
     
     @objc func photoLibrary(_ sender: UIButton) {
         self.imagePicker.present(from: sender)

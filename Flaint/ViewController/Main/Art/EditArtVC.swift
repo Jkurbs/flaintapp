@@ -176,7 +176,7 @@ extension EditArtVC {
             break
         }
         return UITableViewCell()
-
+        
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
