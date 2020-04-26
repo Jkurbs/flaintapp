@@ -289,7 +289,7 @@
 			isa = PBXGroup;
 			children = (
 				6D1962E1231E7B970073EC3D /* ProfileVC */,
-				6D290596232F2C5800281205 /* Art */,
+				6D290596232F2C5800281205 /* Learn+Edit */,
 				6D1962BD231E0C550073EC3D /* AR */,
 			);
 			path = Main;
@@ -392,13 +392,13 @@
 			path = Ressources;
 			sourceTree = "<group>";
 		};
-		6D290596232F2C5800281205 /* Art */ = {
+		6D290596232F2C5800281205 /* Learn+Edit */ = {
 			isa = PBXGroup;
 			children = (
 				6DE39DA022AC5BC100636B47 /* LearnMoreVC.swift */,
 				6DAF1B1E22865D9E000874C6 /* EditArtVC.swift */,
 			);
-			path = Art;
+			path = "Learn+Edit";
 			sourceTree = "<group>";
 		};
 		6D30556C2289287B00C0A7BF /* EditArt */ = {

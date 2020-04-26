@@ -20,8 +20,8 @@ class AuthVC: UIViewController {
     
     var phone = ""
     var label = UILabel()
-    var detailField = BgTextField()
-    var pwdField = BgTextField()
+    var detailField = FieldRect()
+    var pwdField = FieldRect()
     var nextButton = NextButton()
     
     var authChoice = AuthChoice.login
@@ -39,42 +39,8 @@ class AuthVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
         view.endEditing(true)
-
-        detailField.text = nil
-        pwdField.text = nil
-        NotificationCenter.default.removeObserver(self)
     }
 
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        NSLayoutConstraint.activate([
-        
-            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0),
-            label.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -56.0),
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            
-            segmentedCtrl.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 24.0),
-            segmentedCtrl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            segmentedCtrl.widthAnchor.constraint(equalTo: label.widthAnchor),
-        
-            detailField.topAnchor.constraint(equalTo: segmentedCtrl.bottomAnchor, constant: 40.0),
-            detailField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            detailField.widthAnchor.constraint(equalTo: label.widthAnchor),
-            detailField.heightAnchor.constraint(equalToConstant: 46.0),
-            
-            pwdField.topAnchor.constraint(equalTo: detailField.bottomAnchor, constant: 8.0),
-            pwdField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pwdField.widthAnchor.constraint(equalTo: label.widthAnchor),
-            pwdField.heightAnchor.constraint(equalToConstant: 46.0),
-            
-            nextButton.topAnchor.constraint(equalTo: pwdField.bottomAnchor, constant: 16.0),
-            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            nextButton.widthAnchor.constraint(equalTo: label.widthAnchor),
-            nextButton.heightAnchor.constraint(equalToConstant: 46.0),
-        ])
-    }
     
     func setupViews() {
         
@@ -115,6 +81,33 @@ class AuthVC: UIViewController {
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
         view.addSubview(nextButton)
+        
+        
+        NSLayoutConstraint.activate([
+        
+            label.topAnchor.constraint(equalTo: view.topAnchor, constant: 80.0),
+            label.widthAnchor.constraint(equalTo: view.widthAnchor, constant: -56.0),
+            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            segmentedCtrl.topAnchor.constraint(equalTo: label.bottomAnchor, constant: 24.0),
+            segmentedCtrl.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            segmentedCtrl.widthAnchor.constraint(equalTo: label.widthAnchor),
+        
+            detailField.topAnchor.constraint(equalTo: segmentedCtrl.bottomAnchor, constant: 40.0),
+            detailField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            detailField.widthAnchor.constraint(equalTo: label.widthAnchor),
+            detailField.heightAnchor.constraint(equalToConstant: 46.0),
+            
+            pwdField.topAnchor.constraint(equalTo: detailField.bottomAnchor, constant: 8.0),
+            pwdField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            pwdField.widthAnchor.constraint(equalTo: label.widthAnchor),
+            pwdField.heightAnchor.constraint(equalToConstant: 46.0),
+            
+            nextButton.topAnchor.constraint(equalTo: pwdField.bottomAnchor, constant: 16.0),
+            nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            nextButton.widthAnchor.constraint(equalTo: label.widthAnchor),
+            nextButton.heightAnchor.constraint(equalToConstant: 46.0),
+        ])
     }
     
     @objc func authChanged(_ sender: UISegmentedControl) {

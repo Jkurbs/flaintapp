@@ -59,6 +59,8 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         
         tableView?.register(AddArtInfoCell.self, forCellReuseIdentifier: "AddArtInfoCell")
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+    
+        
         tableView?.tableFooterView = UIView()
         
         switch self.prediction {
@@ -257,7 +259,7 @@ extension AddInfoVC {
         
         if indexPath.section == 0 && indexPath.row == 1 {
             let vc = DescriptionVC()
-            vc.textView.text = cell?.detailTextLabel?.text ?? ""
+            vc.artDescription = cell?.detailTextLabel?.text ?? ""
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }
@@ -266,6 +268,8 @@ extension AddInfoVC {
             self.view.endEditing(true)
             cell.selectedInTableView(tableView)
         }
+        
+        tableView.scrollToRow(at: indexPath, at: .none, animated: true)
     }
     
     func finishPassing(description: String) {

@@ -13,7 +13,7 @@
 
 import UIKit
 
-protocol ArtEdited: NSObjectProtocol {
+protocol ArtEditedDelegate: NSObjectProtocol {
     var newArt: Art? { get set }
 }
 
@@ -35,7 +35,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     var titles = ["Title", "Price"]
     var array = ["Title", "Price", "Description", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
     
-    weak var delegate: ArtEdited?
+    weak var delegate: ArtEditedDelegate?
     
     // MARK: - View Lifecycle
     
@@ -68,9 +68,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         // Save Edit Art
         
         guard let userId = userUID ?? UserDefaults.standard.string(forKey: .userId), let artId = self.art?.id else { return }
-        
-        print("USER ID: \(userId)")
-        
+
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! InfoTextFieldCell
         let priceCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as! InfoTextFieldCell
         let descCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2))
@@ -205,7 +203,7 @@ extension EditArtVC {
         
         if indexPath.section == 2 && indexPath.row == 0 {
             let vc = DescriptionVC()
-            vc.textView.text = art?.description
+            vc.artDescription = art?.description
             vc.delegate = self
             self.navigationController?.pushViewController(vc, animated: true)
         }

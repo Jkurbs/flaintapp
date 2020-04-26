@@ -8,7 +8,7 @@
 
 import Foundation
 
-
+// Art properties
 enum ArtProperties: String, CaseIterable {
  
     case style
@@ -34,7 +34,6 @@ enum Direction {
 }
 
 // Setting options
-
 enum Settings: String, CaseIterable {
     
     case edit = "Edit account"

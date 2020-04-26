@@ -65,8 +65,6 @@ extension AddImageVC {
         vc.artImage = self.imageView.image
         vc.styles = self.classifications
         
-        // Save image
-
         let imgUID = NSUUID().uuidString
         vc.artId = imgUID
         let ref = DataService.shared.RefStorage.child("Arts").child(userId).child(imgUID)

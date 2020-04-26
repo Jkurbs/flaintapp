@@ -13,19 +13,23 @@ import IGListKit
 class SearchArtSection: ListSectionController, ListScrollDelegate {
     
     weak var delegate: SearchSectionControllerDelegate?
-    
     private var art: Art?
     
     override func sizeForItem(at index: Int) -> CGSize {
-       
-        let width = collectionContext!.containerSize.width
-        let infoHeight: CGFloat = 150
-        
-        if index == 0 {
-            return CGSize(width: width, height: 430)
-        } else {
-            return CGSize(width: width, height: infoHeight)
+        guard let bottomSafeArea = viewController?.view.safeAreaInsets.bottom else {
+            return CGSize(width: 0.0, height: 0.0)
         }
+        
+         let width = collectionContext!.containerSize.width
+        let height = collectionContext!.containerSize.height + 20.0
+         let infoHeight: CGFloat = 150
+         let artCellHeight = height - (infoHeight + bottomSafeArea)
+        
+         if index == 0 {
+            return CGSize(width: width, height: artCellHeight)
+         } else {
+             return CGSize(width: width, height: infoHeight)
+         }
     }
     
     override init() {
