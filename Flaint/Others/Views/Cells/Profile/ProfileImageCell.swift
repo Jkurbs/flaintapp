@@ -100,7 +100,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     lazy var scnView = SCNView()
     lazy var artRoomScene = ArtRoomScene(create: true)
     var artImg: UIImage!
-    var imageView = UIImageView()
+    lazy var imageView = UIImageView()
     
     var lastWidthRatio: Float = 0
     let lastHeightRatio: Float = 0.2
@@ -108,6 +108,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     let maxWidthRatioRight: Float = 0.1
     let maxWidthRatioLeft: Float = -0.1
     var lastFingersNumber = 0
+    var rotationValue: Float = 0.0
     let queue = OperationQueue()
     
     var art: Art? {
@@ -178,6 +179,8 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         scnView.addGestureRecognizer(panGesture)
         contentView.addSubview(activityIndicator)
         
+        NotificationCenter.default.addObserver(self, selector: #selector(recenter), name: .recenterRotation, object: nil)
+        
     }
     
     
@@ -191,25 +194,48 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
                 
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
         
+        
         if numberOfTouches == fingersNeededToPan {
             
             if widthRatio >= maxWidthRatioRight {
                 widthRatio = maxWidthRatioRight
             }
+            
             if widthRatio <= maxWidthRatioLeft {
                 widthRatio = maxWidthRatioLeft
             }
             
-            self.artRoomScene.boxnode.eulerAngles.y = (Float(2 * Double.pi) * (widthRatio))
+            rotationValue = (Float(2 * Double.pi) * (widthRatio))
+            
+            self.artRoomScene.boxnode.eulerAngles.y = rotationValue
+            print("VALUE: \(rotationValue)")
             lastFingersNumber = fingersNeededToPan
         }
         
         lastFingersNumber = (numberOfTouches > 0 ? numberOfTouches : lastFingersNumber)
-    
-        if sender.state == .ended && lastFingersNumber == fingersNeededToPan {
+        
+        
+        switch sender.state {
+        case .began, .possible:
+            NotificationCenter.default.post(name: .rotationStarted, object: nil, userInfo: nil)
+        case .changed:
+            NotificationCenter.default.post(name: .rotationChanged, object: nil, userInfo: ["value": rotationValue*100])
+        case .ended, .cancelled, .failed:
+//            NotificationCenter.default.post(name: .rotationEnded, object: nil, userInfo: nil)
             lastWidthRatio = widthRatio
+        @unknown default:
+            break
         }
     }
+    
+    
+    @objc func recenter() {
+        UIView.animate(withDuration: 0.5) {
+            self.artRoomScene.boxnode.eulerAngles.y = 0.0
+        }
+    }
+    
+    
     
     override func prepareForReuse() {
         queue.cancelAllOperations()

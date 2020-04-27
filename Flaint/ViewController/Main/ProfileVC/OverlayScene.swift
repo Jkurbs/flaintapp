@@ -40,23 +40,23 @@ class OverlayScene: SKScene {
     var previousScale = CGFloat(1.0)
     
     @objc func pinched(_ sender: UIPinchGestureRecognizer) {
-        if sender.scale > previousScale {
-            sprite.isHidden = false
-            previousScale = sender.scale
-            if sprite.size.height < 800 {
-                let zoomIn = SKAction.scale(by: 1.05, duration: 0)
-                sprite.run(zoomIn)
-            }
-        }
-        if sender.scale < previousScale {
-            previousScale = sender.scale
-            if sprite.size.height > 200 {
-                let zoomOut = SKAction.scale(by: 0.95, duration: 0)
-                let fadeOut = SKAction.fadeOut(withDuration: 0.5)
-                sprite.run(zoomOut)
-                sprite.run(fadeOut)
-            }
-        }
+//        if sender.scale > previousScale {
+//            sprite.isHidden = false
+//            previousScale = sender.scale
+//            if sprite.size.height < 800 {
+//                let zoomIn = SKAction.scale(by: 1.05, duration: 0)
+//                sprite.run(zoomIn)
+//            }
+//        }
+//        if sender.scale < previousScale {
+//            previousScale = sender.scale
+//            if sprite.size.height > 200 {
+//                let zoomOut = SKAction.scale(by: 0.95, duration: 0)
+//                let fadeOut = SKAction.fadeOut(withDuration: 0.5)
+//                sprite.run(zoomOut)
+//                sprite.run(fadeOut)
+//            }
+//        }
     }
     
     

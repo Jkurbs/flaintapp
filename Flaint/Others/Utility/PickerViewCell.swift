@@ -188,8 +188,8 @@ public class AUPickerCell: UITableViewCell {
     private var rightLabelHeightConstraint: NSLayoutConstraint?
     private var separatorHeightConstraint: NSLayoutConstraint?
     
-    /// The height of the cell when the it is not expanded. The default is 44.0.
-    public var unexpandedHeight: CGFloat = 50.0 {
+    /// The height of the cell when the it is not expanded. The default is 60.0.
+    public var unexpandedHeight: CGFloat = 60.0 {
         didSet {
             leftLabelHeightConstraint?.constant = unexpandedHeight
             rightLabelHeightConstraint?.constant = unexpandedHeight

@@ -12,9 +12,7 @@ import UIKit
 extension String {
 
     // UserID
-    
     static var userId = "UserID"
-    
     
     // formatting text for currency textField
     func currencyInputFormatting() -> String {

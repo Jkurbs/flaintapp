@@ -50,8 +50,10 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
         tableView?.backgroundColor = .backgroundColor
+
         tableView?.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
         tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: InfoTextFieldCell.id)
+        tableView?.register(PickerCell.self, forCellReuseIdentifier: PickerCell.id)
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView?.tableFooterView = UIView()
     }
@@ -103,7 +105,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
 extension EditArtVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        9
+        4
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,8 +120,7 @@ extension EditArtVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let section = indexPath.section
-        let cell = PickerCell(type: .default, reuseIdentifier: PickerCell.id)
+        let section = indexPath.row
         
         let title = array[indexPath.section]
         let range = Array(10...100).map(String.init)
@@ -130,8 +131,8 @@ extension EditArtVC {
             cell.configure(imgUrl: art?.imgUrl)
             return cell
         case 1:
-            let title = self.titles[indexPath.row]
             let cell = tableView.dequeueReusableCell(withIdentifier: InfoTextFieldCell.id, for: indexPath) as! InfoTextFieldCell
+            let title = self.titles[indexPath.row]
             cell.configure(title: title, art: art!)
             return cell
         case 2:
@@ -142,33 +143,8 @@ extension EditArtVC {
             cell.detailTextLabel?.text = art?.description
             return cell
         case 3:
-            cell.leftLabel.text = title
-            cell.rightLabel.text = "\(art?.style ?? "Unkown")"
-            cell.values = artProperties.style.values
-            if let index = cell.values.firstIndex(of: art?.style ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        case 4:
-            cell.leftLabel.text = title
-            cell.rightLabel.text = "\(art?.medium ?? "Unkown")"
-            cell.values = artProperties.medium.values
-            if let index = cell.values.firstIndex(of: art?.medium ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        case 5:
-            cell.leftLabel.text = title
-            cell.rightLabel.text = "\(art?.substrate ?? "Unkown")"
-            cell.values = artProperties.substrate.values
-            if let index = cell.values.firstIndex(of: art?.substrate ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        case 6, 7, 8:
-            cell.leftLabel.text = title
-            cell.rightLabel.text = "\(art?.width ?? "")cm"
-            cell.values = range
+            let cell = tableView.dequeueReusableCell(withIdentifier: PickerCell.id) as! PickerCell
+            cell.updateViews(title, "\(art?.style ?? "Unkown")", values: artProperties.style.values)
             return cell
         default:
             break
@@ -191,8 +167,14 @@ extension EditArtVC {
             }
             return UITableView.automaticDimension
         } else {
-            if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
-                return cell.height
+            
+            var height = self.tableView.rowHeight
+
+            if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+                if (indexPath.row == 1) {
+                    height = cell.isPickerVisible ? 216.0 : 0.0
+                }
+                return height;
             }
             return UITableView.automaticDimension
         }

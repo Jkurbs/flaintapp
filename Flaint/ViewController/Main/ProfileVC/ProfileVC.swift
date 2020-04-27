@@ -18,7 +18,7 @@ import SDWebImage
 class ProfileVC: UIViewController, ListAdapterDataSource {
     
     // MARK: - UI Elements
-    
+    var adjustView = AdjustView()
     lazy var orientationView = OrientationView()
     
     // MARK: - Properties
@@ -61,11 +61,20 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         super.viewDidLayoutSubviews()
         let viewHeight = self.view.bounds.height
         orientationView.frame = CGRect(x: 0, y: viewHeight - 120, width: view.frame.width, height: 46)
+        
+        NSLayoutConstraint.activate([
+            adjustView.heightAnchor.constraint(equalToConstant: 25.0),
+            adjustView.widthAnchor.constraint(equalToConstant: 80)
+        ])
     }
     
     // MARK: - Functions
     
     func setupViews() {
+        
+        self.navigationItem.titleView = adjustView
+        adjustView.autoresizingMask = .flexibleWidth
+
         
         searchBar.barStyle = .default
         searchBar.placeholder = "Search gallery"
@@ -80,8 +89,8 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
         let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action: #selector(gotToSettingsVC))
         
-        leftBarButtonItems = [reorderButton]
-        rightBarButtonItems = [menuButton, addButton, searchButton]
+        leftBarButtonItems = [reorderButton, searchButton]
+        rightBarButtonItems = [menuButton, addButton]
         navigationItem.leftBarButtonItems = leftBarButtonItems
         navigationItem.rightBarButtonItems = rightBarButtonItems
         

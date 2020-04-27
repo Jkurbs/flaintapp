@@ -57,9 +57,9 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
-        tableView?.register(AddArtInfoCell.self, forCellReuseIdentifier: "AddArtInfoCell")
-        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-    
+        tableView?.register(PickerCell.self, forCellReuseIdentifier: PickerCell.id)
+        tableView?.register(AddArtInfoCell.self, forCellReuseIdentifier: AddArtInfoCell.id)
+        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.id)
         
         tableView?.tableFooterView = UIView()
         
@@ -160,7 +160,7 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
 extension AddInfoVC {
     
     override func numberOfSections(in tableView: UITableView) -> Int {
-        7
+        2
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,14 +173,6 @@ extension AddInfoVC {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = AUPickerCell(type: .default, reuseIdentifier: "PickerDateCell")
-        cell.separatorInset = UIEdgeInsets.zero
-        cell.leftLabel.textColor = UIColor.darkText
-        cell.rightLabel.textColor = UIColor.darkText
-        cell.leftLabel.font = UIFont.systemFont(ofSize: 15)
-        cell.rightLabel.font = UIFont.systemFont(ofSize: 15)
-        cell.separatorHeight = 1
-        cell.unexpandedHeight = 50
         
         let range = Array(10...100).map(String.init)
         
@@ -196,39 +188,42 @@ extension AddInfoVC {
             cell.accessoryType = .disclosureIndicator
             return cell
         } else if indexPath.section == 1 {
-            cell.leftLabel.text = "Style"
-            cell.values = ["Abstract", "Realism", "Surrealism", "Pop art"]
-            if  let index = self.styles.firstIndex(of: self.classifications?.style ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        } else if indexPath.section == 2 {
-            cell.leftLabel.text = "Medium"
-            cell.values = mediums
-            if let index = self.mediums.firstIndex(of: self.classifications?.medium ?? "") {
-                cell.selectedRow = index
-            }
-            return cell
-        } else if indexPath.section == 3 {
-            cell.leftLabel.text = "Substrate"
-            cell.values = substrates
-            if let index = self.substrates.firstIndex(of: self.classifications?.substrate ?? "" ) {
-                cell.selectedRow = index
-            }
-            return cell
-        } else if indexPath.section == 4 {
-            cell.leftLabel.text = "Width"
-            cell.values = range
-            return cell
-        } else if indexPath.section == 5 {
-            cell.leftLabel.text = "Height"
-            cell.values = range
-            return cell
-        } else {
-            cell.leftLabel.text = "Depth"
-            cell.values = range
+            let cell = tableView.dequeueReusableCell(withIdentifier: PickerCell.id, for: indexPath) as! PickerCell
+            cell.updateViews("Style", nil, values: ["Abstract", "Realism", "Surrealism", "Pop art"])
             return cell
         }
+        
+        return UITableViewCell()
+        
+//        else if indexPath.section == 2 {
+//            cell.leftLabel.text = "Medium"
+//            cell.values = mediums
+//            if let index = self.mediums.firstIndex(of: self.classifications?.medium ?? "") {
+//                cell.selectedRow = index
+//            }
+//            return cell
+//        }
+        
+//        else if indexPath.section == 3 {
+//            cell.leftLabel.text = "Substrate"
+//            cell.values = substrates
+//            if let index = self.substrates.firstIndex(of: self.classifications?.substrate ?? "" ) {
+//                cell.selectedRow = index
+//            }
+//            return cell
+//        } else if indexPath.section == 4 {
+//            cell.leftLabel.text = "Width"
+//            cell.values = range
+//            return cell
+//        } else if indexPath.section == 5 {
+//            cell.leftLabel.text = "Height"
+//            cell.values = range
+//            return cell
+//        } else {
+//            cell.leftLabel.text = "Depth"
+//            cell.values = range
+//            return cell
+//        }
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -246,6 +241,9 @@ extension AddInfoVC {
             return UITableView.automaticDimension
         } else {
             if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
+                if cell.expanded == true {
+                    return cell.height
+                }
                 return cell.height
             }
             return UITableView.automaticDimension
@@ -264,12 +262,17 @@ extension AddInfoVC {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+            print("SELECT")
+            if cell.isPickerVisible {
+                cell.hidePickerView()
+            } else {
+                cell.showPickerView()
+            }
             self.view.endEditing(true)
-            cell.selectedInTableView(tableView)
         }
         
-        tableView.scrollToRow(at: indexPath, at: .none, animated: true)
+        tableView.scrollToRow(at: indexPath, at: .none, animated: false)
     }
     
     func finishPassing(description: String) {
