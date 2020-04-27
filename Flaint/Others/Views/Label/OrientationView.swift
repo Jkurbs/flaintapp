@@ -75,7 +75,6 @@ class AdjustView: UIView {
     }()
     
     
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
@@ -94,16 +93,14 @@ class AdjustView: UIView {
         backgroundColor = UIColor(white: 0.8, alpha: 1.0)
         alpha = 0.0
         isHidden = true
-        
         translatesAutoresizingMaskIntoConstraints = false
         
         addSubview(label)
-        label.text = "1:00۟"
         addSubview(centerButton)
         
         NotificationCenter.default.addObserver(self, selector: #selector(showView), name: .rotationStarted, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateLabel(_:)), name: .rotationChanged, object: nil)
-
+        NotificationCenter.default.addObserver(self, selector: #selector(setTimer), name: .rotationEnded, object: nil)
     }
     
     @objc func showView() {
@@ -116,20 +113,33 @@ class AdjustView: UIView {
     @objc func hideView() {
         UIView.animate(withDuration: 5.0, animations: {
             self.alpha = 0.0
+            self.label.text = nil
             self.isHidden = true
             NotificationCenter.default.post(name: .recenterRotation, object: nil, userInfo: nil)
         }) { (finished) in
         }
     }
     
+    @objc func setTimer() {
+        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
+            UIView.animate(withDuration: 0.5, animations: {
+                self.alpha = 0.0
+            }) { (finished) in
+                self.isHidden = true
+                timer.invalidate()
+            }
+        }
+    }
+    
+    
+    
     @objc func updateLabel(_ notification: Notification) {
         if let info = notification.userInfo, let value = info["value"] as? Float {
             let roundedValue = value.rounded()
             label.text = String(roundedValue)
             if roundedValue == 0.0 {
-                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                let generator = UIImpactFeedbackGenerator(style: .medium)
                 generator.impactOccurred()
-
             }
         }
     }

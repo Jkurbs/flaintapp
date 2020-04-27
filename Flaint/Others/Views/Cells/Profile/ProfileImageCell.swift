@@ -180,7 +180,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         contentView.addSubview(activityIndicator)
         
         NotificationCenter.default.addObserver(self, selector: #selector(recenter), name: .recenterRotation, object: nil)
-        
     }
     
     
@@ -193,7 +192,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         let translation = sender.translation(in: view)
                 
         var widthRatio = (Float(translation.x) / (Float(view.frame.size.width)) - lastWidthRatio)
-        
         
         if numberOfTouches == fingersNeededToPan {
             
@@ -221,8 +219,8 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         case .changed:
             NotificationCenter.default.post(name: .rotationChanged, object: nil, userInfo: ["value": rotationValue*100])
         case .ended, .cancelled, .failed:
-//            NotificationCenter.default.post(name: .rotationEnded, object: nil, userInfo: nil)
             lastWidthRatio = widthRatio
+            NotificationCenter.default.post(name: .rotationEnded, object: nil, userInfo: nil)
         @unknown default:
             break
         }

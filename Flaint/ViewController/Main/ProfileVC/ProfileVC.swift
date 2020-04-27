@@ -18,6 +18,7 @@ import SDWebImage
 class ProfileVC: UIViewController, ListAdapterDataSource {
     
     // MARK: - UI Elements
+    
     var adjustView = AdjustView()
     lazy var orientationView = OrientationView()
     
@@ -51,6 +52,12 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         fetchArts()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+//        navigationItem.titleView = nil
+        adjustView.hideView()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         SDImageCache.shared().clearMemory()
@@ -74,7 +81,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         
         self.navigationItem.titleView = adjustView
         adjustView.autoresizingMask = .flexibleWidth
-
         
         searchBar.barStyle = .default
         searchBar.placeholder = "Search gallery"

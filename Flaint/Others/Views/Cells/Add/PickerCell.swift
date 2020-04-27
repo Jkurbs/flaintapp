@@ -42,6 +42,7 @@ class PickerCell: UITableViewCell {
     private var values = [Any]()
     
     func showPickerView() {
+        print("SHOW")
         isPickerVisible = true
         self.tableView?.beginUpdates()
         self.tableView?.endUpdates()
