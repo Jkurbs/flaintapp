@@ -21,8 +21,6 @@ class NextButton: UIButton {
         self.isEnabled = false
         self.alpha = 0.5
         
-        self.layer.borderWidth = 3
-        self.layer.borderColor = UIColor(red: 231.0 / 255.0, green: 76.0 / 255.0, blue: 60.0 / 255.0, alpha: 0.3).cgColor
         self.titleLabel?.font = UIFont.systemFont(ofSize: 14, weight: .medium)
     }
     

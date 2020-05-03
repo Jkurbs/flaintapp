@@ -45,28 +45,27 @@ class DataService {
     
     var artsRef: DatabaseReference!
     var artsRefHandle: DatabaseHandle!
-    let session = URLSession(configuration: .default)
     
     private var handle: AuthStateDidChangeListenerHandle!
     
     typealias completion = Result<Any?, Error>
     
     
-    // MARK: - Save User Data
+    // MARK: - Functions 
     
+    // Save User Data
     func saveUserData(_ userId: String, _ data: [String: Any], complete: @escaping (Bool, Error?) -> Void) {
         RefUsers.child(userId).setValue(data) { error, _ in
-            if let err = error {
-                print("error:", err.localizedDescription)
-                complete(false, err)
+            if let error = error {
+                NSLog("Error saving user data: \(error)")
+                complete(false, error)
             } else {
                 complete(true, nil)
             }
         }
     }
     
-    // MARK: - Update user data
-    
+    // Update user data
     func updateUserData(_ userId: String, _ name: String, _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> Void) {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             
@@ -90,27 +89,11 @@ class DataService {
                     }
                 }
             })
-            
-            
-            //            handle = Auth.auth().addStateDidChangeListener { (auth, user) in
-            //                if let user = user, let password = UserDefaults.standard.string(forKey: "pwd") {
-            //                    let credential = EmailAuthProvider.credential(withEmail: user.email!, password: password)
-            //                    user.reauthenticate(with: credential, completion:  { (result, error) in
-            //                        if let error = error {
-            //                            complete(false, error)
-            //                        } else {
-            //
-            //
-            //                        }
-            //                    })
-            //                }
-            //            }
         }
     }
     
     
-    // MARK: - Save/Check Username
-    
+    // Save/Check Username
     func saveUsername(_ username: String) {
         RefUsernames.updateChildValues([username: true])
     }
@@ -151,8 +134,7 @@ class DataService {
     }
     
     
-    // MARK: - Get user email
-    
+    // Get user email
     func retrieveUserEmail(_ username: String, complete: @escaping (Bool, String?) -> Void) {
         Database.database().reference().child("usernameAuthLink/\(username)").observeSingleEvent(of: .value) { snapshot in
             if snapshot.exists() {
@@ -164,8 +146,7 @@ class DataService {
         }
     }
     
-    // MARK: - Fetch current user
-    
+    // Fetch current user
     func fetchCurrentUser(userID: String?, completion: @escaping (completion) -> Void) {
         guard let id = Auth.auth().currentUser?.uid else { return }
         RefUsers.child(id).observeSingleEvent(of: .value, with: { snapshot in
@@ -183,8 +164,7 @@ class DataService {
     }
     
     
-    // MARK: - Fetch current user arts
-    
+    // Fetch current user arts
     func fetchCurrentUserArt(userId: String?, complete: @escaping (completion) -> Void) {
         guard let userId = userId ?? AuthService.shared.UserID else { return }
         RefArts.child(userId).observeSingleEvent(of: .value) { snapshot in
@@ -208,8 +188,7 @@ class DataService {
         }
     }
     
-    // MARK: - Add Art
-    
+    // Add Art
     func saveImg(_ ref: StorageReference, _ userID: String, _ data: Data, _ completion: @escaping (completion) -> Void) {
         
         let metadata = StorageMetadata()
@@ -232,8 +211,7 @@ class DataService {
         }
     }
     
-    // MARK: - Save Art
-    
+    // Save Art
     func createArt(userID: String, artId: String, values: [String: Any], imgData: Data, _ completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         let ref = RefArts.child(userID).child(artId)
         DispatchQueue.global(qos: .background).async {
@@ -253,8 +231,7 @@ class DataService {
         }
     }
     
-    // MARK: - Edit Art
-    
+    // Edit Art
     func editArt(userId: String, artId: String, style: String, data: [String: Any], _ completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         DataService.shared.RefArts.child(userId).child(artId).updateChildValues(data) { error, _ in
             if let error = error {
@@ -267,8 +244,7 @@ class DataService {
         }
     }
     
-    // MARK: - Delete Art
-    
+    //  Delete Art
     func deleteArt(userId: String, artId: String, artStyle: String, _ completion: @escaping (completion) -> Void = { _ in }) {
         DataService.shared.RefArts.child(userId).child(artId).removeValue { error, _ in
             if let error = error {
@@ -287,7 +263,7 @@ class DataService {
         }
     }
     
-    
+    // Reorder arts
     func reorderArt(arts: [Art], userId: String, completion: @escaping (completion) -> Void = { _ in }) {
         for art in arts {
             guard let index = art.index else { return }
@@ -307,8 +283,7 @@ class DataService {
         URLSession.shared.dataTask(with: url, completionHandler: completion).resume()
     }
     
-    // MARK: - Create Link
-    
+    // Create Link
     func createLink(Id: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String) -> Void ) {
         //            guard let link = URL(string: "https://www.flaintapp.com/?id=\(Id)") else { return }
         //            let dynamicLinksDomainURIPrefix = "https://flaint"

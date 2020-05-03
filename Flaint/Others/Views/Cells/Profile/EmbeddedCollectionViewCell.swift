@@ -21,7 +21,7 @@ final class EmbeddedCollectionViewCell: UICollectionViewCell {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        collectionView.backgroundColor = .backgroundColor
+        collectionView.backgroundColor = .systemBackground
         collectionView.isPagingEnabled = true
         collectionView.isScrollEnabled = false
     }

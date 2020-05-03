@@ -26,7 +26,7 @@ class ReorderCell: UITableViewCell {
         
         artImageView = UICreator.create.imageView(nil, self.contentView)
         artImageView.contentMode = .scaleAspectFit
-        titleLabel = UICreator.create.label("", 15, .darkText, .natural, .medium, self.contentView)
+        titleLabel = UICreator.create.label("", 15, .label, .natural, .medium, self.contentView)
     }
     
     required init?(coder aDecoder: NSCoder) {

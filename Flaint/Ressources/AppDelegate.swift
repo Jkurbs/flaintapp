@@ -10,6 +10,8 @@ import UIKit
 import Firebase
 import Network
 import IQKeyboardManager
+import FBAllocationTracker
+import FBMemoryProfiler
 
 
 @UIApplicationMain
@@ -18,9 +20,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let monitor = NWPathMonitor()
     var handle: AuthStateDidChangeListenerHandle?
+    var profileVC: ProfileVC?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+          
+        FBAllocationTrackerManager.shared()?.startTrackingAllocations()
+        FBAllocationTrackerManager.shared()?.enableGenerations()
+        
+        let memoryProfiler = FBMemoryProfiler()
+        memoryProfiler.isEnabled = true
  
        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
        UserDefaults.standard.set(currentCount + 1, forKey: "launchCount")
@@ -31,17 +40,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     
-    private func observeAuthorisedState() {
-        handle = Auth.auth().addStateDidChangeListener { auth, user in
+    func observeAuthorisedState() {
+        handle = Auth.auth().addStateDidChangeListener { [weak self] auth, user in
+            guard let self = self else { return }
             if user == nil {
                 self.setupRootViewController(viewController: AuthVC())
             } else {
                 DispatchQueue.main.async {
-                     let vc = ProfileVC()
-                     vc.userUID = user?.uid
+                    self.profileVC = ProfileVC()
+                    self.profileVC?.userUID = user?.uid
                      AuthService.shared.UserID = user?.uid
                      UserDefaults.standard.set(user?.uid, forKey: .userId)
-                     self.setupRootViewController(viewController: vc)
+                    self.setupRootViewController(viewController: self.profileVC!)
+                    self.profileVC = nil
                 }
             }
             Auth.auth().removeStateDidChangeListener(self.handle!)
@@ -60,18 +71,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 
         self.window?.rootViewController?.view.overrideUserInterfaceStyle = .light
         
-        let color = UIColor.darkText
+        let color = UIColor.label
         UINavigationBar.appearance().tintColor = color
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: color]
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
-        UINavigationBar.appearance().backgroundColor = .backgroundColor
-        UINavigationBar.appearance().barTintColor = .backgroundColor
+        UINavigationBar.appearance().backgroundColor = .systemBackground
+        UINavigationBar.appearance().barTintColor = .systemBackground
         UINavigationBar.appearance().isTranslucent = false
         
-        UIToolbar.appearance().tintColor = .black
-        UIToolbar.appearance().backgroundColor = .backgroundColor
+        UIToolbar.appearance().tintColor = .label
+        UIToolbar.appearance().backgroundColor = .systemBackground
         UIToolbar.appearance().clipsToBounds = true
+        UIToolbar.appearance().isTranslucent = true
+
 
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor(white: 0.8, alpha: 1.0)
@@ -97,7 +110,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         monitor.start(queue: queue)
         
         FirebaseApp.configure()
-//        Database.database().isPersistenceEnabled = true
+        Database.database().isPersistenceEnabled = true
     }
     
     

@@ -17,7 +17,7 @@ class LearnMoreInfoCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         let font = UIFont.systemFont(ofSize: 15, weight: .medium)
         let regularFont = UIFont.systemFont(ofSize: 14)
@@ -56,13 +56,13 @@ class LearnMoreInfoCell: UITableViewCell {
 
 class LearnMoreDescCell: UITableViewCell {
     
-    var descLabel = UILabel()
+    var descriptionLabel = UILabel()
     
     
     var artDescription: String? {
         didSet {
-            descLabel.text = artDescription ?? ""
-            descLabel.sizeToFit()
+            descriptionLabel.text = artDescription ?? ""
+            descriptionLabel.sizeToFit()
         }
     }
     
@@ -80,19 +80,18 @@ class LearnMoreDescCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.backgroundColor = .backgroundColor
-        
-        descLabel.adjustsFontSizeToFitWidth = true
-        descLabel.font = UIFont.systemFont(ofSize: 16)
-        descLabel.numberOfLines = 0
-        contentView.addSubview(descLabel)
+                
+        descriptionLabel.adjustsFontSizeToFitWidth = true
+        descriptionLabel.font = UIFont.systemFont(ofSize: 16)
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.textColor = .secondaryLabel
+        contentView.addSubview(descriptionLabel)
     }
     
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        descLabel.frame = contentView.bounds.inset(by: LearnMoreDescCell.insets)
+        descriptionLabel.frame = contentView.bounds.inset(by: LearnMoreDescCell.insets)
     }
     
     

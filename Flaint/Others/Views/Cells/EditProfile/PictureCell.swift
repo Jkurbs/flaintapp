@@ -33,7 +33,7 @@ class PictureCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         userImgView.clipsToBounds = true
         userImgView.contentMode = .scaleAspectFill

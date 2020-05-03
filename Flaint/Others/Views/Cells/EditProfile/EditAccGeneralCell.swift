@@ -24,7 +24,7 @@ class EditAccountGeneralCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        titleLabel = UICreator.create.label(nil, 15, .darkText, .natural, .medium, contentView)
+        titleLabel = UICreator.create.label(nil, 15, .label, .natural, .medium, contentView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         textField.autocapitalizationType = .words
@@ -33,7 +33,7 @@ class EditAccountGeneralCell: UITableViewCell {
         textField.translatesAutoresizingMaskIntoConstraints = false
 
         valueLabel.font = UIFont.normal
-        valueLabel.textColor = .darkText
+        valueLabel.textColor = .secondaryLabel
         valueLabel.translatesAutoresizingMaskIntoConstraints = false
 
         contentView.addSubview(valueLabel)
@@ -89,7 +89,7 @@ class EditAccountPrivateCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        titleLabel = UICreator.create.label("", 15, .darkText, .natural, .medium, contentView)
+        titleLabel = UICreator.create.label("", 15, .label, .natural, .medium, contentView)
         valueLabel.font = UIFont.normal
         
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -129,14 +129,14 @@ class EditAccountPrivateCell: UITableViewCell {
         if index == 0 {
             if item.email == "" {
                 valueLabel.text = "Add email address"
-                valueLabel.textColor = .gray
+                valueLabel.textColor = .secondaryLabel
             } else {
                 valueLabel.text = item.email
             }
         } else {
             if item.phone == "" {
                 valueLabel.text = "Add phone number"
-                valueLabel.textColor = .gray
+                valueLabel.textColor = .secondaryLabel
             } else {
                 valueLabel.text = item.phone
             }

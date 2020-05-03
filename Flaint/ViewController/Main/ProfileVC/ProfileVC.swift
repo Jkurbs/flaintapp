@@ -7,7 +7,7 @@
 //
 
 /* Abstract:
- View controller for displaying user profile
+ View controller for displaying user arts
  */
 
 import UIKit
@@ -20,7 +20,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     // MARK: - UI Elements
     
     var adjustView = AdjustView()
-    lazy var orientationView = OrientationView()
+    var orientationView = OrientationView()
     
     // MARK: - Properties
     
@@ -37,7 +37,7 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         ListAdapter(updater: ListAdapterUpdater(), viewController: self)
     }()
     
-    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+    weak var collectionView: UICollectionView?
     lazy var searchBar: UISearchBar = UISearchBar(frame: CGRect(x: 0, y: 0, width: 200, height: 20))
     
     // MARK: - View Lifecycle
@@ -47,15 +47,14 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         setupViews()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        dch_checkDeallocation()
+    }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         fetchArts()
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-//        navigationItem.titleView = nil
-        adjustView.hideView()
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,16 +67,25 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         super.viewDidLayoutSubviews()
         let viewHeight = self.view.bounds.height
         orientationView.frame = CGRect(x: 0, y: viewHeight - 120, width: view.frame.width, height: 46)
-        
         NSLayoutConstraint.activate([
             adjustView.heightAnchor.constraint(equalToConstant: 25.0),
             adjustView.widthAnchor.constraint(equalToConstant: 80)
         ])
     }
     
+    
+    deinit {
+        print("DEINIT IS CALLED")
+    }
+    
     // MARK: - Functions
     
     func setupViews() {
+        
+        view.backgroundColor = .systemBackground
+        
+        adjustView = AdjustView()
+        orientationView = OrientationView()
         
         self.navigationItem.titleView = adjustView
         adjustView.autoresizingMask = .flexibleWidth
@@ -85,9 +93,9 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         searchBar.barStyle = .default
         searchBar.placeholder = "Search gallery"
         searchBar.isTranslucent = true
-        searchBar.barTintColor = .backgroundColor
+        searchBar.barTintColor = .systemBackground
         searchBar.returnKeyType = .done
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         
         // NavBar setup
         let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action: #selector(gotToReorderVC))
@@ -122,15 +130,47 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         items.append(rightButton)
         items.append(UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: nil))
         
-        self.navigationController?.toolbar.barTintColor = .backgroundColor
+        self.navigationController?.toolbar.barTintColor = .systemBackground
         self.toolbarItems = items
         self.navigationController?.isToolbarHidden = true
+        self.navigationController?.toolbar.setBackgroundImage(UIImage(), forToolbarPosition: .any, barMetrics: .default)
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
+        self.collectionView = collectionView
         
         collectionView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        collectionView.backgroundColor = .backgroundColor
+        collectionView.backgroundColor = .systemBackground
         view.addSubview(collectionView)
         adapter.collectionView = collectionView
         adapter.dataSource = self
         self.view.addSubview(orientationView)
+    }
+}
+
+extension UIViewController {
+    public func dch_checkDeallocation(afterDelay delay: TimeInterval = 2.0) {
+        let rootParentViewController = dch_rootParentViewController
+
+        // We don’t check `isBeingDismissed` simply on this view controller because it’s common
+        // to wrap a view controller in another view controller (e.g. in UINavigationController)
+        // and present the wrapping view controller instead.
+        if isMovingFromParent || rootParentViewController.isBeingDismissed {
+            let isType = type(of: self)
+            let disappearanceSource: String = isMovingFromParent ? "removed from its parent" : "dismissed"
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: { [weak self] in
+                assert(self == nil, "\(isType) not deallocated after being \(disappearanceSource)")
+            })
+        }
+    }
+
+    private var dch_rootParentViewController: UIViewController {
+        var root = self
+
+        while let parent = root.parent {
+            root = parent
+        }
+
+        return root
     }
 }

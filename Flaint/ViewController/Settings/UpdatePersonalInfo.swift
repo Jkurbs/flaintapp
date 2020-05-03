@@ -22,7 +22,7 @@ class UpdatePersonalInfoVC: UIViewController {
     
     func setupUI() {
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         
         view.addSubview(detailField)
         detailField.autocorrectionType = .no

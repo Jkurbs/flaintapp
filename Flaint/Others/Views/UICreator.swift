@@ -60,7 +60,7 @@ class UICreator {
         field.translatesAutoresizingMaskIntoConstraints = false
         field.keyboardType = keyboardType
         field.placeholder = placeholder
-        field.backgroundColor = UIColor.backgroundColor
+        field.backgroundColor = UIColor.systemBackground
         field.layer.cornerRadius = 5
         field.layer.borderColor = UIColor(white: 0.9, alpha: 1.0).cgColor
         field.layer.borderWidth = 0.4

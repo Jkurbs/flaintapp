@@ -18,7 +18,9 @@ extension ProfileVC {
         nav.modalPresentationStyle = .fullScreen
         vc.arts = self.arts
         vc.navigationController?.isToolbarHidden = true
-        navigationController?.present(nav, animated: true, completion: nil)
+        self.present(nav, animated: true) {
+//            self.navigationController?.setViewControllers([], animated: false)
+        }
     }
     
     @objc func searchTapped() {
@@ -36,7 +38,7 @@ extension ProfileVC {
     
     @objc func cancelSearch() {
         self.searchBar.text = nil
-        self.navigationItem.titleView = nil
+        self.navigationItem.titleView = adjustView
         self.navigationItem.leftBarButtonItems = leftBarButtonItems
         self.navigationItem.rightBarButtonItems = rightBarButtonItems
         self.adapter.performUpdates(animated: false, completion: nil)
@@ -102,18 +104,16 @@ extension ProfileVC {
     
     @objc func gotToSettingsVC() {
         let vc = SettingsVC()
-        vc.userId = self.userUID
+//        vc.userId = self.userUID
         vc.navigationController?.isToolbarHidden = true
         navigationController?.pushViewController(vc, animated: true)
     }
     
     @objc func gotToAddArtVC() {
-        DispatchQueue.main.async {
-            let vc = AddImageVC()
-            vc.artsCount = self.orientationView.result?.count
-            let nav = UINavigationController(rootViewController: vc)
-            nav.modalPresentationStyle = .fullScreen
-            self.navigationController?.present(nav, animated: true, completion: nil)
-        }
+        let vc = AddImageVC()
+        vc.artsCount = self.orientationView.result?.count
+        let nav = UINavigationController(rootViewController: vc)
+        nav.modalPresentationStyle = .fullScreen
+        self.navigationController?.present(nav, animated: true, completion: nil)
     }
 }

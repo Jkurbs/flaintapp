@@ -35,7 +35,7 @@ class RecorderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .backgroundColor
+        backgroundColor = .systemBackground
         
         recorder.isMicrophoneEnabled = false
         

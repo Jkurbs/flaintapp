@@ -1244,6 +1244,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flaint/Ressources/Flaint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;
@@ -1271,6 +1272,7 @@
 				CODE_SIGN_ENTITLEMENTS = Flaint/Ressources/Flaint.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = GF728A45JE;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;

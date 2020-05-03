@@ -33,11 +33,15 @@ class ReorderVC: UIViewController {
         setupUI()
     }
     
+    deinit {
+        print("REORDER VC IS DEINIT")
+    }
+    
     // MARK: - Functions
     
     func setupUI() {
         
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         self.title = "Reorder"
         
         indicator.layer.position.y = view.layer.position.y
@@ -58,7 +62,7 @@ class ReorderVC: UIViewController {
         tableView.isEditing = true
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.backgroundColor = .white
+        tableView.backgroundColor = .systemBackground
         
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 80))
         let label = UILabel(frame: headerView.frame)
@@ -66,6 +70,7 @@ class ReorderVC: UIViewController {
         label.numberOfLines = 3
         label.font = UIFont.systemFont(ofSize: 15)
         label.textAlignment = .center
+        label.textColor = .label
         headerView.addSubview(label)
         tableView.tableHeaderView = headerView
         view.addSubview(tableView)
@@ -121,7 +126,7 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.size.width, height: 30))
-        let label = UICreator.create.label("Arts will show from top to bottom.", 12.5, .lightGray, .center, .regular, headerView)
+        let label = UICreator.create.label("Arts will show from top to bottom.", 12.5, .secondaryLabel, .center, .regular, headerView)
         label.frame = headerView.frame
         headerView.addSubview(label)
         return headerView

@@ -74,10 +74,10 @@ extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = items[indexPath.section]
-        let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: "test")
+        let cell = UITableViewCell(style: UITableViewCell.CellStyle.value1, reuseIdentifier: UITableViewCell.id)
         cell.textLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 15)
-        cell.detailTextLabel?.textColor = .darkText
+        cell.detailTextLabel?.textColor = .secondaryLabel
         switch item.type {
         case .primary:
             let item = item as! LearnViewModelGeneralItem
@@ -143,14 +143,10 @@ extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60.0))
-        if section == 0 {
-            headerView.backgroundColor = .backgroundColor
-        } else {
-            headerView.backgroundColor = .white
-        }
+        headerView.backgroundColor = .systemBackground
         let label = UILabel(frame: headerView.bounds)
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
-        label.textColor = UIColor.darkText
+        label.textColor = UIColor.label
         label.textAlignment = .center
         label.text = self.items[section].sectionTitle
         headerView.addSubview(label)

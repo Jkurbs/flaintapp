@@ -42,14 +42,14 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         self.title = "Edit Painting"
         self.restorationIdentifier = "EditArtVCRestorationID"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
-        tableView?.backgroundColor = .backgroundColor
+        tableView?.backgroundColor = .systemBackground
 
         tableView?.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
         tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: InfoTextFieldCell.id)

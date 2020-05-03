@@ -18,7 +18,7 @@ class EditArtCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         artImageView.contentMode = .scaleAspectFit
         contentView.addSubview(artImageView)
     }

@@ -22,7 +22,7 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     var currentIndex = 0
     var filterString = ""
     var searchBar: UISearchBar!
-    weak var vc: ProfileVC?
+    weak var profileVC: ProfileVC?
     var arts = [Art]()
     
     lazy var adapter: ListAdapter = {
@@ -31,13 +31,11 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     
     weak var delegate: SearchSectionControllerDelegate?
     
-    var collectionView: UICollectionView?
-    
     lazy var emptyLabel: UILabel = {
         let label = UILabel()
         label.frame = self.viewController!.view.bounds
-        label.textColor = .darkText
-        label.backgroundColor = .backgroundColor
+        label.textColor = .label
+        label.backgroundColor = .label
         label.textAlignment = .center
         label.numberOfLines = 5
         label.text = "You have no artwork yet! \n Tap on the + button to add your first."
@@ -65,8 +63,8 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         adapter.dataSource = self
         adapter.scrollViewDelegate = self
         self.delegate = self
-        vc = self.viewController as? ProfileVC
-        searchBar = vc?.searchBar
+        profileVC = self.viewController as? ProfileVC
+        searchBar = profileVC?.searchBar
         searchBar.delegate = self
     }
     
@@ -75,7 +73,7 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
     }
 }
 
-// ArtDelegate
+// MARK: - ArtDelegate
 
 extension GallerySection: ArtDelegate {
 
@@ -100,21 +98,21 @@ extension GallerySection: ArtDelegate {
         if direction == .right {
             self.adapter.collectionView?.scrollToNextItem()
             self.currentIndex += 1
-            self.vc?.toolbarItems?[1].isEnabled = true
+            self.profileVC?.toolbarItems?[1].isEnabled = true
             if self.currentIndex == self.arts.count - 1 {
-                self.vc?.toolbarItems?[5].isEnabled = false
+                self.profileVC?.toolbarItems?[5].isEnabled = false
             }
         } else {
             self.adapter.collectionView?.scrollToPreviousItem()
             currentIndex -= 1
-            self.vc?.toolbarItems?[5].isEnabled = true
+            self.profileVC?.toolbarItems?[5].isEnabled = true
             if currentIndex == 0 {
-                self.vc?.toolbarItems?[1].isEnabled = false
+                self.profileVC?.toolbarItems?[1].isEnabled = false
             }
         }
         
         let art = self.arts[currentIndex]
-        self.vc?.currentArt = art
+        self.profileVC?.currentArt = art
         return (index: currentIndex, count: self.arts.count, art: art)
     }
 }
@@ -143,7 +141,6 @@ extension GallerySection {
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         guard let cell = collectionContext?.dequeueReusableCell(of: EmbeddedCollectionViewCell.self, for: self, at: index) as? EmbeddedCollectionViewCell else { fatalError() }
         adapter.collectionView = cell.collectionView
-        collectionView = cell.collectionView
         return cell
     }
     

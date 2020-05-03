@@ -33,12 +33,11 @@ class LearnMoreVC: UIViewController {
         setupViews()
     }
     
-    
     // MARK: - Functions
     
     func setupViews() {
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         self.navigationController?.isToolbarHidden = true
         
         let rightButton = UIBarButtonItem(image: UIImage(named: "Menu-32"), style: .done, target: self, action: #selector(options))
@@ -46,11 +45,11 @@ class LearnMoreVC: UIViewController {
         
         tableView = UITableView(frame: view.frame, style: .grouped)
         tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 50, right: 0)
-        tableView.backgroundColor = .backgroundColor
+        tableView.backgroundColor = .systemBackground
         
         tableView.register(EditArtCell.self, forCellReuseIdentifier: EditArtCell.id)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "test")
-        tableView.register(LearnMoreDescCell.self, forCellReuseIdentifier: "LearnMoreDescCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.id)
+        tableView.register(LearnMoreDescCell.self, forCellReuseIdentifier: LearnMoreDescCell.id)
         
         tableView.delegate = viewModel
         tableView.dataSource = viewModel
@@ -65,7 +64,7 @@ class LearnMoreVC: UIViewController {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 70))
         let label = UILabel(frame: headerView.frame)
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        label.textColor = .darkText
+        label.textColor = .label
         label.textAlignment = .center
         label.text = viewModel.art?.title
         headerView.addSubview(label)

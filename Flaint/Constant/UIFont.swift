@@ -10,6 +10,6 @@ import UIKit
 
 
 extension UIFont {
-    static let normal = UIFont.systemFont(ofSize: 14)
+    static let normal = UIFont.systemFont(ofSize: 14, weight: .medium)
     static let medium = UIFont.systemFont(ofSize: 15, weight: .medium)
 }

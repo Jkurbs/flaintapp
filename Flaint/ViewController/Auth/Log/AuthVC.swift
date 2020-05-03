@@ -44,7 +44,7 @@ class AuthVC: UIViewController {
     
     func setupViews() {
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         
         view.addSubview(label)
         label.font = UIFont.systemFont(ofSize: 28)
@@ -62,15 +62,17 @@ class AuthVC: UIViewController {
         detailField.keyboardType = .emailAddress
         detailField.autocorrectionType = .no
         detailField.autocapitalizationType = .none
-        detailField.backgroundColor = .fieldBackgroundColor
+        detailField.backgroundColor = .systemGray6
         detailField.placeholder = "email address"
+        detailField.textColor = .secondaryLabel
         detailField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(detailField)
         
         pwdField.isSecureTextEntry = true
-        pwdField.backgroundColor = .fieldBackgroundColor
+        pwdField.backgroundColor = .systemGray6
         pwdField.placeholder = "Password"
         pwdField.textContentType = .password
+        pwdField.textColor = .label
         pwdField.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(pwdField)
         
@@ -139,12 +141,9 @@ class AuthVC: UIViewController {
             if !success {
                // Show Error
             } else {
-                let vc = ProfileVC()
-               vc.userUID = userId
-               let nav = UINavigationController(rootViewController: vc)
-               nav.modalPresentationStyle = .fullScreen
-               self.navigationController?.present(nav, animated: true, completion: nil)
-               self.nextButton.hideLoading()
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                self.nextButton.hideLoading()
+                appDelegate.observeAuthorisedState()
             }
         })
     }

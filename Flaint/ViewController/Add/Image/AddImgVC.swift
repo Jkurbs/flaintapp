@@ -77,7 +77,7 @@ class AddImageVC: UIViewController {
         
         self.extendedLayoutIncludesOpaqueBars = true
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         self.title = "Add Painting"
         
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
@@ -88,8 +88,12 @@ class AddImageVC: UIViewController {
         
         imagePicker = ImagePicker(presentationController: self, delegate: self, allowsEditing: false)
         
+        let cropImageConfiguration = UIImage.SymbolConfiguration(scale: .default)
+        var cropButtonImage = UIImage(systemName: "crop", withConfiguration: cropImageConfiguration)!
+        cropButtonImage = cropButtonImage.withTintColor(UIColor.label, renderingMode: .alwaysOriginal)
+        
         cropButton = UIButton(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
-        cropButton.setImage(UIImage(named: "crop-30"), for: .normal)
+        cropButton.setImage(cropButtonImage, for: .normal)
         cropButton.addTarget(self, action: #selector(crop), for: .touchUpInside)
         
         imageView.clipsToBounds = true
@@ -97,7 +101,11 @@ class AddImageVC: UIViewController {
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         
-        addImgButton.setImage(UIImage(named: "Add-100"), for: .normal)
+        let plusImageConfiguration = UIImage.SymbolConfiguration(pointSize: 80, weight: .regular)
+        var plusButtonImage = UIImage(systemName: "plus.circle", withConfiguration: plusImageConfiguration)!
+        plusButtonImage = plusButtonImage.withTintColor(UIColor.label, renderingMode: .alwaysOriginal)
+        
+        addImgButton.setImage(plusButtonImage, for: .normal)
         addImgButton.addTarget(self, action: #selector(photoLibrary(_:)), for: .touchUpInside)
         addImgButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(addImgButton)

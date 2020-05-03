@@ -14,7 +14,8 @@ extension ProfileVC {
     // Fetch user current arts
     @objc func fetchArts() {
         self.arts.removeAll()
-        DataService.shared.fetchCurrentUserArt(userId: userUID ?? Auth.auth().currentUser?.uid) { result in
+        DataService.shared.fetchCurrentUserArt(userId: userUID ?? Auth.auth().currentUser?.uid) { [weak self] result in
+            guard let self = self else { return }
             if let art = try? result.get() as? Art {
                 DispatchQueue.main.async {
                     self.arts.append(art)
@@ -28,6 +29,8 @@ extension ProfileVC {
         }
     }
     
+    
+    // Show or Hide UI base on arts count
     func showHideUI() {
         switch self.arts.count {
         case 0:

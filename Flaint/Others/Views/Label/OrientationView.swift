@@ -22,9 +22,9 @@ class OrientationView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        backgroundColor = .white
+        backgroundColor = .systemBackground
         label.font = UIFont.systemFont(ofSize: 13)
-        label.textColor = .gray
+        label.textColor = .label
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
         addSubview(label)
@@ -55,12 +55,17 @@ class OrientationView: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        print("OrientationView view is deinitialize")
+    }
 }
 
 class AdjustView: UIView {
     
     let label: UILabel = {
         let label = UILabel()
+        label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
         label.font = UIFont.monospacedDigitSystemFont(ofSize: 12, weight: .medium)
         return label
@@ -74,6 +79,7 @@ class AdjustView: UIView {
         return button
     }()
     
+    var timer: Timer!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -90,7 +96,7 @@ class AdjustView: UIView {
     }
     
     func setupViews() {
-        backgroundColor = UIColor(white: 0.8, alpha: 1.0)
+        backgroundColor = .secondaryLabel
         alpha = 0.0
         isHidden = true
         translatesAutoresizingMaskIntoConstraints = false
@@ -116,12 +122,11 @@ class AdjustView: UIView {
             self.label.text = nil
             self.isHidden = true
             NotificationCenter.default.post(name: .recenterRotation, object: nil, userInfo: nil)
-        }) { (finished) in
-        }
+        })
     }
     
     @objc func setTimer() {
-        Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: false) { (timer) in
             UIView.animate(withDuration: 0.5, animations: {
                 self.alpha = 0.0
             }) { (finished) in
@@ -130,7 +135,6 @@ class AdjustView: UIView {
             }
         }
     }
-    
     
     
     @objc func updateLabel(_ notification: Notification) {
@@ -152,12 +156,15 @@ class AdjustView: UIView {
             label.widthAnchor.constraint(equalTo: widthAnchor, constant: -20),
             
             centerButton.rightAnchor.constraint(equalTo: rightAnchor, constant: -4.0),
-            centerButton.heightAnchor.constraint(equalToConstant: 20),
-            centerButton.widthAnchor.constraint(equalToConstant: 20),
+            centerButton.heightAnchor.constraint(equalToConstant: 15),
+            centerButton.widthAnchor.constraint(equalToConstant: 15),
             centerButton.centerYAnchor.constraint(equalTo: centerYAnchor),
-            
         ])
         
         self.layer.cornerRadius = 5.0
+    }
+    
+    deinit {
+        print("Adjust view is deinitialize")
     }
 }

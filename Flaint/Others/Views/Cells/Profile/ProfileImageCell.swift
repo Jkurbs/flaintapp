@@ -151,7 +151,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     override required init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         activityIndicator.frame = contentView.frame
         activityIndicator.cycleColors = [.darkText]
@@ -166,7 +166,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         scnView.scene = scene
         scnView.autoenablesDefaultLighting = true
         scnView.isJitteringEnabled = true
-        scnView.backgroundColor = .backgroundColor
+        scnView.backgroundColor = .systemBackground
         scnView.antialiasingMode = .multisampling4X
         let overlayScene = OverlayScene(size: contentView.bounds.size)
         overlayScene.anchorPoint = CGPoint(x: 0.5, y: 0.5)
@@ -206,7 +206,6 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
             rotationValue = (Float(2 * Double.pi) * (widthRatio))
             
             self.artRoomScene.boxnode.eulerAngles.y = rotationValue
-            print("VALUE: \(rotationValue)")
             lastFingersNumber = fingersNeededToPan
         }
         
@@ -273,10 +272,11 @@ class ProfileArtInfoCell: UICollectionViewCell {
     
     
     func setupViews() {
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         let font = UIFont.medium
         let regularFont = UIFont.normal
+        let color = UIColor.secondaryLabel
         
         titleLabel.adjustsFontSizeToFitWidth = true
         titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
@@ -288,6 +288,7 @@ class ProfileArtInfoCell: UICollectionViewCell {
 
         styleLabel.font = regularFont
         styleLabel.translatesAutoresizingMaskIntoConstraints = false
+        styleLabel.textColor = color
         
         sizeTitleLabel.font = font
         sizeTitleLabel.text = "Size"
@@ -295,17 +296,23 @@ class ProfileArtInfoCell: UICollectionViewCell {
 
         sizeLabel.font = regularFont
         sizeLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+        sizeLabel.textColor = color
+
         dateTitleLabel.font = font
         dateTitleLabel.text = "Date"
         dateTitleLabel.translatesAutoresizingMaskIntoConstraints = false
-        dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        dateLabel.translatesAutoresizingMaskIntoConstraints = false
+        dateLabel.textColor = color
+
         learnMoreLabel.text = "Learn more"
         learnMoreLabel.font = font
         learnMoreLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        learnMoreButton.setImage(UIImage(named: "More-20"), for: .normal)
+                
+        let learnMoreImageConfiguration = UIImage.SymbolConfiguration(scale: .small)
+        var learnMoreButtonImage = UIImage(systemName: "chevron.right", withConfiguration: learnMoreImageConfiguration)!
+        learnMoreButtonImage = learnMoreButtonImage.withTintColor(UIColor.label, renderingMode: .alwaysOriginal)
+        learnMoreButton.setImage(learnMoreButtonImage, for: .normal)
         learnMoreLabel.isUserInteractionEnabled = true
         learnMoreButton.translatesAutoresizingMaskIntoConstraints = false
         
@@ -397,7 +404,7 @@ class ProfileArtAboutCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         let font = UIFont.systemFont(ofSize: 14, weight: .medium)
         

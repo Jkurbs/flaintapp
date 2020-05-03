@@ -32,7 +32,7 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = .backgroundColor
+        contentView.backgroundColor = .systemBackground
         
         addButton.setImage(UIImage(named: "Add-100"), for: .normal)
         addButton.addTarget(self, action: #selector(photoLibrary), for: .touchUpInside)
@@ -49,7 +49,7 @@ class AddArtCell: UITableViewCell, UIImagePickerControllerDelegate, UINavigation
         scnView.scene = scene
         scnView.autoenablesDefaultLighting = true
         scnView.isJitteringEnabled = true
-        scnView.backgroundColor = .backgroundColor
+        scnView.backgroundColor = .systemBackground
 //        contentView.addSubview(scnView)
 //        scnView.isHidden = true
 

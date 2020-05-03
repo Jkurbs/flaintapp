@@ -38,7 +38,7 @@ final class EditProfileVC: UITableViewController {
     func setupUI() {
         
         self.title = "Edit Account"
-        self.view.backgroundColor = .backgroundColor
+        self.view.backgroundColor = .systemBackground
         
         let saveButton = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(save))
         navigationItem.rightBarButtonItem = saveButton
@@ -53,7 +53,7 @@ final class EditProfileVC: UITableViewController {
         tableView.register(EditAccountGeneralCell.self, forCellReuseIdentifier: EditAccountGeneralCell.id)
         tableView.register(EditAccountPrivateCell.self, forCellReuseIdentifier: EditAccountPrivateCell.id)
         
-        tableView.backgroundColor = .backgroundColor
+        tableView.backgroundColor = .systemBackground
         tableView.allowsSelection = true
         tableView.tableFooterView = UIView()
         

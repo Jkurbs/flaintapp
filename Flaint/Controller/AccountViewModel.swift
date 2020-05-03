@@ -79,7 +79,6 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
         case .personal:
             if indexPath.row == 0 {
                 if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
-                    print("ITEM: \(item)")
                     cell.configure(index: 0, title: "Email", item: item)
                     return cell
                 }
@@ -104,11 +103,7 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView(frame: CGRect(x: 20, y: 0, width: tableView.frame.width, height: 60.0))
-        if section == 0 {
-            headerView.backgroundColor = .backgroundColor
-        } else {
-            headerView.backgroundColor = .white
-        }
+        headerView.backgroundColor = .systemBackground
         let label = UILabel(frame: headerView.frame)
         label.font = UIFont.systemFont(ofSize: 17, weight: .medium)
         label.textColor = UIColor.darkText

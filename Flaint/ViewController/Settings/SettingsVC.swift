@@ -26,7 +26,7 @@ class SettingsVC: UIViewController {
         self.title = "Options"
         self.restorationIdentifier = UIView.id
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         
         let displayWidth: CGFloat = self.view.frame.width
         let displayHeight: CGFloat = self.view.frame.height
@@ -36,7 +36,7 @@ class SettingsVC: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .backgroundColor
+        tableView.backgroundColor = .systemBackground
         self.view.addSubview(tableView)
     }
     
@@ -83,7 +83,7 @@ extension SettingsVC: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: UITableViewCell.id, for: indexPath)
-        cell.backgroundColor = .backgroundColor
+        cell.backgroundColor = .systemBackground
         cell.textLabel?.font = UIFont.systemFont(ofSize: 16, weight: .regular)
         cell.textLabel?.text = settings[indexPath.row].rawValue
         return cell

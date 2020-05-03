@@ -21,7 +21,7 @@ class UsernameVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .backgroundColor
+        view.backgroundColor = .systemBackground
         
         view.addSubview(label)
         label.textAlignment = .center
@@ -99,11 +99,9 @@ class UsernameVC: UIViewController {
                     self.nextButton.hideLoading()
                 } else {
                     DataService.shared.saveUsername(username)
-                    let vc = ProfileVC()
-                    let nav = UINavigationController(rootViewController: vc)
-                    nav.modalPresentationStyle = .fullScreen
-                    self.navigationController?.present(nav, animated: true, completion: nil)
                     self.nextButton.hideLoading()
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.observeAuthorisedState()
                 }
             }
         }
