@@ -11,17 +11,6 @@ import UIKit
 
 class FieldRect: UITextField {
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.layer.cornerRadius = 5
-        self.layer.borderWidth = 0.5
-        self.layer.borderColor = UIColor.systemGray2.cgColor
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
     override func textRect(forBounds bounds: CGRect) -> CGRect {
         bounds.insetBy(dx: 15, dy: 0)
     }
@@ -32,6 +21,12 @@ class FieldRect: UITextField {
 }
 
 extension UITextField {
+    
+    func setBorder() {
+        self.layer.cornerRadius = 5
+        self.layer.borderWidth = 0.5
+        self.layer.borderColor = UIColor.systemGray2.cgColor
+    }
     
     func setPlaceHolderColor(_ placeholder: String) {
         self.attributedPlaceholder = NSAttributedString(string: placeholder, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])

@@ -10,7 +10,6 @@ import UIKit
 import IGListKit
 
 class Art: Codable {
-    
     var id: String!
     let title: String!
     var price: String!

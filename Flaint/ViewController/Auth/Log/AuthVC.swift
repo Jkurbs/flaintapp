@@ -21,7 +21,7 @@ class AuthVC: UIViewController {
     var phone = ""
     var label = UILabel()
     var detailField = FieldRect()
-    var pwdField = FieldRect()
+    var passwordField = FieldRect()
     var nextButton = NextButton()
     
     var authChoice = AuthChoice.login
@@ -66,15 +66,17 @@ class AuthVC: UIViewController {
         detailField.placeholder = "email address"
         detailField.textColor = .secondaryLabel
         detailField.translatesAutoresizingMaskIntoConstraints = false
+        detailField.setBorder()
         view.addSubview(detailField)
         
-        pwdField.isSecureTextEntry = true
-        pwdField.backgroundColor = .systemGray6
-        pwdField.placeholder = "Password"
-        pwdField.textContentType = .password
-        pwdField.textColor = .label
-        pwdField.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(pwdField)
+        passwordField.isSecureTextEntry = true
+        passwordField.backgroundColor = .systemGray6
+        passwordField.placeholder = "Password"
+        passwordField.textContentType = .password
+        passwordField.textColor = .label
+        passwordField.translatesAutoresizingMaskIntoConstraints = false
+        passwordField.setBorder()
+        view.addSubview(passwordField)
         
         nextButton.setTitle("Log In", for: .normal)
         nextButton.addTarget(self, action: #selector(self.nextStep), for: .touchUpInside)
@@ -100,12 +102,12 @@ class AuthVC: UIViewController {
             detailField.widthAnchor.constraint(equalTo: label.widthAnchor),
             detailField.heightAnchor.constraint(equalToConstant: 46.0),
             
-            pwdField.topAnchor.constraint(equalTo: detailField.bottomAnchor, constant: 8.0),
-            pwdField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            pwdField.widthAnchor.constraint(equalTo: label.widthAnchor),
-            pwdField.heightAnchor.constraint(equalToConstant: 46.0),
+            passwordField.topAnchor.constraint(equalTo: detailField.bottomAnchor, constant: 8.0),
+            passwordField.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            passwordField.widthAnchor.constraint(equalTo: label.widthAnchor),
+            passwordField.heightAnchor.constraint(equalToConstant: 46.0),
             
-            nextButton.topAnchor.constraint(equalTo: pwdField.bottomAnchor, constant: 16.0),
+            nextButton.topAnchor.constraint(equalTo: passwordField.bottomAnchor, constant: 16.0),
             nextButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             nextButton.widthAnchor.constraint(equalTo: label.widthAnchor),
             nextButton.heightAnchor.constraint(equalToConstant: 46.0),
@@ -126,7 +128,7 @@ class AuthVC: UIViewController {
     
     @objc func nextStep() {
         self.nextButton.showLoading()
-        if let email = self.detailField.text, let pwd = self.pwdField.text {
+        if let email = self.detailField.text, let pwd = self.passwordField.text {
             if authChoice == .login {
                 login(detail: email, pwd: pwd)
             } else {
@@ -149,7 +151,7 @@ class AuthVC: UIViewController {
     }
     
     func registerNext() {
-        if let email = detailField.text, let password = pwdField.text {
+        if let email = detailField.text, let password = passwordField.text {
             let vc = UsernameVC()
             vc.data = [email, password]
             navigationController?.pushViewController(vc, animated: true)
@@ -158,7 +160,7 @@ class AuthVC: UIViewController {
     
     
     @objc func textChanged() {
-        if detailField.hasText && pwdField.hasText {
+        if detailField.hasText && passwordField.hasText {
             nextButton.enable()
         } else {
             nextButton.disable()

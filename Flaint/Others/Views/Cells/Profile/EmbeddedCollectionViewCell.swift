@@ -15,20 +15,12 @@ final class EmbeddedCollectionViewCell: UICollectionViewCell {
         let view = UICollectionView(frame: .zero, collectionViewLayout: layout)
         layout.scrollDirection = .horizontal
         view.showsHorizontalScrollIndicator = false
+        view.backgroundColor = .systemBackground
+        view.isPagingEnabled = true
+        view.isScrollEnabled = false
         self.contentView.addSubview(view)
         return view
     }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        collectionView.backgroundColor = .systemBackground
-        collectionView.isPagingEnabled = true
-        collectionView.isScrollEnabled = false
-    }
-    
-    required init?(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     override func layoutSubviews() {
         super.layoutSubviews()

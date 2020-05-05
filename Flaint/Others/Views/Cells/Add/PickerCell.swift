@@ -8,92 +8,23 @@
 
 import UIKit
 
-class PickerCell: UITableViewCell {
+class PickerCell: AUPickerCell {
     
-    var pickerView = UIPickerView()
+    var selectedValue: String?
     
-    let leftLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    /// The label on the right side of the cell that displays the currently selected value in the picker view.
-    let rightLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    var isPickerVisible = true
-    
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        contentView.addSubview(leftLabel)
-        contentView.addSubview(rightLabel)
-        addConstraints()
+    override init(type: AUPickerCell.PickerType, reuseIdentifier: String?) {
+        super.init(type: type, reuseIdentifier: reuseIdentifier)
+        separatorInset = UIEdgeInsets.zero
+        leftLabel.textColor = UIColor.label
+        rightLabel.textColor = UIColor.secondaryLabel
+        leftLabel.font = UIFont.systemFont(ofSize: 15)
+        rightLabel.font = UIFont.systemFont(ofSize: 15)
+        separatorHeight = 1
+        unexpandedHeight = 50
+        selectionStyle = .none
     }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private var values = [Any]()
-    
-    func showPickerView() {
-        print("SHOW")
-        isPickerVisible = true
-        self.tableView?.beginUpdates()
-        self.tableView?.endUpdates()
-        self.pickerView.alpha = 0.0
-        UIView.animate(withDuration: 0.25, animations: {
-            self.pickerView.alpha = 1.0
-        }) { (finished) in
-            self.pickerView.isHidden = false
-        }
-    }
-    
-    func hidePickerView() {
-        isPickerVisible = false
-        self.tableView?.beginUpdates()
-        self.tableView?.endUpdates()
-        UIView.animate(withDuration: 0.25, animations: {
-            self.pickerView.alpha = 0.0
-        }) { (finished) in
-            self.pickerView.isHidden = true
-        }
-    }
-    
-    func updateViews(_ leftText: String, _ rightText: String?, values: [String]) {
-        leftLabel.text = leftText
-        rightLabel.text = rightText
-        self.values = values
-        pickerView.reloadAllComponents()
-        if let index = values.firstIndex(of: rightText ?? "") {
-            print("INDEX: \(index)")
-            pickerView.selectedRow(inComponent: index)
-        }
-    }
-    
-    private func addConstraints() {
-        NSLayoutConstraint.activate([
-            leftLabel.leftAnchor.constraint(equalTo: leftAnchor, constant: 8.0),
-            leftLabel.heightAnchor.constraint(equalTo: heightAnchor),
-            
-            rightLabel.rightAnchor.constraint(equalTo: rightAnchor, constant: -8.0),
-            rightLabel.heightAnchor.constraint(equalTo: leftLabel.heightAnchor)
-        ])
-    }
-}
 
-extension PickerCell: UIPickerViewDelegate, UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return values.count
+    public required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

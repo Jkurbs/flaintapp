@@ -10,33 +10,28 @@ import UIKit
 import Firebase
 import Network
 import IQKeyboardManager
-import FBAllocationTracker
-import FBMemoryProfiler
-
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
     var window: UIWindow?
     let monitor = NWPathMonitor()
     var handle: AuthStateDidChangeListenerHandle?
     var profileVC: ProfileVC?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-          
-        FBAllocationTrackerManager.shared()?.startTrackingAllocations()
-        FBAllocationTrackerManager.shared()?.enableGenerations()
         
-        let memoryProfiler = FBMemoryProfiler()
-        memoryProfiler.isEnabled = true
- 
-       let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
-       UserDefaults.standard.set(currentCount + 1, forKey: "launchCount")
-       configure()
-       customize()
-       observeAuthorisedState()
-       return true
+        setLaunchCount()
+        configure()
+        customize()
+        observeAuthorisedState()
+        
+        return true
+    }
+    
+    func setLaunchCount() {
+        let currentCount = UserDefaults.standard.integer(forKey: "launchCount")
+        UserDefaults.standard.set(currentCount + 1, forKey: "launchCount")
     }
     
     
@@ -49,8 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 DispatchQueue.main.async {
                     self.profileVC = ProfileVC()
                     self.profileVC?.userUID = user?.uid
-                     AuthService.shared.UserID = user?.uid
-                     UserDefaults.standard.set(user?.uid, forKey: .userId)
+                    AuthService.shared.UserID = user?.uid
+                    UserDefaults.standard.set(user?.uid, forKey: .userId)
                     self.setupRootViewController(viewController: self.profileVC!)
                     self.profileVC = nil
                 }
@@ -59,17 +54,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
     
+    
     private func setupRootViewController(viewController: UIViewController) {
         let navigationController = UINavigationController(rootViewController: viewController)
         self.window?.rootViewController = navigationController
         self.window?.makeKeyAndVisible()
     }
-
+    
     
     @available(iOS 13.0, *)
     func customize() {
-                
+        
         self.window?.rootViewController?.view.overrideUserInterfaceStyle = .light
+        self.window?.backgroundColor = .red
         
         let color = UIColor.label
         UINavigationBar.appearance().tintColor = color
@@ -84,8 +81,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         UIToolbar.appearance().backgroundColor = .systemBackground
         UIToolbar.appearance().clipsToBounds = true
         UIToolbar.appearance().isTranslucent = true
-
-
+        
         let pageControl = UIPageControl.appearance()
         pageControl.pageIndicatorTintColor = UIColor(white: 0.8, alpha: 1.0)
         pageControl.currentPageIndicatorTintColor = UIColor(white: 0.6, alpha: 1.0)
@@ -103,7 +99,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                     self.window?.rootViewController?.showMessage("No connection", type: .warning)
                 }
             }
-            print(path.isExpensive)
         }
         
         let queue = DispatchQueue(label: "Monitor")
@@ -156,26 +151,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // URL not auth related, developer should handle it.
         return false
     }
-
+    
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
         // Use this method to pause ongoing tasks, disable timers, and invalidate graphics rendering callbacks. Games should use this method to pause the game.
     }
-
+    
     func applicationDidEnterBackground(_ application: UIApplication) {
         print("BACKGROUND")
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         // Called as part of the transition from the background to the active state; here you can undo many of the changes made on entering the background.
     }
-
+    
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
-
+    
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }

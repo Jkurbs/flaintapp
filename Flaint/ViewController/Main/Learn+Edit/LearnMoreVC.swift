@@ -9,7 +9,7 @@
 import UIKit
 import FirebaseAuth
 
-class LearnMoreVC: UIViewController {
+class LearnMoreVC: UIViewController, ArtEditedDelegate {
     
     // MARK: - Properties
     
@@ -23,6 +23,13 @@ class LearnMoreVC: UIViewController {
     var art: Art! {
         didSet {
             viewModel.art = art
+        }
+    }
+    
+    var newArt: Art? {
+        didSet {
+            viewModel.art = newArt
+            tableView.reloadData()
         }
     }
     
@@ -78,6 +85,7 @@ class LearnMoreVC: UIViewController {
         let editAction = UIAlertAction(title: "Edit", style: .default) { _ in
             // Edit Art
             let vc = EditArtVC()
+            vc.delegate = self
             vc.artImg = self.artImg
             vc.art = self.art
             let nav = UINavigationController(rootViewController: vc)

@@ -35,7 +35,7 @@ class GallerySection: ListSectionController, ListAdapterDataSource, UIScrollView
         let label = UILabel()
         label.frame = self.viewController!.view.bounds
         label.textColor = .label
-        label.backgroundColor = .label
+        label.backgroundColor = .systemBackground
         label.textAlignment = .center
         label.numberOfLines = 5
         label.text = "You have no artwork yet! \n Tap on the + button to add your first."

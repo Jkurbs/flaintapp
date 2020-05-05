@@ -16,10 +16,11 @@ class AddArtInfoCell: UITableViewCell {
     
     var viewController: UIViewController!
     
-    let separator: CALayer = {
-        let layer = CALayer()
-        layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1).cgColor
-        return layer
+    let separator: UIView = {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .separator
+        return view
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -47,7 +48,7 @@ class AddArtInfoCell: UITableViewCell {
         artImageView.translatesAutoresizingMaskIntoConstraints = false
         contentView.addSubview(artImageView)
         
-        contentView.layer.addSublayer(separator)
+        contentView.addSubview(separator)
         
     }
     
@@ -71,11 +72,14 @@ class AddArtInfoCell: UITableViewCell {
             artImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16.0),
             artImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -8.0),
             artImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
-            artImageView.widthAnchor.constraint(equalToConstant: 72.0)
+            artImageView.widthAnchor.constraint(equalToConstant: 72.0),
+            
+            separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
+            separator.topAnchor.constraint(equalTo: topAnchor, constant: 45),
+            separator.widthAnchor.constraint(equalTo: widthAnchor, constant: -120.0),
+            separator.heightAnchor.constraint(equalToConstant: 0.5)
+            
         ])
-        
-        let height: CGFloat = 0.5
-        separator.frame = CGRect(x: 15, y: 45, width: bounds.width / 2, height: height)
     }
     
     @objc func imageViewTapped() {

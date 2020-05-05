@@ -34,20 +34,16 @@ class DescriptionVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupViews()
-        layoutViews()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         guard let text = textView.text else { return }
-        
-        
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
+        layoutViews()
     }
     
     // MARK: - Functions
@@ -55,12 +51,12 @@ class DescriptionVC: UIViewController {
     func setupViews() {
         
         self.title = "Description"
-        view.backgroundColor = .white
+        view.backgroundColor = .systemBackground
         view.addSubview(textView)
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.backgroundColor = .white
+        textView.backgroundColor = .systemBackground
         textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.tintColor = .darkText
+        textView.tintColor = .label
         view.layer.addSublayer(separator)
         
         

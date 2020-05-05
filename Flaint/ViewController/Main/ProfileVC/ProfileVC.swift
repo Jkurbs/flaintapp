@@ -73,11 +73,6 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         ])
     }
     
-    
-    deinit {
-        print("DEINIT IS CALLED")
-    }
-    
     // MARK: - Functions
     
     func setupViews() {
@@ -144,6 +139,10 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         adapter.collectionView = collectionView
         adapter.dataSource = self
         self.view.addSubview(orientationView)
+    }
+    
+    deinit {
+        print("DEINIT IS CALLED")
     }
 }
 
