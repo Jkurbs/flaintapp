@@ -25,6 +25,12 @@ class AddArtInfoCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupViews()
+    }
+    
+    private func setupViews() {
+        
+        backgroundColor = .tertiarySystemBackground
         
         let font = UIFont.systemFont(ofSize: 15)
         
@@ -49,7 +55,6 @@ class AddArtInfoCell: UITableViewCell {
         contentView.addSubview(artImageView)
         
         contentView.addSubview(separator)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -61,14 +66,6 @@ class AddArtInfoCell: UITableViewCell {
         
         NSLayoutConstraint.activate([
             
-            titleField.topAnchor.constraint(equalTo: contentView.topAnchor),
-            titleField.widthAnchor.constraint(equalToConstant: contentView.frame.width / 2),
-            titleField.heightAnchor.constraint(equalToConstant: 48.0),
-            
-            priceField.topAnchor.constraint(equalTo: titleField.bottomAnchor),
-            priceField.widthAnchor.constraint(equalTo: titleField.widthAnchor),
-            priceField.heightAnchor.constraint(equalToConstant: 48.0),
-            
             artImageView.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -16.0),
             artImageView.heightAnchor.constraint(equalTo: contentView.heightAnchor, constant: -8.0),
             artImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
@@ -77,8 +74,15 @@ class AddArtInfoCell: UITableViewCell {
             separator.leftAnchor.constraint(equalTo: leftAnchor, constant: 15),
             separator.topAnchor.constraint(equalTo: topAnchor, constant: 45),
             separator.widthAnchor.constraint(equalTo: widthAnchor, constant: -120.0),
-            separator.heightAnchor.constraint(equalToConstant: 0.5)
+            separator.heightAnchor.constraint(equalToConstant: 0.5),
             
+            titleField.topAnchor.constraint(equalTo: contentView.topAnchor),
+            titleField.widthAnchor.constraint(equalTo: separator.widthAnchor),
+            titleField.heightAnchor.constraint(equalToConstant: 48.0),
+            
+            priceField.topAnchor.constraint(equalTo: titleField.bottomAnchor),
+            priceField.widthAnchor.constraint(equalTo: titleField.widthAnchor),
+            priceField.heightAnchor.constraint(equalToConstant: 48.0),
         ])
     }
     

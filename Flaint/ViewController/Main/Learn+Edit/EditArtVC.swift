@@ -33,7 +33,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
     var artProperties = ArtProperties.self
     
     var titles = ["Title", "Price"]
-    var array = ["Title", "Price", "Description", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
+    var array = ["Title", "Price", "Description", "Sold", "Style", "Medium", "Substrate", "Width", "Height", "Depth"]
     
     weak var delegate: ArtEditedDelegate?
     
@@ -54,6 +54,9 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         tableView?.register(InfoTextFieldCell.self, forCellReuseIdentifier: InfoTextFieldCell.id)
         tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         tableView?.tableFooterView = UIView()
+        
+        self.presentationController?.delegate = self
+        
     }
     
     
@@ -83,7 +86,7 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text, let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "") {
             
             let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String: Any]
-                    
+            
             DataService.shared.editArt(userId: userId, artId: artId, style: style, data: data) { success, _ in
                 if !success {
                     print("Error updating art")
@@ -100,6 +103,23 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
 
 // MARK: - TableView
 extension EditArtVC {
+    
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 4 {
+            return 35.0
+        }
+        return 0.0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60.0))
+        view.backgroundColor = .systemGroupedBackground
+        if section == 4 {
+            return view
+        }
+        return nil
+    }
     
     override func numberOfSections(in tableView: UITableView) -> Int {
         9
@@ -136,12 +156,24 @@ extension EditArtVC {
             return cell
         case 2:
             let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
+            cell.backgroundColor = .tertiarySystemBackground
             cell.textLabel?.text = title
             cell.textLabel?.font = UIFont.systemFont(ofSize: 15, weight: .medium)
             cell.accessoryType = .disclosureIndicator
             cell.detailTextLabel?.text = art?.description
             return cell
+            
         case 3:
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "toggleCell")
+            cell.textLabel?.text = "Sold"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+            let switchView = UISwitch(frame: .zero)
+            switchView.onTintColor = .systemRed
+            switchView.setOn(art?.status ?? false, animated: false)
+            switchView.tag = indexPath.row // for detect which row switch Changed
+            cell.accessoryView = switchView
+            return cell
+        case 4:
             cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.style ?? "Unkown")"
             cell.values = artProperties.style.values
@@ -149,7 +181,7 @@ extension EditArtVC {
                 cell.selectedRow = index
             }
             return cell
-        case 4:
+        case 5:
             cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.medium ?? "Unkown")"
             cell.values = artProperties.medium.values
@@ -157,7 +189,7 @@ extension EditArtVC {
                 cell.selectedRow = index
             }
             return cell
-        case 5:
+        case 6:
             cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.substrate ?? "Unkown")"
             cell.values = artProperties.substrate.values
@@ -165,7 +197,7 @@ extension EditArtVC {
                 cell.selectedRow = index
             }
             return cell
-        case 6, 7, 8:
+        case 7, 8, 9:
             cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.width ?? "")cm"
             cell.values = range
@@ -174,7 +206,6 @@ extension EditArtVC {
             break
         }
         return UITableViewCell()
-
     }
     
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -191,7 +222,7 @@ extension EditArtVC {
             }
             return UITableView.automaticDimension
         } else {
-            if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+            if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
                 return cell.height
             }
             return UITableView.automaticDimension
@@ -199,7 +230,6 @@ extension EditArtVC {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         
         if indexPath.section == 2 && indexPath.row == 0 {
             let vc = DescriptionVC()
@@ -208,13 +238,36 @@ extension EditArtVC {
             self.navigationController?.pushViewController(vc, animated: true)
         }
         
-        if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
             cell.selectedInTableView(tableView)
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+            if cell.expanded {
+                cell.deselectedInTableView(tableView)
+            }
         }
     }
     
     func finishPassing(description: String) {
         let cell = tableView.cellForRow(at: IndexPath(row: 0, section: 2))
         cell?.detailTextLabel?.text = "\(description)"
+    }
+}
+
+
+extension EditArtVC: UIAdaptivePresentationControllerDelegate {
+    
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        let alert = UIAlertController(title: "Are you sure you want to discard these changes?", message: "", preferredStyle: .actionSheet)
+        let discard = UIAlertAction(title: "Discard", style: .destructive) { (action) in
+            
+        }
+        let cancel = UIAlertAction(title: "Keep editing", style: .default, handler: nil)
+        alert.addAction(discard)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }

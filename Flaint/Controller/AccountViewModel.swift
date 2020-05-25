@@ -37,10 +37,10 @@ class AccountViewModel: NSObject {
             let lastName = user.lastName ?? ""
             let profileItem = AccountViewModelGeneralItem(imgUrl: imgUrl, name: "\(firstName) \(lastName)")
             self.items.append(profileItem)
-            let email = user.email ?? ""
-            let phone = user.phone ?? ""
-            let emailItem = AccountViewModelPersonalItem(email: email, phone: phone)
-            self.items.append(emailItem)
+//            let email = user.email ?? ""
+//            let phone = user.phone ?? ""
+//            let emailItem = AccountViewModelPersonalItem(email: email, phone: phone)
+//            self.items.append(emailItem)
         }
     }
 }
@@ -68,7 +68,6 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
                     return cell
                 }
             case 1:
-                print("ITEM: \(item)")
                 if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountGeneralCell.id, for: indexPath) as? EditAccountGeneralCell {
                     cell.configure(index: 1, title: "Name", item: item)
                     return cell
@@ -77,17 +76,18 @@ extension AccountViewModel: UITableViewDelegate, UITableViewDataSource {
                 break
             }
         case .personal:
-            if indexPath.row == 0 {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
-                    cell.configure(index: 0, title: "Email", item: item)
-                    return cell
-                }
-            } else if indexPath.row == 1 {
-                if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
-                    cell.configure(index: 1, title: "Phone", item: item)
-                    return cell
-                }
-            }
+            break
+//            if indexPath.row == 0 {
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
+//                    cell.configure(index: 0, title: "Email", item: item)
+//                    return cell
+//                }
+//            } else if indexPath.row == 1 {
+//                if let cell = tableView.dequeueReusableCell(withIdentifier: EditAccountPrivateCell.id, for: indexPath) as? EditAccountPrivateCell {
+//                    cell.configure(index: 1, title: "Phone", item: item)
+//                    return cell
+//                }
+//            }
         }
         return UITableViewCell()
     }

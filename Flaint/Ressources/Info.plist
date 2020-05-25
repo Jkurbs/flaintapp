@@ -60,9 +60,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Flaint would like access to your library.</string>
+	<string>${PRODUCT_NAME} would like access to your library for your profile or to add arts.</string>
 	<key>NSCameraUsageDescription</key>
-	<string>Flaint would like access to your camera.</string>
+	<string>This let you capture photos for your profile or to add arts photos in your gallery.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

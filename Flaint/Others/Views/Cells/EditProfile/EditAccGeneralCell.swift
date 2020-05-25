@@ -16,7 +16,7 @@ class EditAccountGeneralCell: UITableViewCell {
     let separator: UIView = {
         let layer = UIView()
         layer.translatesAutoresizingMaskIntoConstraints = false
-        layer.backgroundColor = UIColor(red: 200 / 255.0, green: 199 / 255.0, blue: 204 / 255.0, alpha: 1)
+        layer.backgroundColor = UIColor.separator
         return layer
     }()
 
@@ -24,6 +24,8 @@ class EditAccountGeneralCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        backgroundColor = .tertiarySystemGroupedBackground
+
         titleLabel = UICreator.create.label(nil, 15, .label, .natural, .medium, contentView)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -89,6 +91,9 @@ class EditAccountPrivateCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        backgroundColor = .tertiarySystemGroupedBackground
+        
         titleLabel = UICreator.create.label("", 15, .label, .natural, .medium, contentView)
         valueLabel.font = UIFont.normal
         

@@ -36,11 +36,6 @@ class DescriptionVC: UIViewController {
         setupViews()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        guard let text = textView.text else { return }
-    }
-    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         layoutViews()
@@ -54,7 +49,7 @@ class DescriptionVC: UIViewController {
         view.backgroundColor = .systemBackground
         view.addSubview(textView)
         textView.font = UIFont.systemFont(ofSize: 17)
-        textView.backgroundColor = .systemBackground
+        textView.backgroundColor = .tertiarySystemBackground
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.tintColor = .label
         view.layer.addSublayer(separator)
@@ -65,6 +60,11 @@ class DescriptionVC: UIViewController {
         
         let doneBtn = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         navigationItem.rightBarButtonItem = doneBtn
+        
+        let deadlineTime = DispatchTime.now() + .seconds(1)
+        DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+            self.textView.becomeFirstResponder()
+        }
     }
     
     func layoutViews() {
@@ -84,7 +84,7 @@ class DescriptionVC: UIViewController {
             navigationController?.popViewController(animated: true)
             return
         }
-        let alert = UIAlertController(title: "Discard Changes", message: "If you go back now, you will lose your changes.", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Discard Changes", message: "If you go back now, you will lose your changes.", preferredStyle: .actionSheet)
         let editing = UIAlertAction(title: "Keep editing", style: .default, handler: nil)
         
         let discard = UIAlertAction(title: "Discard changes", style: .destructive) { (action) in
@@ -101,3 +101,5 @@ class DescriptionVC: UIViewController {
         navigationController?.popViewController(animated: true)
     }
 }
+
+

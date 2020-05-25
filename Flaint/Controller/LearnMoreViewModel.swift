@@ -44,8 +44,9 @@ class LearnMoreViewModel: NSObject {
                 let size =  "\(art.width ?? "")cm x \(art.height ?? "")cm"
                 let price = "$\(art.price ?? "$0.00")"
                 let date = art.date ?? ""
+                let status = art.status ?? false
                 
-                let primaryItem = LearnViewModelGeneralItem(title: title, imgUrl: imgUrl, style: style, medium: medium, substrate: substrate, size: size, price: price, date: date)
+                let primaryItem = LearnViewModelGeneralItem(title: title, imgUrl: imgUrl, style: style, medium: medium, substrate: substrate, size: size, price: price, date: date, status: status)
                 self.items.append(primaryItem)
             }
             if let description = art.description {
@@ -84,8 +85,8 @@ extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
             switch indexPath.row {
             case 0:
                 if let cell = tableView.dequeueReusableCell(withIdentifier: EditArtCell.id, for: indexPath) as? EditArtCell {
-                     cell.artImg = self.artImg
-                     cell.item = item
+                    cell.artImg = self.artImg
+                    cell.item = item
                     return cell
                 }
             case 1:
@@ -109,17 +110,26 @@ extension LearnMoreViewModel: UITableViewDelegate, UITableViewDataSource {
                 cell.detailTextLabel?.text = item.price
                 return cell
             case 6:
+                cell.textLabel?.text = "Status"
+                if item.status == true {
+                    cell.detailTextLabel?.text = "Sold"
+                } else {
+                    cell.detailTextLabel?.text = "Available"
+                }
+                return cell
+            case 7:
                 cell.textLabel?.text = "Date"
                 cell.detailTextLabel?.text = item.date
                 return cell
+                
             default:
-                return cell
+                break
             }
         case .secondary:
             let item = item as! LearnViewModelMoreItem
             if let cell = tableView.dequeueReusableCell(withIdentifier: LearnMoreDescCell.id, for: indexPath) as? LearnMoreDescCell {
-            cell.artDescription = item.description
-            return cell
+                cell.artDescription = item.description
+                return cell
             }
         }
         return UITableViewCell()
@@ -172,7 +182,7 @@ class LearnViewModelGeneralItem: LearnModelItem {
     }
     
     var rowCount: Int {
-        7
+        8
     }
     
     var title: String
@@ -183,8 +193,9 @@ class LearnViewModelGeneralItem: LearnModelItem {
     var size: String
     var price: String
     var date: String
+    var status: Bool
     
-    init(title: String, imgUrl: String, style: String, medium: String, substrate: String, size: String, price: String, date: String) {
+    init(title: String, imgUrl: String, style: String, medium: String, substrate: String, size: String, price: String, date: String, status: Bool) {
         self.title = title
         self.imgUrl = imgUrl
         self.style = style
@@ -193,6 +204,7 @@ class LearnViewModelGeneralItem: LearnModelItem {
         self.size = size
         self.price = price
         self.date = date
+        self.status = status
     }
 }
 

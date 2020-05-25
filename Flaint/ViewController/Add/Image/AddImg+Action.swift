@@ -63,7 +63,7 @@ extension AddImageVC {
         
         vc.prediction = self.prediction
         vc.artImage = self.imageView.image
-        vc.styles = self.classifications
+//        vc.styles = self.classifications
         
         let imgUID = NSUUID().uuidString
         vc.artId = imgUID

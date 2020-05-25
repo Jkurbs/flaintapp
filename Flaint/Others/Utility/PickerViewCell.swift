@@ -427,6 +427,15 @@ public class AUPickerCell: UITableViewCell {
         tableView.endUpdates()
     }
     
+    public func deselectedInTableView(_ tableView: UITableView) {
+        expanded.toggle()
+        UIView.transition(with: rightLabel, duration: 0.25, options: .transitionCrossDissolve, animations: { [unowned self] in
+            self.rightLabel.textColor = self.expanded ? self.tintColor : self.rightLabelTextColor
+        })
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
     /**
      Sets the date to display in the date picker, with an option to animate the setting.
      - Parameter date: A Date object representing the new date to display in the date picker.

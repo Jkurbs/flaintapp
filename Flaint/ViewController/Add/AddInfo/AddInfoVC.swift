@@ -11,19 +11,21 @@ import FirebaseAuth
 import FirebaseStorage
 
 class AddInfoVC: UITableViewController, ArtDescDelegate {
-        
+    
+    // MARK: UI Elements
+    
+    var artImage: UIImage!
+    var switchView: UISwitch!
+    
     // MARK: - Properties
     
     var expandingCellHeight: CGFloat = 100
     
-    var styles = ["Abstract", "Realism", "Surrealism", "Pop art"]
-    var substrates = ["Canvas", "Wood", "Paper", "Metal"]
-    var mediums = ["Oil", "Watercolor", "Acrylic"]
+    var artProperties = ArtProperties.self
     
     var prediction: String?
     var classifications: Classifications?
     
-    var artImage: UIImage!
     var imgUrl = ""
     var artId = ""
     var ref: StorageReference?
@@ -32,7 +34,7 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
     
     var expandedSectionIndexPath: IndexPath?
     var expandedSectionValue: String?
-    
+
     // MARK: - View LifeCycle
     
     override func viewDidLoad() {
@@ -60,8 +62,11 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(cancel))
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(done))
         
-        tableView?.register(AddArtInfoCell.self, forCellReuseIdentifier: "AddArtInfoCell")
-        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        tableView?.register(AddArtInfoCell.self, forCellReuseIdentifier: AddArtInfoCell.id)
+        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.id)
+        tableView?.register(UITableViewCell.self, forCellReuseIdentifier: UITableViewCell.id)
+        tableView.backgroundColor = .systemGroupedBackground
         tableView?.tableFooterView = UIView()
         
         switch self.prediction {
@@ -88,23 +93,24 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! AddArtInfoCell
         let descCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0))!
-        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! AUPickerCell
-        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! AUPickerCell
-        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! AUPickerCell
-        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! AUPickerCell
-        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! AUPickerCell
-        let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 6)) as! AUPickerCell
+        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! PickerCell
+        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! PickerCell
+        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! PickerCell
+        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! PickerCell
+        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! PickerCell
+        let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 6)) as! PickerCell
         
-        guard let title = infoCell.titleField.text, let price = infoCell.priceField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell.detailTextLabel?.text, let style = styleCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let imgData = artImage.jpegData(compressionQuality: 1.0) else {
+        guard let title = infoCell.titleField.text, let price = infoCell.priceField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell.detailTextLabel?.text, let style = styleCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let imgData = artImage.jpegData(compressionQuality: 1.0) else {
             self.showMessage("Every value must be filled", type: .error)
             return
         }
-
+        
+        let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "")
         
         self.navigationItem.addActivityIndicator()
         let date = CachedDateFormattingHelper.shared.formatTodayDate()
         
-        let data = ["title": title, "price": price, "sentiment": "sentiment", "description": description, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth, "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String: Any]
+        let data = ["title": title, "price": price, "description": description, "status": self.switchView.isOn, "style": style, "substrate": substrate, "medium": medium, "height": height, "width": width, "depth": depth ?? "Not applicable", "date": date, "index": artsCount ?? 0, "imgUrl": self.imgUrl] as [String: Any]
         DataService.shared.createArt(userID: (Auth.auth().currentUser?.uid)!, artId: self.artId, values: data, imgData: imgData) { success, error in
             if !success {
                 self.showMessage("Error saving painting", type: .error)
@@ -140,15 +146,15 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
         
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! AddArtInfoCell
         let descCell = tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! AddDescCell
-        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! AUPickerCell
-        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! AUPickerCell
-        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! AUPickerCell
-        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! AUPickerCell
-        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! AUPickerCell
-        let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! AUPickerCell
         
-        if let style = styleCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let height = heightCell.rightLabel.text, let width = widthCell.rightLabel.text, let depth = depthCell.rightLabel.text {
-            if infoCell.titleField.hasText && infoCell.priceField.hasText && descCell.textView.hasText && !style.isEmpty && !substrate.isEmpty && !medium.isEmpty && !height.isEmpty && !width.isEmpty && !depth.isEmpty {
+        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! PickerCell
+        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! PickerCell
+        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! PickerCell
+        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! PickerCell
+        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! PickerCell
+
+        if let style = styleCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let height = heightCell.rightLabel.text, let width = widthCell.rightLabel.text {
+            if infoCell.titleField.hasText && infoCell.priceField.hasText && descCell.textView.hasText && !style.isEmpty && !substrate.isEmpty && !medium.isEmpty && !height.isEmpty && !width.isEmpty {
                 self.navigationItem.rightBarButtonItem?.isEnabled = true
             } else {
                 self.navigationItem.rightBarButtonItem?.isEnabled = false
@@ -161,13 +167,31 @@ class AddInfoVC: UITableViewController, ArtDescDelegate {
 // MARK: - TableView
 extension AddInfoVC {
     
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        if section == 1 {
+            return 35.0
+        }
+        return 0.0
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let view = UIView(frame: CGRect(x: 0, y: 0, width: tableView.frame.width, height: 60.0))
+        view.backgroundColor = .systemGroupedBackground
+        if section == 1 {
+            return view
+        }
+        return nil
+    }
+    
+    
     override func numberOfSections(in tableView: UITableView) -> Int {
         7
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if section == 0 {
-            return 2
+            return 3
         } else {
             return 1
         }
@@ -176,9 +200,9 @@ extension AddInfoVC {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = PickerCell(type: .default, reuseIdentifier: PickerCell.id)
-        cell.delegate = self
         
         let range = Array(10...100).map(String.init)
+        let depth = Array(1...5).map(String.init)
         
         if indexPath.section == 0 && indexPath.row == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "AddArtInfoCell", for: indexPath) as! AddArtInfoCell
@@ -187,30 +211,33 @@ extension AddInfoVC {
             return cell
         } else if indexPath.section == 0 && indexPath.row == 1 {
             let cell = UITableViewCell(style: UITableViewCell.CellStyle.subtitle, reuseIdentifier: "cell")
+            cell.backgroundColor = .tertiarySystemBackground
             cell.textLabel?.text = "Description"
             cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+            cell.detailTextLabel?.textColor = .secondaryLabel
             cell.accessoryType = .disclosureIndicator
             return cell
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 0 && indexPath.row == 2  {
+            let cell = UITableViewCell(style: .default, reuseIdentifier: "toggleCell")
+            cell.textLabel?.text = "Sold"
+            cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
+            switchView = UISwitch(frame: .zero)
+            switchView.setOn(false, animated: true)
+            switchView.onTintColor = .systemRed
+            switchView.tag = indexPath.row
+            cell.accessoryView = switchView
+            return cell
+        }else if indexPath.section == 1 {
             cell.leftLabel.text = "Style"
-            cell.values = ["Abstract", "Realism", "Surrealism", "Pop art"]
-            if  let index = self.styles.firstIndex(of: self.classifications?.style ?? "") {
-                cell.selectedRow = index
-            }
+            cell.values = artProperties.style.values
             return cell
         } else if indexPath.section == 2 {
             cell.leftLabel.text = "Medium"
-            cell.values = mediums
-            if let index = self.mediums.firstIndex(of: self.classifications?.medium ?? "") {
-                cell.selectedRow = index
-            }
+            cell.values = artProperties.medium.values
             return cell
         } else if indexPath.section == 3 {
             cell.leftLabel.text = "Substrate"
-            cell.values = substrates
-            if let index = self.substrates.firstIndex(of: self.classifications?.substrate ?? "" ) {
-                cell.selectedRow = index
-            }
+            cell.values = artProperties.substrate.values
             return cell
         } else if indexPath.section == 4 {
             cell.leftLabel.text = "Width"
@@ -221,8 +248,8 @@ extension AddInfoVC {
             cell.values = range
             return cell
         } else {
-            cell.leftLabel.text = "Depth"
-            cell.values = range
+            cell.leftLabel.text = "Depth(optional)"
+            cell.values = depth
             return cell
         }
     }
@@ -239,24 +266,17 @@ extension AddInfoVC {
                     return 80.0
                 }
             }
-            return UITableView.automaticDimension
         } else {
             if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
                 return cell.height
             }
             return UITableView.automaticDimension
         }
+        return UITableView.automaticDimension
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
-        if let indexPath = self.expandedSectionIndexPath, let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
-            if !cell.isSelected {
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-                cell.rightLabel.text = self.expandedSectionValue
-            }
-        }
-
         if let descriptionCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2)) {
             if indexPath.section == 0 && indexPath.row == 1 {
                 let vc = DescriptionVC()
@@ -266,12 +286,24 @@ extension AddInfoVC {
             }
         }
         
-        if let cell = tableView.cellForRow(at: indexPath) as? AUPickerCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
             self.view.endEditing(true)
             self.expandedSectionIndexPath = indexPath
+            tableView.isScrollEnabled = false
             cell.selectedInTableView(tableView)
         }
+        
         tableView.scrollToRow(at: indexPath, at: .none, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        if let cell = tableView.cellForRow(at: indexPath) as? PickerCell {
+            if cell.expanded {
+                cell.deselectedInTableView(tableView)
+            }
+        }
+        tableView.isScrollEnabled = false
+
     }
     
     func finishPassing(description: String) {
@@ -282,27 +314,14 @@ extension AddInfoVC {
 
 extension AddInfoVC {
     
-     func setupKeyboardNotification() {
-         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIWindow.keyboardWillShowNotification, object: nil)
-     }
-    
+    func setupKeyboardNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow), name: UIWindow.keyboardWillShowNotification, object: nil)
+    }
     
     @objc func keyboardWillShow(notification: NSNotification) {
         //TODO: Fix - Reload tableViewSection when keyboard is up.
-        if let expandedSectionIndexPath = self.expandedSectionIndexPath {
-            self.tableView.reloadRows(at: [expandedSectionIndexPath], with: .automatic)
-        }
-    }
-}
-
-
-// MARK: - AUPickerCellDelegate
-
-extension AddInfoVC: AUPickerCellDelegate {
-    
-    func auPickerCell(_ cell: AUPickerCell, didPick row: Int, value: Any) {
-        if let value = value as? String {
-            self.expandedSectionValue = value
+        if let expandedSectionIndexPath = self.expandedSectionIndexPath, let cell = tableView.cellForRow(at: expandedSectionIndexPath) as? PickerCell {
+            cell.expanded.toggle()
         }
     }
 }

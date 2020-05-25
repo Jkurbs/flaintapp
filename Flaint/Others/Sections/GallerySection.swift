@@ -111,6 +111,8 @@ extension GallerySection: ArtDelegate {
             }
         }
         
+    
+        
         let art = self.arts[currentIndex]
         self.profileVC?.currentArt = art
         return (index: currentIndex, count: self.arts.count, art: art)

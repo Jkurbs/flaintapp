@@ -63,6 +63,7 @@ class OrientationView: UIView {
 
 class AdjustView: UIView {
     
+    
     let label: UILabel = {
         let label = UILabel()
         label.textColor = .label
@@ -117,6 +118,7 @@ class AdjustView: UIView {
     }
     
     @objc func hideView() {
+        timer.invalidate()
         UIView.animate(withDuration: 5.0, animations: {
             self.alpha = 0.0
             self.label.text = nil
@@ -149,6 +151,7 @@ class AdjustView: UIView {
     }
     
     func addContraints() {
+        
         NSLayoutConstraint.activate([
             
             label.centerYAnchor.constraint(equalTo: centerYAnchor),

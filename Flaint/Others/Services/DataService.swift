@@ -66,7 +66,7 @@ class DataService {
     }
     
     // Update user data
-    func updateUserData(_ userId: String, _ name: String, _ email: String, _ phone: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> Void) {
+    func updateUserData(_ userId: String, _ name: String, _ image: UIImage, complete: @escaping (Bool, Error?) -> Void) {
         if let imageData = image.jpegData(compressionQuality: 1.0) {
             
             let ref = DataService.shared.RefStorage.child("profile_images").child(userId)

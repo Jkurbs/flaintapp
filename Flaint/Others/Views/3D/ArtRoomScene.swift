@@ -19,11 +19,14 @@ class ArtRoomScene: SCNScene {
     
     func setup(image: UIImage?, height: CGFloat? = nil, width: CGFloat? = nil, position: SCNVector3, rotation: SCNVector4) {
         
-       let camera = SCNCamera()
-       var materials = [SCNMaterial]()
-       let cameraOrbit = SCNNode()
-
-        let geometry = SCNBox(width: width!/110, height: height!/110, length: 57 / 700, chamferRadius: 0.008)
+        let camera = SCNCamera()
+        var materials = [SCNMaterial]()
+        let cameraOrbit = SCNNode()
+        
+        let divider = (width!/3.2)
+        print("DIVIDER: \(divider)")
+        
+        let geometry = SCNBox(width: width!/divider, height: height!/divider, length: 57 / 700, chamferRadius: 0.008)
         boxnode = SCNNode(geometry: geometry)
         boxnode.position = position
         boxnode.rotation = rotation

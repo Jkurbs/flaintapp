@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import ARKit
 import FirebaseAuth
 
 extension ProfileVC {
@@ -18,8 +17,9 @@ extension ProfileVC {
         nav.modalPresentationStyle = .fullScreen
         vc.arts = self.arts
         vc.navigationController?.isToolbarHidden = true
+        
         self.present(nav, animated: true) {
-//            self.navigationController?.setViewControllers([], animated: false)
+            
         }
     }
     
@@ -66,6 +66,14 @@ extension ProfileVC {
         guard let art = self.currentArt else { return }
         
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
+        
+        
+        let copyLink = UIAlertAction(title: "Copy link", style: .default) { _ in
+            self.showMessage("Link copied", type: .success)
+            UIPasteboard.general.string = "Hello world"
+        }
+        
+        
         let edit = UIAlertAction(title: "Edit", style: .default) { _ in
             DispatchQueue.main.async {
                 let editVC = EditArtVC()
@@ -86,6 +94,7 @@ extension ProfileVC {
                         DataService.shared.deleteArt(userId: userId, artId: id, artStyle: style) { _ in
                             DispatchQueue.main.async {
                                 self.showMessage("\(title) successfully deleted", type: .error)
+                                self.fetchArts()
                             }
                         }
                     }
@@ -96,6 +105,7 @@ extension ProfileVC {
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+//        alert.addAction(copyLink)
         alert.addAction(edit)
         alert.addAction(delete)
         alert.addAction(cancel)

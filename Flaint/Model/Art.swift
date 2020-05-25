@@ -13,8 +13,8 @@ class Art: Codable {
     var id: String!
     let title: String!
     var price: String!
-    var sentiment: String!
     var description: String!
+    var status: Bool!
     var style: String!
     var substrate: String!
     var medium: String!

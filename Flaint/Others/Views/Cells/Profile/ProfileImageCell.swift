@@ -154,7 +154,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
         contentView.backgroundColor = .systemBackground
         
         activityIndicator.frame = contentView.frame
-        activityIndicator.cycleColors = [.darkText]
+        activityIndicator.cycleColors = [.label]
         activityIndicator.startAnimating()
         
         scnView = SCNView(frame: contentView.frame)

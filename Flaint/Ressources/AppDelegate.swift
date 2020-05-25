@@ -20,12 +20,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var profileVC: ProfileVC?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         setLaunchCount()
         configure()
         customize()
         observeAuthorisedState()
-        
         return true
     }
     
@@ -66,7 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func customize() {
         
         self.window?.rootViewController?.view.overrideUserInterfaceStyle = .light
-        self.window?.backgroundColor = .red
         
         let color = UIColor.label
         UINavigationBar.appearance().tintColor = color

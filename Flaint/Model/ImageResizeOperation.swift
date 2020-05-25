@@ -29,7 +29,7 @@ class ImageResizeOperation: Operation {
         let options: [CFString: Any] = [
             kCGImageSourceCreateThumbnailWithTransform: true,
             kCGImageSourceCreateThumbnailFromImageAlways: true,
-            kCGImageSourceThumbnailMaxPixelSize: max(width, height) ]
+            kCGImageSourceThumbnailMaxPixelSize: max(width - 20, height - 20) ]
 
         if let source = CGImageSourceCreateWithData(imageData as CFData, nil) {
             let newImage = CGImageSourceCreateThumbnailAtIndex(source, 0, options as CFDictionary)

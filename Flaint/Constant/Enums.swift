@@ -22,7 +22,7 @@ enum ArtProperties: String, CaseIterable {
         case .substrate:
             return ["Canvas", "Wood", "Paper", "Metal"]
         case .medium:
-            return ["Oil", "Watercolor", "Acrylic"]
+            return ["Oil", "Watercolor", "Acrylic", "Digital"]
         }
     }
 }

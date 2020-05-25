@@ -47,9 +47,8 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         setupViews()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        dch_checkDeallocation()
+    @objc func reloadData() {
+        self.fetchArts()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -93,7 +92,11 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         view.backgroundColor = .systemBackground
         
         // NavBar setup
-        let reorderButton = UIBarButtonItem(image: UIImage(systemName: "line.horizontal.3.decrease"), style: .done, target: self, action: #selector(gotToReorderVC))
+        
+        let cropImageConfiguration = UIImage.SymbolConfiguration(pointSize: 19, weight: .regular, scale: .medium)
+        let cropButtonImage = UIImage(systemName: "square.on.square", withConfiguration: cropImageConfiguration)!
+        
+        let reorderButton = UIBarButtonItem(image: cropButtonImage, style: .done, target: self, action: #selector(gotToReorderVC))
         let searchButton = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(searchTapped))
         let addButton = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(gotToAddArtVC))
         let menuButton = UIBarButtonItem(image: UIImage(named: "New-menu-filled-20"), style: .plain, target: self, action: #selector(gotToSettingsVC))
@@ -143,33 +146,5 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
     
     deinit {
         print("DEINIT IS CALLED")
-    }
-}
-
-extension UIViewController {
-    public func dch_checkDeallocation(afterDelay delay: TimeInterval = 2.0) {
-        let rootParentViewController = dch_rootParentViewController
-
-        // We don’t check `isBeingDismissed` simply on this view controller because it’s common
-        // to wrap a view controller in another view controller (e.g. in UINavigationController)
-        // and present the wrapping view controller instead.
-        if isMovingFromParent || rootParentViewController.isBeingDismissed {
-            let isType = type(of: self)
-            let disappearanceSource: String = isMovingFromParent ? "removed from its parent" : "dismissed"
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + delay, execute: { [weak self] in
-                assert(self == nil, "\(isType) not deallocated after being \(disappearanceSource)")
-            })
-        }
-    }
-
-    private var dch_rootParentViewController: UIViewController {
-        var root = self
-
-        while let parent = root.parent {
-            root = parent
-        }
-
-        return root
     }
 }

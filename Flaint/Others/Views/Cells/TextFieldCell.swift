@@ -15,8 +15,11 @@ class TextFieldCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        backgroundColor = .tertiarySystemGroupedBackground
+        
         textField.frame = contentView.frame
         textField.font = UIFont.normal
+        textField.textColor = .label
         contentView.addSubview(textField)
     }
     
