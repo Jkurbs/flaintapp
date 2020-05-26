@@ -14,6 +14,8 @@ target 'Flaint' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
+  pod 'Firebase/Analytics'
+  pod 'Firebase/DynamicLinks'
 
   target 'FlaintTests' do
     inherit! :search_paths

@@ -19,6 +19,10 @@ protocol ArtEditedDelegate: NSObjectProtocol {
 
 class EditArtVC: UITableViewController, ArtDescDelegate {
     
+    // MARK: - UI Elements
+
+    var switchView: UISwitch!
+    
     // MARK: - Properties
     
     var artImg: UIImage?
@@ -75,17 +79,17 @@ class EditArtVC: UITableViewController, ArtDescDelegate {
         let infoCell = tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! InfoTextFieldCell
         let priceCell = tableView.cellForRow(at: IndexPath(row: 1, section: 1)) as! InfoTextFieldCell
         let descCell = tableView.cellForRow(at: IndexPath(row: 0, section: 2))
-        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 3)) as! PickerCell
-        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! PickerCell
-        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! PickerCell
+        let styleCell = tableView.cellForRow(at: IndexPath(row: 0, section: 4)) as! PickerCell
+        let mediumCell = tableView.cellForRow(at: IndexPath(row: 0, section: 5)) as! PickerCell
+        let substrateCell = tableView.cellForRow(at: IndexPath(row: 0, section: 6)) as! PickerCell
         
-        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 6)) as! PickerCell
-        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 7)) as! PickerCell
-        let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 8)) as! PickerCell
+        let heightCell = tableView.cellForRow(at: IndexPath(row: 0, section: 7)) as! PickerCell
+        let widthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 8)) as! PickerCell
+        let depthCell = tableView.cellForRow(at: IndexPath(row: 0, section: 9)) as! PickerCell
         
-        if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text, let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "") {
+        if let title = infoCell.textField.text, let price = priceCell.textField.text?.replacingOccurrences(of: "$", with: ""), let description = descCell?.detailTextLabel?.text,  let style = styleCell.rightLabel.text, let medium = mediumCell.rightLabel.text, let substrate = substrateCell.rightLabel.text, let height = heightCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let width = widthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: ""), let depth = depthCell.rightLabel.text?.replacingOccurrences(of: "cm", with: "") {
             
-            let data = ["title": title, "price": price, "description": description, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String: Any]
+            let data = ["title": title, "price": price, "description": description, "status": switchView.isOn, "style": style, "medium": medium, "substrate": substrate, "height": height, "width": width, "depth": depth] as [String: Any]
             
             DataService.shared.editArt(userId: userId, artId: artId, style: style, data: data) { success, _ in
                 if !success {
@@ -162,12 +166,11 @@ extension EditArtVC {
             cell.accessoryType = .disclosureIndicator
             cell.detailTextLabel?.text = art?.description
             return cell
-            
         case 3:
             let cell = UITableViewCell(style: .default, reuseIdentifier: "toggleCell")
             cell.textLabel?.text = "Sold"
             cell.textLabel?.font = UIFont.systemFont(ofSize: 15)
-            let switchView = UISwitch(frame: .zero)
+            switchView = UISwitch(frame: .zero)
             switchView.onTintColor = .systemRed
             switchView.setOn(art?.status ?? false, animated: false)
             switchView.tag = indexPath.row // for detect which row switch Changed
@@ -256,7 +259,7 @@ extension EditArtVC {
         cell?.detailTextLabel?.text = "\(description)"
     }
 }
-
+ 
 
 extension EditArtVC: UIAdaptivePresentationControllerDelegate {
     

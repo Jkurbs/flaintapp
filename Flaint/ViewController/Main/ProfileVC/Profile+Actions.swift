@@ -67,9 +67,8 @@ extension ProfileVC {
         
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
         
-        
-        let copyLink = UIAlertAction(title: "Copy link", style: .default) { _ in
-            self.showMessage("Link copied", type: .success)
+        let copyLink = UIAlertAction(title: "Copy artwork link", style: .default) { _ in
+            self.showMessage("Link copied to clipboard", type: .success)
             UIPasteboard.general.string = "Hello world"
         }
         
@@ -105,7 +104,7 @@ extension ProfileVC {
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-//        alert.addAction(copyLink)
+        alert.addAction(copyLink)
         alert.addAction(edit)
         alert.addAction(delete)
         alert.addAction(cancel)

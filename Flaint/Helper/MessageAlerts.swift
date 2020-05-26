@@ -110,10 +110,10 @@ public class GSMessage: NSObject {
     
     public static var font: UIFont = UIFont.systemFont(ofSize: 14)
     
-    public static var successBackgroundColor: UIColor = UIColor(red: 142.0 / 255, green: 183.0 / 255, blue: 64.0 / 255, alpha: 0.95)
-    public static var warningBackgroundColor: UIColor = UIColor(red: 230.0 / 255, green: 189.0 / 255, blue: 1.0 / 255, alpha: 0.95)
-    public static var errorBackgroundColor: UIColor = UIColor(red: 219.0 / 255, green: 36.0 / 255, blue: 27.0 / 255, alpha: 0.70)
-    public static var infoBackgroundColor: UIColor = UIColor(red: 44.0 / 255, green: 187.0 / 255, blue: 255.0 / 255, alpha: 0.90)
+    public static var successBackgroundColor: UIColor = UIColor.systemGreen
+    public static var warningBackgroundColor: UIColor = UIColor.systemOrange
+    public static var errorBackgroundColor: UIColor = UIColor.systemRed
+    public static var infoBackgroundColor: UIColor = UIColor.systemGray3
     
     public class func showMessageAddedTo(text: String,
                                          type: GSMessageType,
