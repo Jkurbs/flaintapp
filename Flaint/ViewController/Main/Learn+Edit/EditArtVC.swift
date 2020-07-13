@@ -146,6 +146,7 @@ extension EditArtVC {
         let cell = PickerCell(type: .default, reuseIdentifier: PickerCell.id)
         
         let title = array[indexPath.section]
+        print("TITLE: \(title)")
         let range = Array(10...100).map(String.init)
         
         switch section {
@@ -204,6 +205,7 @@ extension EditArtVC {
             cell.leftLabel.text = title
             cell.rightLabel.text = "\(art?.width ?? "")cm"
             cell.values = range
+            cell.backgroundColor = .red
             return cell
         default:
             break

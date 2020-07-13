@@ -104,7 +104,7 @@ extension ProfileVC {
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
-        alert.addAction(copyLink)
+//        alert.addAction(copyLink)
         alert.addAction(edit)
         alert.addAction(delete)
         alert.addAction(cancel)

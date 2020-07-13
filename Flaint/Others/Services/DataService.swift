@@ -215,9 +215,9 @@ class DataService {
     func createArt(userID: String, artId: String, values: [String: Any], imgData: Data, _ completion: @escaping (_ success: Bool, _ error: Error?) -> Void) {
         let ref = RefArts.child(userID).child(artId)
         DispatchQueue.global(qos: .background).async {
-            self.createLink(Id: artId, completion: { _, _, url in
+            self.createLink(username: "Kerby", id: artId) { (success, error, url) in
                 ref.updateChildValues(["url": url])
-            })
+            }
         }
         ref.updateChildValues(values) { error, _ in
             if let error = error {
@@ -285,12 +285,12 @@ class DataService {
     
     // Create Link
     func createLink(username: String, id: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String) -> Void ) {
-        guard let link = URL(string: "https://www.flaintapp.com/\(username)/?id=\(id)") else { return }
-        let dynamicLinksDomainURIPrefix = "https://flaint"
-        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
-        linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Flaint")
-        guard let longDynamicLink = linkBuilder?.url else { return }
-        print("The long URL is: \(longDynamicLink.absoluteString)")
-        completion(true, nil,longDynamicLink.absoluteString)
+//        guard let link = URL(string: "https://www.flaintapp.com/\(username)/?id=\(id)") else { return }
+//        let dynamicLinksDomainURIPrefix = "https://flaint"
+//        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
+//        linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Flaint")
+//        guard let longDynamicLink = linkBuilder?.url else { return }
+//        print("The long URL is: \(longDynamicLink.absoluteString)")
+//        completion(true, nil,longDynamicLink.absoluteString)
     }
 }

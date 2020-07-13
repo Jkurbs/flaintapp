@@ -21,7 +21,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
         }
         
          let width = collectionContext!.containerSize.width
-        let height = collectionContext!.containerSize.height + 20.0
+         let height = collectionContext!.containerSize.height + 20.0
          let infoHeight: CGFloat = 150
          let artCellHeight = height - (infoHeight + bottomSafeArea)
         
