@@ -230,11 +230,9 @@ extension GalleryViewController {
         imageSnapshot.append(self.arts)
         
         dataSource.apply(imageSnapshot, to: .image, animatingDifferences: false)
-        
-        let art = Art(id: "15", title: "Ttitle", price: "test", description: "test", status: false, style: "test", substrate: nil, medium: nil, width: nil, height: nil, depth: nil, date: nil, url: nil, imgUrl: nil, index: nil, image: nil)
-        
+
         var allSnapshot = NSDiffableDataSourceSectionSnapshot<Art>()
-        allSnapshot.append([art])
+        allSnapshot.append(self.arts)
         dataSource.apply(allSnapshot, to: .info, animatingDifferences: false)
     }
     
