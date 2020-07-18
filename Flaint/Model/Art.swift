@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-class Art: Codable {
+struct Art: Codable, Hashable {
     var id: String!
     let title: String!
     var price: String!
@@ -26,25 +26,7 @@ class Art: Codable {
     var imgUrl: String!
     var index: Int!
     var image: Data?
-}
-
-
-extension Art: Equatable {
     
-    public static func ==(rhs: Art, lhs: Art) -> Bool {
-        rhs.id != lhs.id
-    }
-}
+    private let identifier = UUID()
 
-extension Art: ListDiffable {
-    
-    public func diffIdentifier() -> NSObjectProtocol {
-        id as NSObjectProtocol
-    }
-    
-    public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        guard self !== object else { return true }
-        guard let object = object as? Art else { return false }
-        return self.id == object.id
-    }
 }

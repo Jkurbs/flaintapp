@@ -92,7 +92,7 @@ class DetailsCell: UICollectionViewCell {
 
 import FirebaseStorage
 
-class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
+class GalleryCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     
     // MARK: - UI Elements
     
@@ -132,6 +132,10 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
 
                         self.activityIndicator.isHidden = true
                         let newImage = imageResizeOperation.image
+    
+                        self.artRoomScene.boxnode.cleanUp()
+                        self.artRoomScene.boxnode.removeFromParentNode()
+                        
                         self.artRoomScene.setup(image: img, height: newImage.size.height, width: newImage.size.width, position: SCNVector3(0, 0.0, -1.5), rotation: SCNVector4(0, 0, 0, 0))
                     }
 
@@ -151,7 +155,7 @@ class ProfileArtCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     override required init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .blue
         
         activityIndicator.frame = contentView.frame
         activityIndicator.cycleColors = [.label]

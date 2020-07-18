@@ -46,7 +46,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
     
     override func cellForItem(at index: Int) -> UICollectionViewCell {
         if index == 0 {
-            guard let cell = collectionContext?.dequeueReusableCell(of: ProfileArtCell.self, for: self, at: index) as? ProfileArtCell else {
+            guard let cell = collectionContext?.dequeueReusableCell(of: GalleryCell.self, for: self, at: index) as? GalleryCell else {
                 fatalError()
             }
             cell.artRoomScene.boxnode.cleanUp()
@@ -70,7 +70,7 @@ class SearchArtSection: ListSectionController, ListScrollDelegate {
     
     @objc func learnMore() {
         let vc = LearnMoreVC()
-        if let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? ProfileArtCell {
+        if let cell = collectionContext?.cellForItem(at: 0, sectionController: self) as? GalleryCell {
             vc.artImg = cell.artImg
             vc.art = self.art
             self.viewController?.navigationController?.pushViewController(vc, animated: true)

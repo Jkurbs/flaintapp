@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     let monitor = NWPathMonitor()
     var handle: AuthStateDidChangeListenerHandle?
-    var profileVC: ProfileVC?
+    var galleryViewController: GalleryViewController?
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setLaunchCount()
@@ -40,12 +40,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 self.setupRootViewController(viewController: AuthVC())
             } else {
                 DispatchQueue.main.async {
-                    self.profileVC = ProfileVC()
-                    self.profileVC?.userUID = user?.uid
+                    self.galleryViewController = GalleryViewController()
+                    //self.profileVC?.userUID = user?.uid
                     AuthService.shared.UserID = user?.uid
                     UserDefaults.standard.set(user?.uid, forKey: .userId)
-                    self.setupRootViewController(viewController: self.profileVC!)
-                    self.profileVC = nil
+                    self.setupRootViewController(viewController: self.galleryViewController!)
+                    self.galleryViewController = nil
                 }
             }
             Auth.auth().removeStateDidChangeListener(self.handle!)

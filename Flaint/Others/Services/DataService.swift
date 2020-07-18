@@ -177,7 +177,7 @@ class DataService {
                     let decoder = JSONDecoder()
                     do {
                         let art = try decoder.decode(Art.self, from: data)
-                        art.id = key
+//                        art.id = key
                         complete(.success(art))
                     } catch {
                         NSLog("Error fetching current user: \(error)")

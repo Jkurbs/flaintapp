@@ -24,5 +24,5 @@ protocol ArtDescDelegate: AnyObject {
 
 // Called for searching arts
 protocol SearchSectionControllerDelegate: AnyObject {
-    func searchSectionController(_ sectionController: GallerySection, didChangeText text: String)
+//    func searchSectionController(_ sectionController: GallerySection, didChangeText text: String)
 }

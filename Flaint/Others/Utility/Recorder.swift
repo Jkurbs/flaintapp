@@ -12,7 +12,7 @@ import ReplayKit
 
 class RecorderView: UIView {
     
-    weak var viewController: ProfileVC!
+    weak var viewController: GalleryViewController!
     let recorder = RPScreenRecorder.shared()
 
 //    var recordView: UIView!
