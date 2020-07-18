@@ -9,7 +9,7 @@
 import UIKit
 import IGListKit
 
-struct Art: Codable, Hashable {
+struct Art: Codable {
     var id: String!
     let title: String!
     var price: String!
@@ -26,7 +26,15 @@ struct Art: Codable, Hashable {
     var imgUrl: String!
     var index: Int!
     var image: Data?
-    
-    private let identifier = UUID()
+}
 
+extension Art: Hashable {
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+    
+    static func == (lhs: Art, rhs: Art) -> Bool {
+        lhs.id != rhs.id
+    }
 }

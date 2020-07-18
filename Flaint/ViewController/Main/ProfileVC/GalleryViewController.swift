@@ -158,11 +158,10 @@ extension GalleryViewController {
             
             // orthogonal scrolling section of images
             if sectionKind == .image {
-                
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(self.view.frame.width), heightDimension: .fractionalHeight(0.7))
+                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(self.view.frame.width), heightDimension: .fractionalHeight(0.5))
                 let item = NSCollectionLayoutItem(layoutSize: itemSize)
                 item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-                
+                                
                 let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.view.frame.width), heightDimension: .absolute(self.view.frame.height))
                 
                 let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
@@ -170,28 +169,16 @@ extension GalleryViewController {
                 section = NSCollectionLayoutSection(group: group)
                 section.orthogonalScrollingBehavior = .paging
                 section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
-                
                 // info
             } else if sectionKind == .info {
-                let itemSize = NSCollectionLayoutSize(widthDimension: .absolute(self.view.frame.width), heightDimension: .fractionalHeight(0.7))
-                let item = NSCollectionLayoutItem(layoutSize: itemSize)
-                item.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-                
-                let groupSize = NSCollectionLayoutSize(widthDimension: .absolute(self.view.frame.width), heightDimension: .absolute(self.view.frame.height))
-                
-                let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-                
-                section = NSCollectionLayoutSection(group: group)
-                section.orthogonalScrollingBehavior = .paging
-                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 10, trailing: 0)
+                section = NSCollectionLayoutSection.list(using: .init(appearance: .sidebar), layoutEnvironment: layoutEnvironment)
+                section.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             } else {
                 fatalError("Unknown section!")
             }
             
             return section
         }
-        
-        
         return  UICollectionViewCompositionalLayout(sectionProvider: sectionProvider)
     }
     
@@ -206,7 +193,7 @@ extension GalleryViewController {
             case .image:
                 return collectionView.dequeueConfiguredReusableCell(using: self.configuredGridCell(), for: indexPath, item: item)
             case .info:
-                return collectionView.dequeueConfiguredReusableCell(using: self.configuredGridCell(), for: indexPath, item: item)
+                return collectionView.dequeueConfiguredReusableCell(using: self.configuredListCell(), for: indexPath, item: item)
             }
         }
     }
@@ -214,7 +201,6 @@ extension GalleryViewController {
     
     func configuredGridCell() -> UICollectionView.CellRegistration<GalleryCell, Art> {
         return UICollectionView.CellRegistration<GalleryCell, Art> { (cell, indexPath, item) in
-            cell.contentView.backgroundColor = .red
             cell.art = item
         }
     }
@@ -242,11 +228,14 @@ extension GalleryViewController {
         
         var imageSnapshot = NSDiffableDataSourceSectionSnapshot<Art>()
         imageSnapshot.append(self.arts)
+        
         dataSource.apply(imageSnapshot, to: .image, animatingDifferences: false)
         
+        let art = Art(id: "15", title: "Ttitle", price: "test", description: "test", status: false, style: "test", substrate: nil, medium: nil, width: nil, height: nil, depth: nil, date: nil, url: nil, imgUrl: nil, index: nil, image: nil)
+        
         var allSnapshot = NSDiffableDataSourceSectionSnapshot<Art>()
-        allSnapshot.append(self.arts)
-        dataSource.apply(allSnapshot, to: .image, animatingDifferences: false)
+        allSnapshot.append([art])
+        dataSource.apply(allSnapshot, to: .info, animatingDifferences: false)
     }
     
     
