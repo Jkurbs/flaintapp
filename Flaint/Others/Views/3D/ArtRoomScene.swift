@@ -24,7 +24,6 @@ class ArtRoomScene: SCNScene {
         let cameraOrbit = SCNNode()
         
         let divider = (width!/3.2)
-        print("DIVIDER: \(divider)")
         
         let geometry = SCNBox(width: width!/divider, height: height!/divider, length: 57 / 700, chamferRadius: 0.008)
         boxnode = SCNNode(geometry: geometry)

@@ -7,7 +7,6 @@ target 'Flaint' do
 
   # Pods for Flaint
 
-  pod 'IGListKit', '~> 3.0'
   pod 'IQKeyboardManager'
   pod 'SDWebImage', '~> 4.0'
   pod 'MaterialComponents/ActivityIndicator'

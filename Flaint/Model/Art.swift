@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IGListKit
 
 struct Art: Codable {
     var id: String!
@@ -26,6 +25,13 @@ struct Art: Codable {
     var imgUrl: String!
     var index: Int!
     var image: Data?
+    
+    func contains(_ filter: String?) -> Bool {
+        guard let filterText = filter else { return true }
+        if filterText.isEmpty { return true }
+        let lowercasedFilter = filterText.lowercased()
+        return title.lowercased().contains(lowercasedFilter)
+    }
 }
 
 extension Art: Hashable {

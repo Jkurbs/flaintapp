@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import IGListKit
 
 class Users: Codable {
     var userId: String!
@@ -26,15 +25,3 @@ extension Users: Equatable {
     }
 }
 
-extension Users: ListDiffable {
-    
-    public func diffIdentifier() -> NSObjectProtocol {
-        userId as NSObjectProtocol
-    }
-    
-    public func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        guard self !== object else { return true }
-        guard let object = object as? Users else { return false }
-        return self.userId == object.userId
-    }
-}

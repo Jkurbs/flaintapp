@@ -155,8 +155,6 @@ class GalleryCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     override required init(frame: CGRect) {
         super.init(frame: frame)
         
-        contentView.backgroundColor = .blue
-        
         activityIndicator.frame = contentView.frame
         activityIndicator.cycleColors = [.label]
         activityIndicator.startAnimating()
@@ -244,7 +242,7 @@ class GalleryCell: UICollectionViewCell, UIGestureRecognizerDelegate {
     }
 }
 
-class ProfileArtInfoCell: UICollectionViewCell {
+class GalleryInfoCell: UICollectionViewCell {
     
     let titleLabel = UILabel()
     
@@ -283,7 +281,7 @@ class ProfileArtInfoCell: UICollectionViewCell {
         let color = UIColor.secondaryLabel
         
         titleLabel.adjustsFontSizeToFitWidth = true
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
+        titleLabel.font = UIFont.preferredFont(forTextStyle: .title2)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
  
         styleTitleLabel.font = font
