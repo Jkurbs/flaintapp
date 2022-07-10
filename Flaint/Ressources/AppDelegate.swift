@@ -6,13 +6,14 @@
 //  Copyright © 2019 Kerby Jean. All rights reserved.
 //
 
+import SwiftUI
 import UIKit
 import Firebase
 import Network
 import IQKeyboardManager
 
-@UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+//@UIApplicationMain
+class AppDelegate: NSObject, UIApplicationDelegate {
     
     var window: UIWindow?
     let monitor = NWPathMonitor()
@@ -22,9 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setLaunchCount()
         configure()
-        customize()
-        observeAuthorisedState()
-        return true
+//        customize()
+//        observeAuthorisedState()
+        return false
     }
     
     func setLaunchCount() {
@@ -155,7 +156,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        print("BACKGROUND")
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
     }
@@ -170,5 +170,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+}
+
+
+@main
+struct FlaintApp: App {
+    
+    @UIApplicationDelegateAdaptor private var appDelegate: AppDelegate
+    
+    var body: some Scene {
+        WindowGroup {
+            NavigationView {
+                UsernameView(model: AuthModel())
+            }
+        }
     }
 }

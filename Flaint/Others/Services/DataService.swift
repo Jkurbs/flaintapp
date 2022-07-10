@@ -28,7 +28,7 @@ class DataService {
         Database.database().reference().child("arts")
     }
     
-    var RefUsernames: DatabaseReference {
+    var userNameReference: DatabaseReference {
         Database.database().reference().child("usernames")
     }
     
@@ -95,7 +95,7 @@ class DataService {
     
     // Save/Check Username
     func saveUsername(_ username: String) {
-        RefUsernames.updateChildValues([username: true])
+        userNameReference.updateChildValues([username: true])
     }
     
     func updateUsernameAuth(_ username: String) {
@@ -108,7 +108,7 @@ class DataService {
     func removeUsername(username: String) {
         // Look for user current username
         // Remove username
-        RefUsernames.child("username").removeValue()
+        userNameReference.child("username").removeValue()
         // Remove Auth username
         
         if !username.isEmpty {
@@ -117,13 +117,12 @@ class DataService {
     }
     
     
-    func checkUsername(_ username: String, complete: @escaping (Bool) -> Void) {
-        RefUsernames.child(username).observeSingleEvent(of: .value) { snapshot in
+    func usernameAvailable(_ username: String, complete: @escaping (Bool) -> Void) {
+        guard !username.isEmpty else { return }
+        userNameReference.child(username).observeSingleEvent(of: .value) { snapshot in
             if snapshot.exists() {
-                // Username taken
                 complete(false)
             } else {
-                // Username not taken
                 complete(true)
             }
         }

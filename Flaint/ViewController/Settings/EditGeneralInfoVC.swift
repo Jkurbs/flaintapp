@@ -124,7 +124,7 @@ extension UpdateGeneralInfoVC: UITextFieldDelegate {
     @objc func textFieldDidChange(_ textField: UITextField) {
         if textField.hasText {
             let username = textField.text!.lowercased().trimmingCharacters(in: .whitespaces)
-            DataService.shared.checkUsername(username) { success in
+            DataService.shared.usernameAvailable(username) { success in
                 if !success {
                     DispatchQueue.main.async {
                         self.errorLabel.text = "Username already taken"
