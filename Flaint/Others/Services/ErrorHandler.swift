@@ -14,9 +14,8 @@ class ErrorHandler {
     private static let error = ErrorHandler()
     
     func authError(_ error: Error?) {
-        
-        if let errCode = AuthErrorCode(rawValue: error!._code) {
-            switch errCode {
+        if let errCode = AuthErrorCode.Code(rawValue: error!._code) {
+            switch AuthErrorCode(errCode).code {
             case .invalidEmail:
                 _ = handleError("The email you entered is invalid.")
             case .emailAlreadyInUse:

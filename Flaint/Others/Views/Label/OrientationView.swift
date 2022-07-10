@@ -63,8 +63,7 @@ class OrientationView: UIView {
 
 class AdjustView: UIView {
     
-    
-    let label: UILabel = {
+    lazy var label: UILabel = {
         let label = UILabel()
         label.textColor = .label
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,7 +71,7 @@ class AdjustView: UIView {
         return label
     }()
     
-    let centerButton: UIButton = {
+   lazy var centerButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setImage(UIImage(systemName: "multiply.circle.fill"), for: .normal)

@@ -17,10 +17,7 @@ extension ProfileVC {
         nav.modalPresentationStyle = .fullScreen
         vc.arts = self.arts
         vc.navigationController?.isToolbarHidden = true
-        
-        self.present(nav, animated: true) {
-            
-        }
+        self.present(nav, animated: true)
     }
     
     @objc func searchTapped() {
@@ -30,8 +27,7 @@ extension ProfileVC {
         self.navigationItem.rightBarButtonItem = cancelButton
         self.navigationItem.titleView = searchBar
         self.searchBar.sizeToFit()
-        let deadline = DispatchTime.now() + .milliseconds(5)
-        DispatchQueue.main.asyncAfter(deadline: deadline) {
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(5)) {
             self.searchBar.becomeFirstResponder()
         }
     }
@@ -46,12 +42,9 @@ extension ProfileVC {
     
     @objc func action(_ button: UIBarButtonItem) {
         switch button.tag {
-        case 0:
-            slide(.left)
-        case 1:
-            slide(.right)
-        case 2:
-            more()
+        case 0: slide(.left)
+        case 1: slide(.right)
+        case 2: more()
         default:
             break
         }
@@ -64,14 +57,11 @@ extension ProfileVC {
     
     @objc func more() {
         guard let art = self.currentArt else { return }
-        
         let alert = UIAlertController(title: "More", message: nil, preferredStyle: .actionSheet)
-        
         let copyLink = UIAlertAction(title: "Copy artwork link", style: .default) { _ in
             self.showMessage("Link copied to clipboard", type: .success)
             UIPasteboard.general.string = "Hello world"
         }
-        
         
         let edit = UIAlertAction(title: "Edit", style: .default) { _ in
             DispatchQueue.main.async {

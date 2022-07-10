@@ -419,7 +419,7 @@ public class GSMessage: NSObject {
                 let isNavBarHidden = nav?.isNavigationBarHidden ?? true
                 let isNavBarTranslucent = nav?.navigationBar.isTranslucent ?? false
                 let navBarHeight = nav?.navigationBar.frame.size.height ?? 44
-                let isStatusBarHidden = UIApplication.shared.isStatusBarHidden
+                guard let isStatusBarHidden = UIWindow().windowScene?.statusBarManager?.isStatusBarHidden else { return }
                 if !isNavBarHidden && isNavBarTranslucent && !isStatusBarHidden { offsetY += statusBarHeight }
                 if !isNavBarHidden && isNavBarTranslucent { offsetY += navBarHeight }
                 if isNavBarHidden && !isStatusBarHidden { offsetY += statusBarHeight }

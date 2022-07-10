@@ -285,8 +285,8 @@ class DataService {
     
     // Create Link
     func createLink(username: String, id: String, completion: @escaping ( _ success: Bool, _ error: Error?, _ link: String) -> Void ) {
-        guard let link = URL(string: "https://www.flaintapp.com/\(username)/?id=\(id)") else { return }
-        let dynamicLinksDomainURIPrefix = "https://flaint"
+//        guard let link = URL(string: "https://www.flaintapp.com/\(username)/?id=\(id)") else { return }
+//        let dynamicLinksDomainURIPrefix = "https://flaint"
 //        let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: dynamicLinksDomainURIPrefix)
 //        linkBuilder?.iOSParameters = DynamicLinkIOSParameters(bundleID: "com.Kurbs.Flaint")
 //        guard let longDynamicLink = linkBuilder?.url else { return }

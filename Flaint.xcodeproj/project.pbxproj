@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -90,6 +90,7 @@
 		6DE60E1222D2C58700AB0E85 /* NextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE60E1122D2C58700AB0E85 /* NextButton.swift */; };
 		6DE60E1522D2C66300AB0E85 /* UIColor+Palette.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DE60E1422D2C66300AB0E85 /* UIColor+Palette.swift */; };
 		6DE60E1922D3FD2700AB0E85 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6DE60E1822D3FD2700AB0E85 /* GoogleService-Info.plist */; };
+		6DEB1601285FAEB5009BBD5C /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 6DEB1600285FAEB5009BBD5C /* DequeModule */; };
 		6DF0A5A5226C012100C892C4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF0A5A4226C012100C892C4 /* AppDelegate.swift */; };
 		6DF0A5A7226C012100C892C4 /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DF0A5A6226C012100C892C4 /* ProfileVC.swift */; };
 		6DF0A5AA226C012100C892C4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6DF0A5A8226C012100C892C4 /* Main.storyboard */; };
@@ -237,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6D9BBB7923383AD10089B688 /* AuthenticationServices.framework in Frameworks */,
+				6DEB1601285FAEB5009BBD5C /* DequeModule in Frameworks */,
 				6D388D0B232532A40080E413 /* Security.framework in Frameworks */,
 				5BB98B69A04FAE3EC581A71B /* Pods_Flaint.framework in Frameworks */,
 			);
@@ -715,6 +717,9 @@
 			dependencies = (
 			);
 			name = Flaint;
+			packageProductDependencies = (
+				6DEB1600285FAEB5009BBD5C /* DequeModule */,
+			);
 			productName = Flaint;
 			productReference = 6DF0A5A1226C012100C892C4 /* Flaint.app */;
 			productType = "com.apple.product-type.application";
@@ -765,7 +770,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1010;
-				LastUpgradeCheck = 1010;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "Kerby Jean";
 				TargetAttributes = {
 					6DF0A5A0226C012100C892C4 = {
@@ -801,6 +806,9 @@
 				Base,
 			);
 			mainGroup = 6DF0A598226C012100C892C4;
+			packageReferences = (
+				6DEB15FF285FAEB5009BBD5C /* XCRemoteSwiftPackageReference "swift-collections" */,
+			);
 			productRefGroup = 6DF0A5A2226C012100C892C4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1109,6 +1117,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1170,6 +1179,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -1209,7 +1219,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = GF728A45JE;
+				DEVELOPMENT_TEAM = FHE2BMTPG3;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1237,7 +1247,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = GF728A45JE;
+				DEVELOPMENT_TEAM = FHE2BMTPG3;
 				GCC_GENERATE_TEST_COVERAGE_FILES = YES;
 				INFOPLIST_FILE = Flaint/Ressources/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
@@ -1261,7 +1271,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GF728A45JE;
+				DEVELOPMENT_TEAM = FHE2BMTPG3;
 				INFOPLIST_FILE = FlaintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1283,7 +1293,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = GF728A45JE;
+				DEVELOPMENT_TEAM = FHE2BMTPG3;
 				INFOPLIST_FILE = FlaintTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1380,6 +1390,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6DEB15FF285FAEB5009BBD5C /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6DEB1600285FAEB5009BBD5C /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6DEB15FF285FAEB5009BBD5C /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6DF0A599226C012100C892C4 /* Project object */;
 }

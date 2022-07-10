@@ -82,7 +82,6 @@ class ReorderVC: UIViewController {
     
     
     @objc func sendRequest() {
-        
         let activityIndicator = UIActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         activityIndicator.style = UIActivityIndicatorView.Style.medium
         let barButton = UIBarButtonItem(customView: activityIndicator)
@@ -111,7 +110,6 @@ extension ReorderVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         if let cell = tableView.dequeueReusableCell(withIdentifier: ReorderCell.id, for: indexPath) as? ReorderCell {
             let art = self.arts[indexPath.row]
             cell.art = art

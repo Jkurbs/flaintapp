@@ -95,7 +95,7 @@ class UsernameVC: UIViewController {
             let password = data.last {
             AuthService.shared.createAccount(firstName: firstName, lastName: lastName, username: username, email: email, pwd: password) { _, error in
                 if let error = error {
-                    NSLog("error: \(error)")
+                    NSLog("error registering: \(error)")
                     self.nextButton.hideLoading()
                 } else {
                     DataService.shared.saveUsername(username)

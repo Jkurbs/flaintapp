@@ -143,8 +143,4 @@ class ProfileVC: UIViewController, ListAdapterDataSource {
         adapter.dataSource = self
         self.view.addSubview(orientationView)
     }
-    
-    deinit {
-        print("DEINIT IS CALLED")
-    }
 }

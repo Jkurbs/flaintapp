@@ -29,7 +29,6 @@ extension ProfileVC {
         }
     }
     
-    
     // Show or Hide UI base on arts count
     func showHideUI() {
         switch self.arts.count {

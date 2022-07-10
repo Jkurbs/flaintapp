@@ -33,13 +33,14 @@ class AddImageVC: UIViewController {
     
     lazy var classificationRequest: VNCoreMLRequest = {
         do {
-            let model = try VNCoreMLModel(for: ImageClassifier().model)
+            let model = try VNCoreMLModel(for:  ImageClassifier().model)
             let request = VNCoreMLRequest(model: model, completionHandler: { [weak self] request, error in
                 self?.processClassifications(for: request, error: error)
             })
             request.imageCropAndScaleOption = .centerCrop
             return request
         } catch {
+            print(error)
             fatalError("Failed to load Vision ML Model:\(error)")
         }
     }()
